@@ -1,6 +1,8 @@
 #include "../../../include/Tree.h"
+std::vector<Tree*> c;
 
 Tree::Tree(int rootLabel)
+:node(0),children(c)
 {
 
 }
@@ -18,4 +20,8 @@ Tree* Tree::createTree(const Session& session, int rootLabel)
 int Tree::traceTree()
 {
     return 0;
+}
+
+Tree::~Tree() {
+
 }
