@@ -1,5 +1,8 @@
 #include <iostream>
 #include "Session.h"
+#include "Graph.h"
+#include "Agent.h"
+#include "Tree.h"
 
 using namespace std;
 
