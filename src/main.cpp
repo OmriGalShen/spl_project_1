@@ -17,6 +17,7 @@ void add_agents_from_json(const vector<Agent>& agentList, json inputJson);
 int main(int argc, char** argv)
 {
     auto agentList = vector<Agent>();// list of agents with ContactTracer and Virus objects
+    auto graphMatrix = vector<vector<int>>();// A 2d vector representing the graph matrix
 
      if(argc != 2) // json file for testing was not given as argument in terminal
      {
@@ -27,7 +28,14 @@ int main(int argc, char** argv)
      {
          json inputJson = file_location_to_json(argv[1]);
          add_agents_from_json(agentList,inputJson);
-
+         graphMatrix = inputJson.at("graph").get<vector<vector<int>>>();
+         cout << "input graph" << endl;
+         for (int k = 0 ; k < graphMatrix.size () ; k = k + 1) {
+             for (int l = 0; l < graphMatrix[k].size(); l = l + 1) {
+                 cout << graphMatrix[k][l] << ' ';
+             }
+             cout << endl;
+         }
          // Session sess(argv[1]);
          // sess.simulate();
      }
