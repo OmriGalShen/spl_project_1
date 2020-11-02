@@ -17,7 +17,7 @@ void add_agents_from_json(vector<Agent>& agentList, const json& inputJson);
 int main(int argc, char** argv)
 {
     auto* agentList = new vector<Agent>();// list of agents with ContactTracer and Virus objects
-    vector<vector<int>> graphMatrix;// A 2d vector representing the graph matrix
+    vector<vector<int>>* graphMatrix;// A 2d vector representing the graph matrix
 
      if(argc != 2) // json file for testing was not given as argument in terminal
      {
@@ -28,13 +28,14 @@ int main(int argc, char** argv)
      {
          json inputJson = file_location_to_json(argv[1]); //get json
          add_agents_from_json(*agentList,inputJson);
-         graphMatrix = inputJson.at("graph").get<vector<vector<int>>>();
+         // get the graph matrix and point graphMatrix to it
+         graphMatrix = new vector<vector<int>>(inputJson.at("graph").get<vector<vector<int>>>());
          // Print graph to console
          cout << "input graph:" << endl;
-         for (int i = 0, r=graphMatrix.size() ; i < r ; i++)
+         for (int i = 0, r=(*graphMatrix).size() ; i < r ; i++)
          {
-             for (int j = 0, c=graphMatrix[i].size(); j<c; j++) {
-                 cout << graphMatrix[i][j] << ' ';
+             for (int j = 0, c=(*graphMatrix)[i].size(); j<c; j++) {
+                 cout << (*graphMatrix)[i][j] << ' ';
              }
              cout << endl;
          }
@@ -44,8 +45,11 @@ int main(int argc, char** argv)
      // -- Free heap memory allocation ----------------
      // -- Please update with every heap allocation  --
      agentList->clear();
+     graphMatrix->clear();
      delete agentList;
+     delete graphMatrix;
      agentList = nullptr;
+     graphMatrix = nullptr;
      // ----------------------------------
     cout<< "Hello World!" << endl;
     return 0;
