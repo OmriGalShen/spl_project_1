@@ -16,21 +16,31 @@ void add_agents_from_json(vector<Agent>& agentList, const json& inputJson);
 
 int main(int argc, char** argv)
 {
-    auto* agentList = new vector<Agent>();// list of agents with ContactTracer and Virus objects
-    vector<vector<int>>* graphMatrix;// A 2d vector representing the graph matrix
+    // list of agents with ContactTracer and Virus objects stored on heap
+    auto* agentList = new vector<Agent>();
+    // A 2d vector representing the graph matrix
+    vector<vector<int>>* graphMatrix;
+    // The tree type to use during Session
+    // "C" = CycleTree, "M" = MaxRankTree, "R" = RootTree
+    string treeType = "R"; // initialized with rootTree
 
-     if(argc != 2) // json file for testing was not given as argument in terminal
+     if(argc != 2) // input json file was not given as argument in terminal
      {
          cout << "usage cTrace <config_path>" << endl;
          return 0;
      }
-     else // json file for testing was given as argument in terminal
+     else // input json file was given as argument in terminal
      {
-         json inputJson = file_location_to_json(argv[1]); //get json
+         //get json file by location given as argument
+         json inputJson = file_location_to_json(argv[1]);
+         // add agents given by the json input to the agent vector
          add_agents_from_json(*agentList,inputJson);
          // get the graph matrix and point graphMatrix to it
          graphMatrix = new vector<vector<int>>(inputJson.at("graph").get<vector<vector<int>>>());
-         // Print graph to console
+        // get type of tree to use in Session
+         treeType = inputJson.at("tree").get<string>();
+         // Print input info to console
+         cout << "Tree Type: " << treeType << endl;
          cout << "input graph:" << endl;
          for (int i = 0, r=(*graphMatrix).size() ; i < r ; i++)
          {
