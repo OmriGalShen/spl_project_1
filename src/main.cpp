@@ -13,6 +13,7 @@ using namespace std;
 
 json file_location_to_json(const string& location); //function to read json file
 void add_agents_from_json(vector<Agent>& agentList, const json& inputJson);
+TreeType get_tree_type(const json& inputJson);
 
 int main(int argc, char** argv)
 {
@@ -21,8 +22,7 @@ int main(int argc, char** argv)
     // A 2d vector representing the graph matrix
     vector<vector<int>>* graphMatrix;
     // The tree type to use during Session
-    // "C" = CycleTree, "M" = MaxRankTree, "R" = RootTree
-    string treeType = "R"; // initialized with rootTree
+    TreeType treeType = Root; // initialized with rootTree
 
      if(argc != 2) // input json file was not given as argument in terminal
      {
@@ -37,10 +37,9 @@ int main(int argc, char** argv)
          add_agents_from_json(*agentList,inputJson);
          // get the graph matrix and point graphMatrix to it
          graphMatrix = new vector<vector<int>>(inputJson.at("graph").get<vector<vector<int>>>());
-        // get type of tree to use in Session
-         treeType = inputJson.at("tree").get<string>();
+         // get type of tree to use in Session
+         treeType = get_tree_type(inputJson);
          // Print input info to console
-         cout << "Tree Type: " << treeType << endl;
          cout << "input graph:" << endl;
          for (int i = 0, r=(*graphMatrix).size() ; i < r ; i++)
          {
@@ -92,4 +91,15 @@ void add_agents_from_json(vector<Agent>& agentList, const json& inputJson)
             cout << "his node is: " << agent_index << endl;
         }
     }
+}
+
+TreeType get_tree_type(const json& inputJson)
+{
+    string type = inputJson.at("tree").get<string>();
+    if(type=="R")
+        return Root;
+    else if(type=="C")
+        return Cycle;
+    else
+        return MaxRank;
 }
