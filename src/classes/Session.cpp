@@ -88,10 +88,16 @@ void Session::add_agents_from_json(const json& inputJson)
     {
         auto agent_type = agent.at(0); //type of agent "C" or "V"
         auto agent_index = agent.at(1); // the node index of the agent
-        if(agent_type == "C")
-            agents.push_back(new ContactTracer((*this)));
-        else if(agent_type == "V")
-            agents.push_back(new Virus(agent_index,(*this)));
+        if(agent_type == "C") // Agent is contact tracer
+        {
+            const Agent* contact_ptr = new ContactTracer((*this));
+            this->addAgent((*contact_ptr));
+        }
+        else if(agent_type == "V") // Agent is virus
+        {
+            const Agent* virus_ptr = new Virus(agent_index,(*this));
+            this->addAgent((*virus_ptr));
+        }
     }
 }
 
