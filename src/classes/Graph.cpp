@@ -1,9 +1,18 @@
 #include "../../include/Graph.h"
+#include "iostream"
 
 Graph::Graph(std::vector<std::vector<int>> matrix):
 edges(matrix)
 {
-
+    // Print input info to console
+    std::cout << "input graph:" << std::endl;
+    for (int i = 0, r=(edges).size() ; i < r ; i++)
+    {
+        for (int j = 0, c=(edges)[i].size(); j<c; j++) {
+            std::cout << (edges)[i][j] << ' ';
+        }
+        std::cout << std::endl;
+    }
 }
 void Graph::infectNode(int nodeInd)
 {
