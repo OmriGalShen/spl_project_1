@@ -1,6 +1,8 @@
 #include "../../include/Graph.h"
 #include "iostream"
 
+Graph::Graph() {}
+
 Graph::Graph(std::vector<std::vector<int>> matrix):
 edges(matrix)
 {

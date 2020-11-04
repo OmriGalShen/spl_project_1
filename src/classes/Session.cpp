@@ -4,11 +4,9 @@
 #include "Agent.h"
 // for convenience
 using namespace std;
-// used temporarily in order to initialize g in constructor
-std::vector<std::vector<int>> matrix;
 
 Session::Session(const std::string& path)
-:g(matrix)
+:g(),treeType(Root),agents(std::vector<Agent*>())
 {
     //get json file by location given as argument
     json inputJson = file_path_to_json(path);
@@ -23,6 +21,14 @@ Session::Session(const std::string& path)
 void Session::simulate()
 {
     // Print input info to console
+    cout << "Agents list:" << endl;
+    for(auto& agent: agents)
+    {
+        if(typeid(agent) == typeid(ContactTracer))
+            cout << "This is a Contact Tracer" <<endl;
+        else
+            cout << "This is a Virus" << endl;
+    }
 //    cout << "input graph:" << endl;
 //    for (int i = 0, r=(*graphMatrix).size() ; i < r ; i++)
 //    {
@@ -39,15 +45,13 @@ Session::~Session()
     // -- Free heap memory allocation ----------------
     // -- Please update with every heap allocation  --
     agents.clear();
-//    graphMatrix->clear();
-//    delete graphMatrix;
-//    graphMatrix = nullptr;
     // ----------------------------------
 }
 
 void Session:: addAgent(const Agent& agent)
 {
-
+    const Agent* agent_ptr = &agent;
+    agents.push_back(const_cast<Agent *&&>(agent_ptr));
 }
 void Session::setGraph(const Graph& graph)
 {
@@ -85,17 +89,9 @@ void Session::add_agents_from_json(const json& inputJson)
         auto agent_type = agent.at(0); //type of agent "C" or "V"
         auto agent_index = agent.at(1); // the node index of the agent
         if(agent_type == "C")
-        {
-            cout << "This is a contact Tracer" << endl;
-            cout << "his node is: " << agent_index << endl;
             agents.push_back(new ContactTracer((*this)));
-        }
         else if(agent_type == "V")
-        {
-            cout << "This is a Virus" << endl;
-            cout << "his node is: " << agent_index << endl;
             agents.push_back(new Virus(agent_index,(*this)));
-        }
     }
 }
 
