@@ -20,6 +20,16 @@ Session::Session(const std::string& path)
     treeType = get_tree_type(inputJson);
 }
 
+Session::Session(const Session& other)
+:g(other.g),treeType(other.treeType),agents(std::vector<Agent*>())
+{
+    for(auto agent : other.agents)
+    {
+        Agent* agentClone = agent->clone();
+        agents.push_back(agentClone);
+    }
+}
+
 void Session::simulate()
 {
     // Print input info to console

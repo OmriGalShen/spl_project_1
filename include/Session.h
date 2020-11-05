@@ -20,6 +20,7 @@ enum TreeType{
 class Session{
 public:
     Session(const std::string& path);
+    Session(const Session& other);
     ~Session();
     
     void simulate();
