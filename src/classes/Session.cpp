@@ -50,6 +50,7 @@ void Session::simulate()
 //        cout << endl;
 //    }
     cout<< "In simulate!" << endl;
+    create_json_output();
 }
 
 Session::~Session()
@@ -86,12 +87,22 @@ TreeType Session::getTreeType() const
 
 json Session::file_path_to_json(const std::string& path)
 {
-    string myText;
     ifstream MyReadFile(path);
-    json j;
-    MyReadFile >> j;
+    json inputJSON;
+    MyReadFile >> inputJSON;
     MyReadFile.close();
-    return j;
+    return inputJSON;
+}
+
+void Session::create_json_output()
+{
+    // output final results as json
+    json outputJSON;
+    string myText;
+    outputJSON["graph"] = (*g.getEdges());
+    ofstream file("output.json");
+    file << outputJSON;
+    file.close();
 }
 
 void Session::add_agents_from_json(const json& inputJson)

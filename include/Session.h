@@ -38,6 +38,7 @@ private:
     static json file_path_to_json(const std::string& path);
     void add_agents_from_json(const json& inputJson);
     static TreeType get_tree_type(const json& inputJson);
+    void create_json_output();
 };
 
 #endif
