@@ -16,6 +16,12 @@ edges(matrix)
         std::cout << std::endl;
     }
 }
+
+Graph::Graph(const Graph &other)
+:edges(other.edges)
+{
+}
+
 void Graph::infectNode(int nodeInd)
 {
 
@@ -24,4 +30,6 @@ bool Graph::isInfected(int nodeInd)
 {
 
 }
+
+
 
