@@ -9,3 +9,8 @@ void ContactTracer::act()
 {
 
 }
+
+Agent * ContactTracer::clone()  const
+{
+    return new ContactTracer(*this);
+}

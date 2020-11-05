@@ -52,8 +52,8 @@ Session::~Session()
 
 void Session:: addAgent(const Agent& agent)
 {
-    const Agent* agent_ptr = &agent;
-    agents.push_back(const_cast<Agent *&&>(agent_ptr));
+    Agent* clone = agent.clone();
+    agents.push_back(clone);
 }
 void Session::setGraph(const Graph& graph)
 {
