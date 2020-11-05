@@ -2,8 +2,10 @@
 #include <fstream>
 #include "Tree.h"
 #include "Agent.h"
+#include "iostream"
 // for convenience
 using namespace std;
+
 
 Session::Session(const std::string& path)
 :g(),treeType(Root),agents(std::vector<Agent*>())
@@ -13,7 +15,7 @@ Session::Session(const std::string& path)
     // add agents given by the json input to the agent vector
     add_agents_from_json(inputJson);
     // get the graph matrix and point graphMatrix to it
-    g = Graph(inputJson.at("graph").get<vector<vector<int>>>());
+    g = Graph(inputJson["graph"]);
     // get type of tree to use in Session
     treeType = get_tree_type(inputJson);
 }
@@ -74,17 +76,15 @@ TreeType Session::getTreeType() const
 
 json Session::file_path_to_json(const std::string& path)
 {
-    string myText;
-    ifstream MyReadFile(path);
+    ifstream i(path);
     json j;
-    MyReadFile >> j;
-    MyReadFile.close();
+    j << i;
     return j;
 }
 
 void Session::add_agents_from_json(const json& inputJson)
 {
-    for (auto const& agent : inputJson.at("agents"))
+    for (auto& agent : inputJson.at("agents"))
     {
         auto agent_type = agent.at(0); //type of agent "C" or "V"
         auto agent_index = agent.at(1); // the node index of the agent

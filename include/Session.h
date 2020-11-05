@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include "Graph.h"
-#include <nlohmann/json.hpp>  //used for working with json files
+#include "json.hpp"  //used for working with json files
 
 // for convenience
 using json = nlohmann::json; //used for working with json files
