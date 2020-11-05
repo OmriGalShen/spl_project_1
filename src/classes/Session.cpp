@@ -86,9 +86,11 @@ TreeType Session::getTreeType() const
 
 json Session::file_path_to_json(const std::string& path)
 {
-    ifstream i(path);
+    string myText;
+    ifstream MyReadFile(path);
     json j;
-    j << i;
+    MyReadFile >> j;
+    MyReadFile.close();
     return j;
 }
 
