@@ -1,7 +1,7 @@
 #include "../../include/Graph.h"
 #include "iostream"
 
-Graph::Graph() {}
+Graph::Graph():edges(std::vector<std::vector<int>> ()) {}
 
 Graph::Graph(std::vector<std::vector<int>> matrix):
 edges(matrix)
@@ -22,14 +22,20 @@ Graph::Graph(const Graph &other)
 {
 }
 
+Graph::~Graph() {
+    edges.clear();
+}
+
 void Graph::infectNode(int nodeInd)
 {
 
 }
 bool Graph::isInfected(int nodeInd)
 {
-
+    return false;
 }
+
+
 
 
 

@@ -10,3 +10,7 @@ void Agent::act()
 {
 
 }
+
+Agent::~Agent() {
+
+}

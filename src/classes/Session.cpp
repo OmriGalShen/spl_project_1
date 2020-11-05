@@ -76,7 +76,7 @@ void Session::enqueueInfected(int)
 }
 int Session::dequeueInfected()
 {
-
+    return 1;
 }
 TreeType Session::getTreeType() const
 {

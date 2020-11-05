@@ -9,7 +9,7 @@ public:
     Agent(Session& session);
     virtual Agent * clone() const = 0;
     virtual void act()=0;
-
+    virtual ~Agent();
 protected:
     Session& session;
 };
@@ -18,7 +18,6 @@ class ContactTracer: public Agent{
 public:
     ContactTracer(Session& session);
     virtual void act();
-
     Agent *clone() const;
 };
 

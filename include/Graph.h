@@ -8,6 +8,7 @@ public:
     Graph(std::vector<std::vector<int>> matrix);
     Graph();
     Graph(const Graph& other);
+    ~Graph();
     
     void infectNode(int nodeInd);
     bool isInfected(int nodeInd);
