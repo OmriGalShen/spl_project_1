@@ -35,6 +35,9 @@ bool Graph::isInfected(int nodeInd)
     return false;
 }
 
+std::vector<std::vector<int>>* Graph::getEdges() {
+    return new std::vector<std::vector<int>>(edges);
+}
 
 
 

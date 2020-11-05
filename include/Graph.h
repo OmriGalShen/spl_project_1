@@ -9,6 +9,7 @@ public:
     Graph();
     Graph(const Graph& other);
     ~Graph();
+    std::vector<std::vector<int>> * getEdges();
     
     void infectNode(int nodeInd);
     bool isInfected(int nodeInd);
