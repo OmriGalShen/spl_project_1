@@ -7,7 +7,8 @@ Tree::Tree(int rootLabel)
 
 }
 
-Tree::~Tree() {
+Tree::~Tree()
+{
 
 }
 
@@ -24,17 +25,12 @@ Tree* Tree::createTree(const Session& session, int rootLabel)
 Tree* Tree::BFS(const Session& session, int rootLabel)
 {
     Tree* curr_tree = Tree::createTree(session,rootLabel);
-
+    return curr_tree;
 }
 
 void Tree::addChild(const Tree& child)
 {
     return;
-}
-
-Tree* Tree::createTree(const Session& session, int rootLabel)
-{
-    return nullptr;
 }
 
 int Tree::traceTree()
