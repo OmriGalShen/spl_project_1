@@ -40,10 +40,11 @@ std::vector<std::vector<int>>* Graph::getEdgesCopy() {
 }
 
 std::vector<int> Graph::getNeighbours(int nodeInd) const {
+    size_t index = nodeInd;
     auto neighbours = std::vector<int>();
-    if(nodeInd>=0&&nodeInd<edges.size())
+    if(index>=0&&index<edges.size())
     {
-        for(int neighbourInd=0;neighbourInd<edges[nodeInd].size();neighbourInd++)
+        for(int neighbourInd:edges[index])
         {
             if(edges[nodeInd][neighbourInd]==1)
                 neighbours.push_back(neighbourInd);
