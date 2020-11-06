@@ -2,7 +2,7 @@
 #include "Session.h"
 
 Tree::Tree(int rootLabel)
-:node(0),children(std::vector<Tree*>())
+:node(rootLabel),children(std::vector<Tree*>())
 {
 
 }
