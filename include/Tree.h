@@ -10,7 +10,7 @@ public:
     Tree(int rootLabel);
     virtual ~Tree(); //added destructor
     void addChild(const Tree& child);
-
+    Tree* BFS(const Session& session, int rootLabel);
 
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree()=0;
