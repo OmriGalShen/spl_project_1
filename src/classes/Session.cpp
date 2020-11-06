@@ -84,6 +84,10 @@ TreeType Session::getTreeType() const
     return treeType;
 }
 
+int Session::getCycle() const
+{
+    return 1;
+}
 
 json Session::file_path_to_json(const std::string& path)
 {
