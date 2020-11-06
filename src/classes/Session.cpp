@@ -99,7 +99,7 @@ void Session::create_json_output()
     // output final results as json
     json outputJSON;
     string myText;
-    outputJSON["graph"] = (*g.getEdges());
+    outputJSON["graph"] = (*g.getEdgesCopy());
     ofstream file("output.json");
     file << outputJSON;
     file.close();

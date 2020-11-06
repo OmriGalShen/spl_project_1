@@ -35,8 +35,21 @@ bool Graph::isInfected(int nodeInd)
     return false;
 }
 
-std::vector<std::vector<int>>* Graph::getEdges() {
+std::vector<std::vector<int>>* Graph::getEdgesCopy() {
     return new std::vector<std::vector<int>>(edges);
+}
+
+std::vector<int> Graph::getNeighbours(int nodeInd) const {
+    auto neighbours = std::vector<int>();
+    if(nodeInd>=0&&nodeInd<edges.size())
+    {
+        for(int neighbourInd=0;neighbourInd<edges[nodeInd].size();neighbourInd++)
+        {
+            if(edges[nodeInd][neighbourInd]==1)
+                neighbours.push_back(neighbourInd);
+        }
+    }
+    return neighbours;
 }
 
 
