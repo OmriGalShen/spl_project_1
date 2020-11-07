@@ -10,6 +10,8 @@ Tree::Tree(int rootLabel)
 
 }
 
+Tree::Tree(const Tree &other):node(other.node),children(other.children) {}
+
 Tree::~Tree()
 {
 
@@ -29,6 +31,11 @@ void Tree::addChild(const Tree& child)
 {
     Tree* clone = child.clone();
     children.push_back(clone);
+}
+
+Tree* Tree::getNewChild()
+{
+    return children.back();
 }
 
 int Tree::getNodeInd()
