@@ -2,6 +2,7 @@
 #define GRAPH_H_
 
 #include <vector>
+#include <deque>
 
 class Graph{
 public:
@@ -15,8 +16,12 @@ public:
     
     void infectNode(int nodeInd);
     bool isInfected(int nodeInd);
+    int dequeueInfected();
+    std::deque<int>* getInfectedCopy();
+
 private:
     std::vector<std::vector<int>> edges;
+    std::deque<int> infectedQueue;
 };
 
 #endif

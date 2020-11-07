@@ -1,10 +1,15 @@
 #include "../../include/Graph.h"
 #include "iostream"
 
-Graph::Graph():edges(std::vector<std::vector<int>> ()) {}
+
+Graph::Graph():
+edges(std::vector<std::vector<int>> ()),
+infectedQueue(std::deque<int>())
+{}
 
 Graph::Graph(std::vector<std::vector<int>> matrix):
-edges(matrix)
+edges(matrix),
+infectedQueue(std::deque<int>())
 {
     // Print input info to console
     std::cout << "input graph:" << std::endl;
@@ -18,20 +23,33 @@ edges(matrix)
 }
 
 Graph::Graph(const Graph &other)
-:edges(other.edges)
+:edges(other.edges),infectedQueue(other.infectedQueue)
 {
 }
 
 Graph::~Graph() {
-    edges.clear();
+//    edges.clear();
+//    infectedNodes.clear();
 }
 
 void Graph::infectNode(int nodeInd)
 {
-
+    if(!isInfected(nodeInd))
+        infectedQueue.push_back(nodeInd);
 }
+
+int Graph::dequeueInfected()
+{
+    int nodeTemp = infectedQueue.front();
+    infectedQueue.pop_front();
+    return nodeTemp;
+}
+
 bool Graph::isInfected(int nodeInd)
 {
+    for(int currNode : infectedQueue)
+        if(currNode == nodeInd)
+            return true;
     return false;
 }
 
@@ -56,6 +74,11 @@ std::vector<int> Graph::getNeighbours(int nodeInd) const {
 unsigned int Graph::getVerticesCount() const
 {
     return edges.size();
+}
+
+std::deque<int>* Graph::getInfectedCopy()
+{
+    return new std::deque<int>(infectedQueue);
 }
 
 
