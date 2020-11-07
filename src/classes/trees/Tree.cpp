@@ -1,5 +1,8 @@
 #include "Tree.h"
 #include "Session.h"
+#include "Graph.h"
+
+using namespace std;
 
 Tree::Tree(int rootLabel)
 :node(rootLabel),children(std::vector<Tree*>())
@@ -22,12 +25,6 @@ Tree* Tree::createTree(const Session& session, int rootLabel)
     return new CycleTree(rootLabel,session.getCycle());
 }
 
-Tree* Tree::BFS(const Session& session, int rootLabel)
-{
-    Tree* curr_tree = Tree::createTree(session,rootLabel);
-    return curr_tree;
-}
-
 void Tree::addChild(const Tree& child)
 {
     return;
@@ -36,4 +33,9 @@ void Tree::addChild(const Tree& child)
 int Tree::traceTree()
 {
     return 0;
+}
+
+int Tree::getNodeInd()
+{
+    return node;
 }
