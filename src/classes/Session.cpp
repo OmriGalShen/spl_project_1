@@ -48,6 +48,7 @@ void Session::simulate()
     enqueueInfected(1);
     enqueueInfected(2);
     enqueueInfected(5);
+    g.removeEdge(0,1);
     create_json_output();
 }
 

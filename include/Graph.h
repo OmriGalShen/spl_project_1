@@ -13,7 +13,7 @@ public:
     std::vector<std::vector<int>> * getEdgesCopy();
     std::vector<int> getNeighbours(int nodeInd) const;
     unsigned int getVerticesCount() const;
-    
+    void removeEdge(int firstNode, int secondNode);
     void infectNode(int nodeInd);
     bool isInfected(int nodeInd);
     int dequeueInfected();

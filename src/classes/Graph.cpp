@@ -81,4 +81,13 @@ std::deque<int>* Graph::getInfectedCopy()
     return new std::deque<int>(infectedQueue);
 }
 
+void Graph::removeEdge(int firstNode, int secondNode)
+{
+    if(firstNode>=0&&firstNode<edges.size()&&secondNode>=0&&secondNode<edges.size())
+    {
+        edges[firstNode][secondNode] = 0;
+        edges[secondNode][firstNode] = 0;
+    }
+}
+
 
