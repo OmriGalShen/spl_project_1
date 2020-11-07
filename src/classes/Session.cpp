@@ -45,6 +45,9 @@ void Session::simulate()
     Tree* tree_ptr = BFS(0);
 
     cout<< "In simulate!" << endl;
+    enqueueInfected(1);
+    enqueueInfected(2);
+    enqueueInfected(5);
     create_json_output();
 }
 
@@ -66,13 +69,13 @@ void Session::setGraph(const Graph& graph)
 
 }
 
-void Session::enqueueInfected(int)
+void Session::enqueueInfected(int nodeInd)
 {
-
+    g.infectNode(nodeInd);
 }
 int Session::dequeueInfected()
 {
-    return 1;
+    return g.dequeueInfected();
 }
 TreeType Session::getTreeType() const
 {
@@ -127,6 +130,7 @@ void Session::create_json_output()
     json outputJSON;
     string myText;
     outputJSON["graph"] = (*g.getEdgesCopy());
+    outputJSON["infected"] = (*g.getInfectedCopy());
     ofstream file("output.json");
     file << outputJSON;
     file.close();
