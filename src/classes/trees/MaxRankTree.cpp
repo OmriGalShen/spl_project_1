@@ -16,7 +16,7 @@ Tree * MaxRankTree::clone() const
 
 int MaxRankTree::traceTree()
 {
-    int maxChildrenCount = 0;
+    size_t maxChildrenCount = 0;
     MaxRankTree* maxChildrenPtr = this;
     std::deque<MaxRankTree*> nodesToCheck;
     nodesToCheck.push_back(this);
