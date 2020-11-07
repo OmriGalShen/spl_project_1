@@ -40,19 +40,22 @@ std::vector<std::vector<int>>* Graph::getEdgesCopy() {
 }
 
 std::vector<int> Graph::getNeighbours(int nodeInd) const {
-    size_t index = nodeInd;
+    size_t rowInd = nodeInd;
     auto neighbours = std::vector<int>();
-    if(index>=0&&index<edges.size())
+    if(rowInd>=0&&rowInd<edges.size())
     {
-        for(int neighbourInd:edges[index])
+        for(size_t colInd=0,len=edges.size();colInd<len;colInd++)
         {
-            if(edges[nodeInd][neighbourInd]==1)
-                neighbours.push_back(neighbourInd);
+            if(edges[nodeInd][colInd]==1)
+                neighbours.push_back(colInd);
         }
     }
     return neighbours;
 }
 
-
+unsigned int Graph::getVerticesCount() const
+{
+    return edges.size();
+}
 
 

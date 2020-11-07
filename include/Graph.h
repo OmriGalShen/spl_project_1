@@ -11,7 +11,7 @@ public:
     ~Graph();
     std::vector<std::vector<int>> * getEdgesCopy();
     std::vector<int> getNeighbours(int nodeInd) const;
-
+    unsigned int getVerticesCount() const;
     
     void infectNode(int nodeInd);
     bool isInfected(int nodeInd);
