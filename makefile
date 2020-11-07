@@ -3,7 +3,7 @@ all: cTrace
 
 # Tool invocations
 # Executable "main" depends on the file main.o
-cTrace: bin/main.o bin/Aget.o bin/ContactTracer.o bin/Virus.o bin/CycleTree.o bin/MaxRankTree.o bin/RootTree.o bin/Tree.o bin/Graph.o bin/Session.o
+cTrace: bin/main.o bin/Agent.o bin/ContactTracer.o bin/Virus.o bin/CycleTree.o bin/MaxRankTree.o bin/RootTree.o bin/Tree.o bin/Graph.o bin/Session.o
 	@echo 'Building target: cTrace'
 	@echo 'Invoking: C++ Linker'
 	g++ -o bin/cTrace bin/main.o bin/Aget.o bin/ContactTracer.o bin/Virus.o bin/CycleTree.o bin/MaxRankTree.o bin/RootTree.o bin/Tree.o bin/Graph.o bin/Session.o
@@ -15,8 +15,8 @@ bin/main.o: src/main.cpp
 	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/main.o src/main.cpp
 
 # Depends on the source and header file
-bin/Aget.o: src/classes/agents/Agent.cpp
-	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/Aget.o src/classes/agents/Agent.cpp
+bin/Agent.o: src/classes/agents/Agent.cpp
+	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/Agent.o src/classes/agents/Agent.cpp
 
 # Depends on the source and header file
 bin/ContactTracer.o: src/classes/agents/ContactTracer.cpp
