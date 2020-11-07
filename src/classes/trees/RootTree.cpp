@@ -7,5 +7,10 @@ RootTree::RootTree(int rootLabel)
 }
 int RootTree::traceTree()
 {
-    return 0;
+    return node;
+}
+
+Tree * RootTree::clone() const
+{
+    return new RootTree(node);
 }

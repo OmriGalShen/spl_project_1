@@ -27,7 +27,8 @@ Tree* Tree::createTree(const Session& session, int rootLabel)
 
 void Tree::addChild(const Tree& child)
 {
-    return;
+    Tree* clone = child.clone();
+    children.push_back(clone);
 }
 
 int Tree::traceTree()
