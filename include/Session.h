@@ -5,6 +5,7 @@
 #include <string>
 #include "Graph.h"
 #include "json.hpp"  //used for working with json files
+#include "Tree.h"
 
 // for convenience
 using json = nlohmann::json; //used for working with json files
@@ -26,7 +27,7 @@ public:
     void simulate();
     void addAgent(const Agent& agent);
     void setGraph(const Graph& graph);
-    
+    Tree* BFS(int rootLabel);
     void enqueueInfected(int);
     int dequeueInfected();
     TreeType getTreeType() const;

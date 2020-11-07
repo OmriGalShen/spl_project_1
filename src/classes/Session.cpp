@@ -1,8 +1,9 @@
 #include "../../include/Session.h"
 #include <fstream>
-#include "Tree.h"
 #include "Agent.h"
 #include "iostream"
+#include <deque>
+#include <algorithm>
 // for convenience
 using namespace std;
 
@@ -41,14 +42,8 @@ void Session::simulate()
         else
             cout << "This is a Virus" << endl;
     }
-//    cout << "input graph:" << endl;
-//    for (int i = 0, r=(*graphMatrix).size() ; i < r ; i++)
-//    {
-//        for (int j = 0, c=(*graphMatrix)[i].size(); j<c; j++) {
-//            cout << (*graphMatrix)[i][j] << ' ';
-//        }
-//        cout << endl;
-//    }
+    Tree* tree_ptr = BFS(0);
+
     cout<< "In simulate!" << endl;
     create_json_output();
 }
@@ -87,6 +82,34 @@ TreeType Session::getTreeType() const
 int Session::getCycle() const
 {
     return 1;
+}
+
+Tree* Session::BFS(int rootLabel)
+{
+    Tree* curr_tree = Tree::createTree((*this),rootLabel);
+    vector<bool> visitedNode(g.getVerticesCount());
+    visitedNode[rootLabel] =true;
+    std::deque<Tree*> greyQueue;
+    greyQueue.push_back(curr_tree);
+    cout << "BFS tree:" << endl;
+    while(!greyQueue.empty())
+    {
+        Tree* treeNode = greyQueue.front();
+        cout <<greyQueue.front()->getNodeInd() <<" "<< endl;
+        greyQueue.pop_front();
+        vector<int> neighbours = g.getNeighbours(treeNode->getNodeInd());
+        for(int neighbourInd:neighbours)
+        {
+            if(!visitedNode[neighbourInd])
+            {
+                Tree* newTree = Tree::createTree((*this),neighbourInd);
+                greyQueue.push_back(newTree);
+                treeNode->addChild((*newTree));
+                visitedNode[neighbourInd] = true;
+            }
+        }
+    }
+    return curr_tree;
 }
 
 json Session::file_path_to_json(const std::string& path)
