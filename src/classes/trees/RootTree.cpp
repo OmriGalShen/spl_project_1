@@ -2,9 +2,10 @@
 
 RootTree::RootTree(int rootLabel)
         : Tree(rootLabel)
-{
+{}
 
-}
+RootTree::RootTree(const RootTree& other):Tree(other) {}
+
 int RootTree::traceTree()
 {
     return node;
@@ -12,5 +13,5 @@ int RootTree::traceTree()
 
 Tree * RootTree::clone() const
 {
-    return new RootTree(node);
+    return new RootTree((*this));
 }

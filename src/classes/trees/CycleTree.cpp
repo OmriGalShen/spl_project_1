@@ -5,6 +5,7 @@ CycleTree::CycleTree(int rootLabel, int currCycle)
 {
 
 }
+CycleTree::CycleTree(const CycleTree &other):Tree(other),currCycle(other.currCycle) {}
 int CycleTree::traceTree()
 {
     return 0;
@@ -12,5 +13,5 @@ int CycleTree::traceTree()
 
 Tree * CycleTree::clone() const
 {
-    return new CycleTree(node,currCycle);
+    return new CycleTree((*this));
 }
