@@ -43,7 +43,7 @@ void Session::simulate()
             cout << "This is a Virus" << endl;
     }
     Tree* tree_ptr = BFS(0);
-
+    cout << "trace node: " << (*tree_ptr).traceTree() << endl;
     cout<< "In simulate!" << endl;
     enqueueInfected(1);
     enqueueInfected(2);
@@ -107,8 +107,8 @@ Tree* Session::BFS(int rootLabel)
             if(!visitedNode[neighbourInd])
             {
                 Tree* newTree = Tree::createTree((*this),neighbourInd);
-                greyQueue.push_back(newTree);
                 treeNode->addChild((*newTree));
+                greyQueue.push_back(treeNode->getNewChild());
                 visitedNode[neighbourInd] = true;
             }
         }
