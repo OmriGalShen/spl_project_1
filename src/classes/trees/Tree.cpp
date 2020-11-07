@@ -31,11 +31,6 @@ void Tree::addChild(const Tree& child)
     children.push_back(clone);
 }
 
-int Tree::traceTree()
-{
-    return 0;
-}
-
 int Tree::getNodeInd()
 {
     return node;
