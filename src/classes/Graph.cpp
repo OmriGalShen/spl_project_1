@@ -92,7 +92,10 @@ std::deque<int>* Graph::getInfectedCopy()
 
 void Graph::removeEdge(int firstNode, int secondNode)
 {
-    if(firstNode>=0&&firstNode<edges.size()&&secondNode>=0&&secondNode<edges.size())
+    //using size_t to compare with .size() without warnings
+    size_t node1 = firstNode;
+    size_t node2 = secondNode;
+    if(node1>=0&&node1<edges.size()&&node2>=0&&node2<edges.size())
     {
         edges[firstNode][secondNode] = 0;
         edges[secondNode][firstNode] = 0;
@@ -102,7 +105,9 @@ void Graph::removeEdge(int firstNode, int secondNode)
 void Graph::removeNode(int node)
 {
 //    std::cout << "IN removeNode:"<< node << std::endl;
-    if(node>=0&&node<edges.size())
+    //using size_t to compare with .size() without warnings
+    size_t tNode = node;
+    if(tNode>=0&&tNode<edges.size())
     {
         std::cout << "BANANA";
         for(int row=0,len=edges.size();row<len;row++)
