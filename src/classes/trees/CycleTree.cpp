@@ -6,12 +6,21 @@ CycleTree::CycleTree(int rootLabel, int currCycle)
 
 }
 CycleTree::CycleTree(const CycleTree &other):Tree(other),currCycle(other.currCycle) {}
-int CycleTree::traceTree()
-{
-    return 0;
-}
 
 Tree * CycleTree::clone() const
 {
     return new CycleTree((*this));
+}
+
+int CycleTree::traceTree()
+{
+    Tree* currentTree = this;
+    int cycleCount = currCycle;
+    while (cycleCount>0&&currentTree->hasChildren())
+    {
+        currentTree = currentTree->getLeftChild();
+        cycleCount--;
+    }
+    return currentTree->getNodeInd();
+
 }
