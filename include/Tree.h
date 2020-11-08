@@ -11,11 +11,13 @@ public:
     Tree(const Tree& other);
     virtual ~Tree(); //added destructor
     void addChild(const Tree& child);
-    Tree* getNewChild();
+    Tree* getRightChild();
     int getNodeInd();
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree()=0;
     virtual Tree * clone() const=0;
+    bool hasChildren() const;
+    Tree* getLeftChild();
 
 protected:
     int node;
