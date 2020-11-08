@@ -11,15 +11,7 @@ Graph::Graph(std::vector<std::vector<int>> matrix):
 edges(matrix),
 infectedQueue(std::deque<int>())
 {
-    // Print input info to console
-    std::cout << "input graph:" << std::endl;
-    for (int i = 0, r=(edges).size() ; i < r ; i++)
-    {
-        for (int j = 0, c=(edges)[i].size(); j<c; j++) {
-            std::cout << (edges)[i][j] << ' ';
-        }
-        std::cout << std::endl;
-    }
+    printGraph();
 }
 
 Graph::Graph(const Graph &other)
@@ -32,6 +24,19 @@ Graph::~Graph() {
 //    infectedNodes.clear();
 }
 
+void Graph::printGraph()
+{
+    // Print input info to console
+    std::cout << "graph:" << std::endl;
+    for (int i = 0, r=(edges).size() ; i < r ; i++)
+    {
+        for (int j = 0, c=(edges)[i].size(); j<c; j++) {
+            std::cout << (edges)[i][j] << ' ';
+        }
+        std::cout << std::endl;
+    }
+}
+
 void Graph::infectNode(int nodeInd)
 {
     if(!isInfected(nodeInd))
@@ -40,9 +45,13 @@ void Graph::infectNode(int nodeInd)
 
 int Graph::dequeueInfected()
 {
-    int nodeTemp = infectedQueue.front();
-    infectedQueue.pop_front();
-    return nodeTemp;
+    if(!infectedQueue.empty())
+    {
+        int nodeTemp = infectedQueue.front();
+        infectedQueue.pop_front();
+        return nodeTemp;
+    }
+    return -1;
 }
 
 bool Graph::isInfected(int nodeInd)
@@ -88,6 +97,20 @@ void Graph::removeEdge(int firstNode, int secondNode)
         edges[firstNode][secondNode] = 0;
         edges[secondNode][firstNode] = 0;
     }
+}
+
+void Graph::removeNode(int node)
+{
+//    std::cout << "IN removeNode:"<< node << std::endl;
+    if(node>=0&&node<edges.size())
+    {
+        std::cout << "BANANA";
+        for(int row=0,len=edges.size();row<len;row++)
+            edges[row][node]=0;
+        for(int col=0,len=edges.size();col<len;col++)
+            edges[node][col]=0;
+    }
+//    printGraph();
 }
 
 

@@ -18,6 +18,8 @@ public:
     bool isInfected(int nodeInd);
     int dequeueInfected();
     std::deque<int>* getInfectedCopy();
+    void removeNode(int node);
+    void printGraph();
 
 private:
     std::vector<std::vector<int>> edges;
