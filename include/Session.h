@@ -37,6 +37,7 @@ private:
     Graph g;
     TreeType treeType;
     std::vector<Agent*> agents;
+    int cycleCount;
     static json file_path_to_json(const std::string& path);
     void add_agents_from_json(const json& inputJson);
     static TreeType get_tree_type(const json& inputJson);

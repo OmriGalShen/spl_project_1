@@ -9,7 +9,7 @@ using namespace std;
 
 
 Session::Session(const std::string& path)
-:g(),treeType(Root),agents(std::vector<Agent*>())
+:g(),treeType(Root),agents(std::vector<Agent*>()),cycleCount(0)
 {
     //get json file by location given as argument
     json inputJson = file_path_to_json(path);
@@ -22,7 +22,7 @@ Session::Session(const std::string& path)
 }
 
 Session::Session(const Session& other)
-:g(other.g),treeType(other.treeType),agents(std::vector<Agent*>())
+:g(other.g),treeType(other.treeType),agents(std::vector<Agent*>()),cycleCount(0)
 {
     for(auto agent : other.agents)
     {
@@ -42,6 +42,7 @@ void Session::simulate()
         else
             cout << "This is a Virus" << endl;
     }
+    cycleCount = 2;
     Tree* tree_ptr = BFS(0);
     cout << "trace node: " << (*tree_ptr).traceTree() << endl;
     cout<< "In simulate!" << endl;
@@ -85,7 +86,7 @@ TreeType Session::getTreeType() const
 
 int Session::getCycle() const
 {
-    return 1;
+    return cycleCount;
 }
 
 Tree* Session::BFS(int rootLabel)
@@ -108,7 +109,7 @@ Tree* Session::BFS(int rootLabel)
             {
                 Tree* newTree = Tree::createTree((*this),neighbourInd);
                 treeNode->addChild((*newTree));
-                greyQueue.push_back(treeNode->getNewChild());
+                greyQueue.push_back(treeNode->getRightChild());
                 visitedNode[neighbourInd] = true;
             }
         }
