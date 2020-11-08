@@ -33,7 +33,7 @@ void Tree::addChild(const Tree& child)
     children.push_back(clone);
 }
 
-Tree* Tree::getNewChild()
+Tree* Tree::getRightChild()
 {
     return children.back();
 }
@@ -41,4 +41,16 @@ Tree* Tree::getNewChild()
 int Tree::getNodeInd()
 {
     return node;
+}
+
+bool Tree::hasChildren() const
+{
+    return children.size()>0;
+}
+
+Tree* Tree::getLeftChild()
+{
+    if(hasChildren())
+        return children[0];
+    return nullptr;
 }
