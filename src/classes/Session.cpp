@@ -34,22 +34,22 @@ Session::Session(const Session& other)
 void Session::simulate()
 {
     // Print input info to console
-    cout << "Agents list:" << endl;
-    for(auto& agent: agents)
-    {
-        if(typeid(agent) == typeid(ContactTracer))
-            cout << "This is a Contact Tracer" <<endl;
-        else
-            cout << "This is a Virus" << endl;
-    }
-    cycleCount = 2;
+//    cout << "Agents list:" << endl;
+//    for(auto& agent: agents)
+//    {
+//        if(typeid(agent) == typeid(ContactTracer))
+//            cout << "This is a Contact Tracer" <<endl;
+//        else
+//            cout << "This is a Virus" << endl;
+//    }
+    enqueueInfected(0);
+//    enqueueInfected(2);
+//    enqueueInfected(5);
+    agents[1]->act();
+//    cycleCount = 2;
     Tree* tree_ptr = BFS(0);
-    cout << "trace node: " << (*tree_ptr).traceTree() << endl;
+//    cout << "trace node: " << (*tree_ptr).traceTree() << endl;
     cout<< "In simulate!" << endl;
-    enqueueInfected(1);
-    enqueueInfected(2);
-    enqueueInfected(5);
-    g.removeEdge(0,1);
     create_json_output();
 }
 
@@ -89,6 +89,8 @@ int Session::getCycle() const
     return cycleCount;
 }
 
+void Session::removeNode(int node) {g.removeNode(node);}
+
 Tree* Session::BFS(int rootLabel)
 {
     Tree* curr_tree = Tree::createTree((*this),rootLabel);
@@ -100,19 +102,21 @@ Tree* Session::BFS(int rootLabel)
     while(!greyQueue.empty())
     {
         Tree* treeNode = greyQueue.front();
-        cout <<greyQueue.front()->getNodeInd() <<" "<< endl;
         greyQueue.pop_front();
         vector<int> neighbours = g.getNeighbours(treeNode->getNodeInd());
+        cout <<" parent: "<< treeNode->getNodeInd() <<" children:";
         for(int neighbourInd:neighbours)
         {
             if(!visitedNode[neighbourInd])
             {
                 Tree* newTree = Tree::createTree((*this),neighbourInd);
                 treeNode->addChild((*newTree));
+                cout <<" "<< newTree->getNodeInd() <<" ";
                 greyQueue.push_back(treeNode->getRightChild());
                 visitedNode[neighbourInd] = true;
             }
         }
+        cout << endl;
     }
     return curr_tree;
 }

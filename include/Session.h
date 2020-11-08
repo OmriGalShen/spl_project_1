@@ -32,6 +32,7 @@ public:
     int dequeueInfected();
     TreeType getTreeType() const;
     int getCycle() const;
+    void removeNode(int node);
     
 private:
     Graph g;
