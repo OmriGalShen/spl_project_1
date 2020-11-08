@@ -109,7 +109,6 @@ void Graph::removeNode(int node)
     size_t tNode = node;
     if(tNode>=0&&tNode<edges.size())
     {
-        std::cout << "BANANA";
         for(int row=0,len=edges.size();row<len;row++)
             edges[row][node]=0;
         for(int col=0,len=edges.size();col<len;col++)
