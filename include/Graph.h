@@ -11,8 +11,8 @@ public:
     bool isInfected(int nodeInd);
     //added
     Graph();
+    bool isInfectedEmpty();
     Graph(const Graph& other);
-    ~Graph();
     std::vector<std::vector<int>> * getEdgesCopy();
     std::vector<int> getNeighbours(int nodeInd) const;
     unsigned int getVerticesCount() const;

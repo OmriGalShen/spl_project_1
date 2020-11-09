@@ -19,11 +19,6 @@ Graph::Graph(const Graph &other)
 {
 }
 
-Graph::~Graph() {
-//    edges.clear();
-//    infectedNodes.clear();
-}
-
 void Graph::printGraph()
 {
     // Print input info to console
@@ -35,6 +30,11 @@ void Graph::printGraph()
         }
         std::cout << std::endl;
     }
+}
+
+bool Graph::isInfectedEmpty()
+{
+    return infectedQueue.empty();
 }
 
 void Graph::infectNode(int nodeInd)
