@@ -29,7 +29,7 @@ public:
     TreeType getTreeType() const;
     //added
     Session(const Session& other);
-    ~Session();
+    virtual ~Session();
     Tree* BFS(int rootLabel);
     int getCycle() const;
     void removeNode(int node);

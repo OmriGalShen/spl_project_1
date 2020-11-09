@@ -33,6 +33,16 @@ Session::Session(const Session& other)
 
 void Session::simulate()
 {
+    bool terminateCycle = false;// true when terminate conditions are fulfilled
+    while(!terminateCycle) //cycle loop
+    {
+        cycleCount++; // update counter for cycle
+        for(Agent* agent : agents)
+            agent->act((*this));
+//        terminateCycle = g.isInfectedEmpty();
+        if(cycleCount==2)
+            terminateCycle=true;
+    }
     // Print input info to console
 //    cout << "Agents list:" << endl;
 //    for(auto& agent: agents)
@@ -42,23 +52,21 @@ void Session::simulate()
 //        else
 //            cout << "This is a Virus" << endl;
 //    }
-    enqueueInfected(0);
+//    enqueueInfected(0);
 //    enqueueInfected(2);
 //    enqueueInfected(5);
 //    agents[1]->act((*this));
 //    cycleCount = 2;
-    Tree* tree_ptr = BFS(0);
-    cout << "trace node: " << (*tree_ptr).traceTree() << endl;
+//    Tree* tree_ptr = BFS(0);
+//    cout << "trace node: " << (*tree_ptr).traceTree() << endl;
     cout<< "In simulate!" << endl;
     create_json_output();
 }
 
 Session::~Session()
 {
-    // -- Free heap memory allocation ----------------
-    // -- Please update with every heap allocation  --
-    agents.clear();
-    // ----------------------------------
+    for(auto* agent: agents)
+        delete agent;
 }
 
 void Session:: addAgent(const Agent& agent)
@@ -99,7 +107,7 @@ void Session::removeNode(int node) {g.removeNode(node);}
 Tree* Session::BFS(int rootLabel)
 {
     Tree* curr_tree = Tree::createTree((*this),rootLabel);
-    vector<bool> visitedNode(g.getVerticesCount());
+    vector<bool> visitedNode(g.getVerticesCount(),false);
     visitedNode[rootLabel] =true;
     std::deque<Tree*> greyQueue;
     greyQueue.push_back(curr_tree);
