@@ -1,5 +1,5 @@
 ## spl_project_1 - best project ever made 
-This project was made to graduate from Ben Gorion and actually work in on real programming projects :)   
+This project was made to graduate from Ben Gurion and actually work in on real programming projects :)   
 You can check the assignment details [here](https://www.cs.bgu.ac.il/~spl211/Assignments/Assignment_1)  
 
 ### Read when first installing the project:

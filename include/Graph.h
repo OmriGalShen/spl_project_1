@@ -2,11 +2,14 @@
 #define GRAPH_H_
 
 #include <vector>
-#include <deque>
+#include <deque> //added
 
 class Graph{
 public:
     Graph(std::vector<std::vector<int>> matrix);
+    void infectNode(int nodeInd);
+    bool isInfected(int nodeInd);
+    //added
     Graph();
     Graph(const Graph& other);
     ~Graph();
@@ -14,16 +17,15 @@ public:
     std::vector<int> getNeighbours(int nodeInd) const;
     unsigned int getVerticesCount() const;
     void removeEdge(int firstNode, int secondNode);
-    void infectNode(int nodeInd);
-    bool isInfected(int nodeInd);
     int dequeueInfected();
     std::deque<int>* getInfectedCopy();
     void removeNode(int node);
     void printGraph();
+    //
 
 private:
     std::vector<std::vector<int>> edges;
-    std::deque<int> infectedQueue;
+    std::deque<int> infectedQueue; //added
 };
 
 #endif

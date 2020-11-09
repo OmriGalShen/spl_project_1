@@ -1,12 +1,12 @@
 #include "../../../include/Agent.h"
 #include "iostream"
 
-ContactTracer::ContactTracer(Session& session): Agent(session)
+ContactTracer::ContactTracer(): Agent()
 {
 
 }
 
-void ContactTracer::act()
+void ContactTracer::act(Session& session)
 {
     int infectedNode = session.dequeueInfected();
     Tree* shortPathTree = session.BFS(infectedNode);

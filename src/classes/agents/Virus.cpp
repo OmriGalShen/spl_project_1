@@ -1,17 +1,17 @@
 #include "../../../include/Agent.h"
 
-Virus::Virus(int nodeInd, Session& session): Agent(session),nodeInd(nodeInd)
+Virus::Virus(int nodeInd): Agent(),nodeInd(nodeInd)
 {
 
 }
 
 Virus::Virus(const Virus& other):
-Agent(other.session),nodeInd(other.nodeInd)
+Agent(),nodeInd(other.nodeInd)
 {
 
 }
 
-void Virus::act()
+void Virus::act(Session& session)
 {
 
 }

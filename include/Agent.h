@@ -2,35 +2,36 @@
 #define AGENT_H_
 
 #include <vector>
-#include "Session.h"
+#include "Session.h" //added
 
 class Agent{
 public:
-    Agent(Session& session);
+    Agent();
+    virtual void act(Session& session)=0;
+    //added
     virtual Agent * clone() const = 0;
-    virtual void act()=0;
     virtual ~Agent();
-protected:
-    Session& session;
+    //
 };
+
 
 class ContactTracer: public Agent{
 public:
-    ContactTracer(Session& session);
-    virtual void act();
-    Agent *clone() const;
+    ContactTracer();
+    virtual void act(Session& session);
+    Agent *clone() const; //added
 };
 
 
 class Virus: public Agent{
 public:
-    Virus(int nodeInd, Session& session);
-    Virus(const Virus& other);
-    virtual void act();
+    Virus(int nodeInd);
+    virtual void act(Session& session);
+    Virus(const Virus& other); //added
+
 private:
     const int nodeInd;
-
-    Agent *clone() const;
+    Agent *clone() const; //added
 };
 
 #endif
