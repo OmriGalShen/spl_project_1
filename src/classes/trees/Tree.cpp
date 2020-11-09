@@ -14,7 +14,8 @@ Tree::Tree(const Tree &other):node(other.node),children(other.children) {}
 
 Tree::~Tree()
 {
-
+    for(auto* child:children)
+        delete child;
 }
 
 Tree* Tree::createTree(const Session& session, int rootLabel)
