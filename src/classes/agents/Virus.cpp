@@ -1,12 +1,12 @@
 #include "../../../include/Agent.h"
 
-Virus::Virus(int nodeInd): Agent(),nodeInd(nodeInd)
+Virus::Virus(int nodeInd): nodeInd(nodeInd)
 {
 
 }
 
 Virus::Virus(const Virus& other):
-Agent(),nodeInd(other.nodeInd)
+nodeInd(other.nodeInd)
 {
 
 }
@@ -19,7 +19,7 @@ void Virus::act(Session& session)
     bool found = false;
     if(! vec.empty())
     {
-        for(int i=0; !found && i<vec.size(); i++)
+        for(int i=0,len=vec.size(); !found && i<len; i++)
         {
             if(! g.isInfected(vec[i]))
             {

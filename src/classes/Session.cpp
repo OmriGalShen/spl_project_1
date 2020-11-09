@@ -45,7 +45,7 @@ void Session::simulate()
     enqueueInfected(0);
 //    enqueueInfected(2);
 //    enqueueInfected(5);
-    agents[1]->act();
+    agents[1]->act((*this));
 //    cycleCount = 2;
     Tree* tree_ptr = BFS(0);
 //    cout << "trace node: " << (*tree_ptr).traceTree() << endl;
