@@ -6,7 +6,7 @@ all: cTrace
 cTrace: bin/main.o bin/Agent.o bin/ContactTracer.o bin/Virus.o bin/CycleTree.o bin/MaxRankTree.o bin/RootTree.o bin/Tree.o bin/Graph.o bin/Session.o
 	@echo 'Building target: cTrace'
 	@echo 'Invoking: C++ Linker'
-	g++ -o bin/cTrace bin/main.o bin/Aget.o bin/ContactTracer.o bin/Virus.o bin/CycleTree.o bin/MaxRankTree.o bin/RootTree.o bin/Tree.o bin/Graph.o bin/Session.o
+	g++ -o bin/cTrace bin/main.o bin/Agent.o bin/ContactTracer.o bin/Virus.o bin/CycleTree.o bin/MaxRankTree.o bin/RootTree.o bin/Tree.o bin/Graph.o bin/Session.o
 	@echo 'Finished building target: cTrace'
 	@echo ' '
 
