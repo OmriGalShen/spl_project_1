@@ -33,6 +33,11 @@ void Tree::addChild(const Tree& child)
     children.push_back(clone);
 }
 
+void Tree::addChild(Tree* child)
+{
+    children.push_back(child);
+}
+
 Tree* Tree::getRightChild()
 {
     return children.back();

@@ -13,6 +13,7 @@ public:
     virtual int traceTree()=0;
     //added
     Tree(const Tree& other);
+    void addChild(Tree* child);
     virtual ~Tree(); //added destructor
     Tree* getRightChild();
     int getNodeInd();

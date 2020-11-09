@@ -45,10 +45,10 @@ void Session::simulate()
     enqueueInfected(0);
 //    enqueueInfected(2);
 //    enqueueInfected(5);
-    agents[1]->act((*this));
+//    agents[1]->act((*this));
 //    cycleCount = 2;
     Tree* tree_ptr = BFS(0);
-//    cout << "trace node: " << (*tree_ptr).traceTree() << endl;
+    cout << "trace node: " << (*tree_ptr).traceTree() << endl;
     cout<< "In simulate!" << endl;
     create_json_output();
 }
@@ -115,9 +115,9 @@ Tree* Session::BFS(int rootLabel)
             if(!visitedNode[neighbourInd])
             {
                 Tree* newTree = Tree::createTree((*this),neighbourInd);
-                treeNode->addChild((*newTree));
+                treeNode->addChild(newTree);
                 cout <<" "<< newTree->getNodeInd() <<" ";
-                greyQueue.push_back(treeNode->getRightChild());
+                greyQueue.push_back(newTree);
                 visitedNode[neighbourInd] = true;
             }
         }
