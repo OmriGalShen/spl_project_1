@@ -21,6 +21,7 @@ public:
     std::deque<int>* getInfectedCopy();
     void removeNode(int node);
     void printGraph();
+
     //
 
 private:

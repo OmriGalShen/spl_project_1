@@ -89,6 +89,11 @@ int Session::getCycle() const
     return cycleCount;
 }
 
+Graph Session::getGraph() const
+{
+    return g;
+}
+
 void Session::removeNode(int node) {g.removeNode(node);}
 
 Tree* Session::BFS(int rootLabel)
@@ -150,12 +155,12 @@ void Session::add_agents_from_json(const json& inputJson)
         auto agent_index = agent.at(1); // the node index of the agent
         if(agent_type == "C") // Agent is contact tracer
         {
-            const Agent* contact_ptr = new ContactTracer((*this));
+            const Agent* contact_ptr = new ContactTracer();
             this->addAgent((*contact_ptr));
         }
         else if(agent_type == "V") // Agent is virus
         {
-            const Agent* virus_ptr = new Virus(agent_index,(*this));
+            const Agent* virus_ptr = new Virus(agent_index);
             this->addAgent((*virus_ptr));
         }
     }

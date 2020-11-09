@@ -33,6 +33,7 @@ public:
     Tree* BFS(int rootLabel);
     int getCycle() const;
     void removeNode(int node);
+    Graph getGraph() const; // Eden
     //
     
 private:
