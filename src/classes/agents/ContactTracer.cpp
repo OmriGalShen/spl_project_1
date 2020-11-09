@@ -9,9 +9,13 @@ ContactTracer::ContactTracer(): Agent()
 void ContactTracer::act(Session& session)
 {
     int infectedNode = session.dequeueInfected();
-    Tree* shortPathTree = session.BFS(infectedNode);
-    int nodeToRemove = shortPathTree->traceTree();
-    session.removeNode(nodeToRemove);
+    if(infectedNode>0)
+    {
+        Tree *shortPathTree = session.BFS(infectedNode);
+        int nodeToRemove = shortPathTree->traceTree();
+        delete shortPathTree;
+        session.removeNode(nodeToRemove);
+    }
 }
 
 Agent * ContactTracer::clone()  const
