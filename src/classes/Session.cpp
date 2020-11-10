@@ -36,12 +36,16 @@ void Session::simulate()
     bool terminateCycle = false;// true when terminate conditions are fulfilled
     while(!terminateCycle) //cycle loop
     {
+        size_t tempAgentsSize = agents.size();
         cycleCount++; // update counter for cycle
         for(Agent* agent : agents)
             agent->act((*this));
         g.printGraph();
         if(cycleCount==2)
+
             terminateCycle=true;
+//        if(g.isInfectedEmpty()&&tempAgentsSize==agents.size())
+//            terminateCycle=true;
     }
     // Print input info to console
 //    cout << "Agents list:" << endl;

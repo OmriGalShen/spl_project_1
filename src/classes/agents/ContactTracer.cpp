@@ -14,6 +14,7 @@ void ContactTracer::act(Session& session)
     {
         Tree *shortPathTree = session.BFS(infectedNode);
         int nodeToRemove = shortPathTree->traceTree();
+        std::cout << "node to remove "<< nodeToRemove << std::endl;
         delete shortPathTree;
         //session.removeNode(nodeToRemove); //change to g.
     }

@@ -36,7 +36,10 @@ void Graph::printGraph()
 void Graph::infectNode(int nodeInd)
 {
     if(!isInfected(nodeInd))
+    {
+        std::cout << "infecting node" << nodeInd << std::endl;
         infectedQueue.push_back(nodeInd);
+    }
 }
 
 int Graph::dequeueInfected()
@@ -91,14 +94,16 @@ std::deque<int>* Graph::getInfectedCopy()
 void Graph::removeNode(int node)
 {
 //    std::cout << "IN removeNode:"<< node << std::endl;
+//    std::cout << "row:"<< edges.size() << std::endl;
+//    std::cout << "col:"<< edges[0].size() << std::endl;
     //using size_t to compare with .size() without warnings
     size_t tNode = node;
     if(tNode>=0 && tNode<edges.size()) // to verify that the input is valid
     {
         for(int row=0,len=edges.size();row<len;row++)
             edges[row][node]=0;
-        for(int col=0,len=edges.size();col<len;col++)
-            edges[node][col]=0;
+        for(auto col: edges[node])
+            col = 0;
     }
 //    printGraph();
 }

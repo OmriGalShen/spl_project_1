@@ -15,8 +15,10 @@ nodeInd(other.nodeInd)
 void Virus::act(Session& session)
 {
     Graph g = session.getGraph();
+
     g.infectNode(nodeInd);
     std::cout<<"virus-act "<<nodeInd<<std::endl;
+
     std::vector<int> vec = g.getNeighbours(nodeInd);
     bool found = false;
     if(! vec.empty())
@@ -31,6 +33,7 @@ void Virus::act(Session& session)
             }
         }
     }
+    session.enqueueInfected(nodeInd);
 }
 
 Agent * Virus::clone() const
