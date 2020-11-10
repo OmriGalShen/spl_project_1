@@ -1,4 +1,5 @@
 #include "../../../include/Agent.h"
+#include "iostream"
 
 Virus::Virus(int nodeInd): nodeInd(nodeInd)
 {
@@ -14,7 +15,8 @@ nodeInd(other.nodeInd)
 void Virus::act(Session& session)
 {
     Graph g = session.getGraph();
-    g.infectNode(nodeInd);
+//    g.infectNode(nodeInd);
+    std::cout << "node to infect " << nodeInd << std::endl;
     std::vector<int> vec = g.getNeighbours(nodeInd);
     bool found = false;
     if(! vec.empty())
@@ -29,6 +31,7 @@ void Virus::act(Session& session)
             }
         }
     }
+    session.enqueueInfected(nodeInd);
 }
 
 Agent * Virus::clone() const
