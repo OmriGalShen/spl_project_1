@@ -16,7 +16,7 @@ public:
     std::vector<std::vector<int>> * getEdgesCopy();
     std::vector<int> getNeighbours(int nodeInd) const;
     unsigned int getVerticesCount() const;
-    void removeEdge(int firstNode, int secondNode);
+    void removeEdge(int firstNode, int secondNode); // what is this for? - Eden
     int dequeueInfected();
     std::deque<int>* getInfectedCopy();
     void removeNode(int node);
