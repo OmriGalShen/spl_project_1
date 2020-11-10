@@ -8,7 +8,7 @@
 using namespace std;
 
 
-Session::Session(const std::string& path)
+Session::Session(const std::string& path) // constructor
 :g(),treeType(Root),agents(std::vector<Agent*>()),cycleCount(0)
 {
     //get json file by location given as argument
@@ -21,7 +21,7 @@ Session::Session(const std::string& path)
     treeType = get_tree_type(inputJson);
 }
 
-Session::Session(const Session& other)
+Session::Session(const Session& other) //copy constructor
 :g(other.g),treeType(other.treeType),agents(std::vector<Agent*>()),cycleCount(0)
 {
     for(auto agent : other.agents)
@@ -29,6 +29,34 @@ Session::Session(const Session& other)
         Agent* agentClone = agent->clone();
         agents.push_back(agentClone);
     }
+}
+
+Session::~Session() //destructor
+{
+    clean();
+}
+
+void Session::clean() // used by move assignment+destructor
+{
+    for(auto* agent:agents)
+        delete agent;
+    agents.clear();
+}
+
+Session::Session(Session&& other)://move constructor
+g(other.g),treeType(other.treeType),agents(std::move(other.agents)),cycleCount(other.cycleCount)
+{}
+
+Session& Session::operator=(Session& other)// move assignment
+{
+    if(this != &other)
+    {
+        this->clean();
+        g = other.g;
+        treeType = other.treeType;
+        agents = std::move(other.agents);
+    }
+    return (*this);
 }
 
 void Session::simulate()
@@ -65,13 +93,6 @@ void Session::simulate()
 //    cout << "trace node: " << (*tree_ptr).traceTree() << endl;
     cout<< "In simulate!" << endl;
     create_json_output();
-}
-
-Session::~Session()
-{
-    for(auto* agent: agents)
-        delete agent;
-    agents.clear();
 }
 
 void Session:: addAgent(const Agent& agent)

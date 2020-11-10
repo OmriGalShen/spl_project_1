@@ -28,10 +28,14 @@ public:
     int dequeueInfected();
     TreeType getTreeType() const;
     //added
-    Session(const Session& other);
-    virtual ~Session();
-    Tree* BFS(int rootLabel);
-    int getCycle() const;
+    Session& operator=(const Session& other); //Copy assignment operator
+    Session(const Session& other); // Copy constructor
+    Session(Session&& other); //move constructor
+    Session& operator=(Session& other); // move assignment
+    void clean(); // used by move assignment+destructor
+    virtual ~Session(); // destructor
+    Tree* BFS(int rootLabel); // Create BFS tree based on given node the graph in session
+    int getCycle() const; // getter for private member cycleCount
     Graph getGraph() const; // Eden
     //
     

@@ -2,22 +2,21 @@
 #include "iostream"
 
 
-Graph::Graph():
+Graph::Graph(): //empty constructor
 edges(std::vector<std::vector<int>> ()),
 infectedQueue(std::deque<int>())
 {}
 
-Graph::Graph(std::vector<std::vector<int>> matrix):
+Graph::Graph(std::vector<std::vector<int>> matrix): //constructor
 edges(matrix),
 infectedQueue(std::deque<int>())
-{
-    printGraph();
-}
+{}
 
-Graph::Graph(const Graph &other)
+
+Graph::Graph(const Graph &other) // copy constructor
 :edges(other.edges),infectedQueue(other.infectedQueue)
-{
-}
+{}
+
 
 void Graph::printGraph()
 {

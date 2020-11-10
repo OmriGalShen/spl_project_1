@@ -4,19 +4,38 @@
 
 using namespace std;
 
-Tree::Tree(int rootLabel)
-:node(rootLabel),children(std::vector<Tree*>())
-{
+Tree::Tree(int rootLabel):// Constructor
+node(rootLabel),children(std::vector<Tree*>()){}
 
-}
+Tree::Tree(const Tree &other): // Copy constructor
+node(other.node),children(other.children) {}
 
-Tree::Tree(const Tree &other):node(other.node),children(other.children) {}
-
-Tree::~Tree()
+void Tree::clean() // used by move assignment+destructor
 {
     for(auto* child:children)
-        delete child;
+         delete child;
     children.clear();
+    node=-1;
+}
+
+Tree::~Tree() // destructor
+{
+    clean();
+}
+
+Tree::Tree(Tree&& other)://move constructor
+node(other.node),children(std::move(other.children))
+{}
+
+Tree& Tree::operator=(Tree& other)// move assignment
+{
+    if(this != &other)
+    {
+        this->clean();
+        node = other.node;
+        children = std::move(other.children);
+    }
+    return (*this);
 }
 
 Tree* Tree::createTree(const Session& session, int rootLabel)
