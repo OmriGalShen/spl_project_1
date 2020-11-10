@@ -36,16 +36,16 @@ void Session::simulate()
     bool terminateCycle = false;// true when terminate conditions are fulfilled
     while(!terminateCycle) //cycle loop
     {
-        size_t tempAgentsSize = agents.size();
+        int tempAgentsSize = agents.size();
         cycleCount++; // update counter for cycle
-        for(Agent* agent : agents)
-            agent->act((*this));
+        for(int i=0; i<tempAgentsSize; i++) //need to fix?
+            agents[i]->act((*this));
         g.printGraph();
-        if(cycleCount==2)
-
-            terminateCycle=true;
-//        if(g.isInfectedEmpty()&&tempAgentsSize==agents.size())
+//        if(cycleCount==2)         //testing
+//
 //            terminateCycle=true;
+        if(tempAgentsSize==int(agents.size()))
+            terminateCycle=true;
     }
     // Print input info to console
 //    cout << "Agents list:" << endl;
@@ -56,13 +56,6 @@ void Session::simulate()
 //        else
 //            cout << "This is a Virus" << endl;
 //    }
-//    enqueueInfected(0);
-//    enqueueInfected(2);
-//    enqueueInfected(5);
-//    agents[1]->act((*this));
-//    cycleCount = 2;
-//    Tree* tree_ptr = BFS(0);
-//    cout << "trace node: " << (*tree_ptr).traceTree() << endl;
     cout<< "In simulate!" << endl;
     create_json_output();
 }
