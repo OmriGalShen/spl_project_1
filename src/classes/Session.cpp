@@ -47,7 +47,7 @@ Session::Session(Session&& other)://move constructor
 g(other.g),treeType(other.treeType),agents(std::move(other.agents)),cycleCount(other.cycleCount)
 {}
 
-Session& Session::operator=(Session& other)// move assignment
+Session& Session::operator=(Session&& other)// move assignment
 {
     if(this != &other)
     {
@@ -55,6 +55,22 @@ Session& Session::operator=(Session& other)// move assignment
         g = other.g;
         treeType = other.treeType;
         agents = std::move(other.agents);
+    }
+    return (*this);
+}
+
+Session& Session::operator=(Session& other)// copy assignment
+{
+    if(this != &other)
+    {
+        g = other.g;
+        treeType = other.treeType;
+        cycleCount = other.cycleCount;
+        for(auto agent : other.agents)
+        {
+            Agent* agentClone = agent->clone();
+            agents.push_back(agentClone);
+        }
     }
     return (*this);
 }

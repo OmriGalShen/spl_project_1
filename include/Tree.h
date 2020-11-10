@@ -15,6 +15,7 @@ public:
     Tree& operator=(const Tree& other); //Copy assignment operator
     Tree(const Tree& other); // Copy constructor
     Tree(Tree&& other); //move constructor
+    Tree& operator=(Tree&& other); // move assignment
     Tree& operator=(Tree& other); // move assignment
     void clean(); // used by move assignment+destructor
     virtual ~Tree(); // destructor

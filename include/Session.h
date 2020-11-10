@@ -31,7 +31,8 @@ public:
     Session& operator=(const Session& other); //Copy assignment operator
     Session(const Session& other); // Copy constructor
     Session(Session&& other); //move constructor
-    Session& operator=(Session& other); // move assignment
+    Session& operator=(Session&& other); // move assignment
+    Session& operator=(Session& other); // copy assignment
     void clean(); // used by move assignment+destructor
     virtual ~Session(); // destructor
     Tree* BFS(int rootLabel); // Create BFS tree based on given node the graph in session

@@ -27,13 +27,23 @@ Tree::Tree(Tree&& other)://move constructor
 node(other.node),children(std::move(other.children))
 {}
 
-Tree& Tree::operator=(Tree& other)// move assignment
+Tree& Tree::operator=(Tree&& other)// move assignment
 {
     if(this != &other)
     {
         this->clean();
         node = other.node;
         children = std::move(other.children);
+    }
+    return (*this);
+}
+
+Tree& Tree::operator=(Tree& other)// copy assignment
+{
+    if(this != &other)
+    {
+        node = other.node;
+        children = other.children;
     }
     return (*this);
 }
