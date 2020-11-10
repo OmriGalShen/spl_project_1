@@ -67,6 +67,7 @@ Session::~Session()
 {
     for(auto* agent: agents)
         delete agent;
+    agents.clear();
 }
 
 void Session:: addAgent(const Agent& agent)

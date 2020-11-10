@@ -16,6 +16,7 @@ Tree::~Tree()
 {
     for(auto* child:children)
         delete child;
+    children.clear();
 }
 
 Tree* Tree::createTree(const Session& session, int rootLabel)
