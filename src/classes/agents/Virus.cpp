@@ -29,7 +29,6 @@ void Virus::act(Session& session)
             }
         }
     }
-    session.enqueueInfected(nodeInd);// virus infect current node
 }
 
 Agent * Virus::clone() const
