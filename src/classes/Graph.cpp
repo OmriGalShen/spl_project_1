@@ -32,10 +32,6 @@ void Graph::printGraph()
     }
 }
 
-bool Graph::isInfectedEmpty()
-{
-    return infectedQueue.empty();
-}
 
 void Graph::infectNode(int nodeInd)
 {
@@ -90,24 +86,14 @@ std::deque<int>* Graph::getInfectedCopy()
     return new std::deque<int>(infectedQueue);
 }
 
-void Graph::removeEdge(int firstNode, int secondNode)
-{
-    //using size_t to compare with .size() without warnings
-    size_t node1 = firstNode;
-    size_t node2 = secondNode;
-    if(node1>=0 && node1<edges.size() && node2>=0 && node2<edges.size())
-    {
-        edges[firstNode][secondNode] = 0;
-        edges[secondNode][firstNode] = 0;
-    }
-}
+
 
 void Graph::removeNode(int node)
 {
 //    std::cout << "IN removeNode:"<< node << std::endl;
     //using size_t to compare with .size() without warnings
     size_t tNode = node;
-    if(tNode>=0 && tNode<edges.size()) //why do we need the second condition?
+    if(tNode>=0 && tNode<edges.size()) // to verify that the input is valid
     {
         for(int row=0,len=edges.size();row<len;row++)
             edges[row][node]=0;

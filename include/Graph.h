@@ -11,12 +11,11 @@ public:
     bool isInfected(int nodeInd);
     //added
     Graph();
-    bool isInfectedEmpty();
+    //bool isInfectedEmpty();  //why? ew use infectedQueue.empty anyway - Eden
     Graph(const Graph& other);
     std::vector<std::vector<int>> * getEdgesCopy();
     std::vector<int> getNeighbours(int nodeInd) const;
     unsigned int getVerticesCount() const;
-    void removeEdge(int firstNode, int secondNode); // what is this for? - Eden
     int dequeueInfected();
     std::deque<int>* getInfectedCopy();
     void removeNode(int node);

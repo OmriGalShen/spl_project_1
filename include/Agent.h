@@ -27,7 +27,7 @@ class Virus: public Agent{
 public:
     Virus(int nodeInd);
     virtual void act(Session& session);
-    Virus(const Virus& other); //added
+    Virus(const Virus& other); //added          copy constructor
 
 private:
     const int nodeInd;

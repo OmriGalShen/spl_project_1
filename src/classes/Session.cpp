@@ -39,7 +39,7 @@ void Session::simulate()
         cycleCount++; // update counter for cycle
         for(Agent* agent : agents)
             agent->act((*this));
-//        terminateCycle = g.isInfectedEmpty();
+        g.printGraph();
         if(cycleCount==2)
             terminateCycle=true;
     }
@@ -103,7 +103,6 @@ Graph Session::getGraph() const
     return g;
 }
 
-void Session::removeNode(int node) {g.removeNode(node);}
 
 Tree* Session::BFS(int rootLabel)
 {
