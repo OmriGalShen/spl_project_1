@@ -8,7 +8,7 @@ ContactTracer::ContactTracer(): Agent()
 
 void ContactTracer::act(Session& session)
 {
-    //add getter
+    Graph g = session.getGraph();
     int infectedNode = session.dequeueInfected();
     if(infectedNode>=0)
     {
@@ -16,7 +16,7 @@ void ContactTracer::act(Session& session)
         int nodeToRemove = shortPathTree->traceTree();
         std::cout << "node to remove "<< nodeToRemove << std::endl;
         delete shortPathTree;
-        //session.removeNode(nodeToRemove); //change to g.
+        g.removeNode(nodeToRemove);
     }
 }
 

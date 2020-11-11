@@ -11,7 +11,6 @@ public:
     bool isInfected(int nodeInd);
     //added
     Graph();
-    //bool isInfectedEmpty();  //why? ew use infectedQueue.empty anyway - Eden
     Graph(const Graph& other);
     std::vector<std::vector<int>> * getEdgesCopy();
     std::vector<int> getNeighbours(int nodeInd) const;
