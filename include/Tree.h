@@ -7,16 +7,21 @@ class Session;
 
 class Tree{
 public:
-    Tree(int rootLabel);
+    Tree(int rootLabel); // Constructor
     void addChild(const Tree& child);
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree()=0;
     //added
-    Tree(const Tree& other);
+    Tree& operator=(const Tree& other); //Copy assignment operator
+    Tree(const Tree& other); // Copy constructor
+    Tree(Tree&& other); //move constructor
+    Tree& operator=(Tree&& other); // move assignment
+    Tree& operator=(Tree& other); // move assignment
+    void clean(); // used by move assignment+destructor
+    virtual ~Tree(); // destructor
     void addChild(Tree* child);
-    virtual ~Tree(); //added destructor
     Tree* getRightChild();
-    int getNodeInd();
+    int getNodeInd(); // getter for private member node
     virtual Tree * clone() const=0;
     bool hasChildren() const;
     Tree* getLeftChild();
