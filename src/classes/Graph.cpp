@@ -18,7 +18,7 @@ Graph::Graph(std::vector<std::vector<int>> matrix): //constructor
 
 Graph::Graph(const Graph &other): // copy constructor
     edges(other.edges),
-    infectedNodes()   // not other.infectedNodes
+    infectedNodes(other.infectedNodes)
 {}
 
 
@@ -31,10 +31,6 @@ std::vector<int> Graph::getInfectedNodes()
     return infectedNodes;
 }
 
-//std::vector<std::vector<int>>* Graph::getEdgesCopy()
-//{
-//    return new std::vector<std::vector<int>>(edges);
-//}
 
 
 
@@ -60,7 +56,7 @@ std::vector<int> Graph::getNeighbours(int nodeInd) const
 void Graph::infectNode(int nodeInd)
 {
     if(! isInfected(nodeInd))
-        infectedNodes.push_back(nodeInd);
+        setInfected(nodeInd);
 }
 
 
@@ -75,13 +71,17 @@ void Graph::setEdges(int row, int col, int num)
     edges[row][col] = num;
 }
 
-
+void Graph::setInfected(int node)
+{
+    infectedNodes.push_back(node);
+}
 
 bool Graph::isInfected(int nodeInd)
 {
-    for(int currNode: infectedNodes)
+    int size = infectedNodes.size();
+    for(int i=0; i<size; i++)
     {
-        if(currNode == nodeInd)
+        if(infectedNodes[i] == nodeInd)
             return true;
     }
     return false;

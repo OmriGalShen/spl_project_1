@@ -42,6 +42,7 @@ Tree& Tree::operator=(Tree& other)// copy assignment
 {
     if(this != &other)
     {
+        this->clean();
         node = other.node;
         children = other.children;
     }
@@ -51,9 +52,9 @@ Tree& Tree::operator=(Tree& other)// copy assignment
 Tree* Tree::createTree(const Session& session, int rootLabel)
 {
     TreeType treeType = session.getTreeType();
-    if(treeType==Root)
+    if(treeType == Root)
         return new RootTree(rootLabel);
-    else if(treeType==MaxRank)
+    else if(treeType == MaxRank)
         return new MaxRankTree(rootLabel);
     return new CycleTree(rootLabel,session.getCycle());
 }

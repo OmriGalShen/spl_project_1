@@ -11,12 +11,15 @@ void Virus::act(Session& session)
 {
     Graph g = session.getGraph();
     std::cout<<"virus act-nodeInd = "<<nodeInd<<std::endl;
-    session.enqueueInfected(nodeInd);
     //std::cout<<"virus-act "<<nodeInd<<std::endl;
     std::vector<int> vec = g.getNeighbours(nodeInd);
     int vecSize = vec.size();
     //std::cout<<"num of nei "<<vecSize<<std::endl;
     bool found = false;
+    int size = g.getInfectedNodes().size();
+    std::cout<<"infected nodes:"<<std::endl;
+    for (int i=0; i<size; i++)
+        std::cout<<g.getInfectedNodes()[i]<<std::endl;
     if(! vec.empty())
     {
         for(int i=0; !found && i<vecSize; i++)
@@ -30,6 +33,7 @@ void Virus::act(Session& session)
             }
         }
     }
+    session.enqueueInfected(nodeInd);
 }
 
 Agent * Virus::clone() const

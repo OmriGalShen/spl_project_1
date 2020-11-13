@@ -58,7 +58,7 @@ Session::Session(const Session& other): //copy constructor
     treeType(other.treeType),
     agents(),
     infectedQueue(other.infectedQueue),   //other.infectedQueue? - Eden
-    cycleCount(0) //should it be other.cycleCount? - Eden
+    cycleCount(other.cycleCount) //should it be other.cycleCount? - Eden
 {
     for(auto agent : other.agents)
     {
@@ -95,6 +95,7 @@ Session& Session::operator=(Session& other)// copy assignment
 {
     if(this != &other)
     {
+        this->clean();
         g = other.g;
         treeType = other.treeType;
         cycleCount = other.cycleCount;
@@ -159,21 +160,24 @@ void Session::simulate()
             cout << "agent in action!" <<endl;
             agents[i]->act((*this));
         }
-        if (cycleCount == 4)         //testing
+        if (cycleCount == 4) {  //testing
             terminateCycle = true;
+            cout << "agents list" <<endl;
+        }
+
 //        int newAgentsSize = agents.size();
 //        if (tempAgentsSize == newAgentsSize)
 //            terminateCycle = true;
     }
     // Print input info to console
     //cout << "Agents list:" << endl;
-//    for(auto& agent: agents)
-//    {
-//        if(typeid(agent) == typeid(ContactTracer))
-//            cout << "This is a Contact Tracer" <<endl;
-//        else
-//            cout << "This is a Virus" << endl;
-//    }
+    for(auto& agent: agents)
+    {
+        if(typeid(agent) == typeid(ContactTracer))
+            cout << "This is a Contact Tracer" <<endl;
+        else
+            cout << "This is a Virus" << endl;
+    }
     cout<< "In simulate!" << endl;
     jsonOutput();
 }
