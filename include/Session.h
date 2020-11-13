@@ -53,7 +53,7 @@ private:
     TreeType treeType;
     std::vector<Agent*> agents;
     //added
-    std::deque<int> infectedQueue; // Eden
+    std::deque<int> infectedQueue;
     int cycleCount;
     //
 };

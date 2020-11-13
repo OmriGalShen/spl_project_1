@@ -8,13 +8,13 @@
 
 Graph::Graph(): //empty constructor
     edges(),
-    infectedQueue(),
+    //infectedQueue(),
     infectedNodes()
 {}
 
 Graph::Graph(std::vector<std::vector<int>> matrix): //constructor
     edges(matrix),
-    infectedQueue(),
+    //infectedQueue(),
     infectedNodes()
 {}
 
@@ -57,20 +57,16 @@ std::vector<int> Graph::getNeighbours(int nodeInd) const
 }
 
 
-std::deque<int> Graph::getInfectedQueue()
-{
-    return infectedQueue;
-}
+//std::deque<int> Graph::getInfectedQueue()
+//{
+//    return infectedQueue;
+//}
 
 
 void Graph::infectNode(int nodeInd)
 {
     if(!isInfected(nodeInd))
-    {
-        //std::cout << "infecting node" << nodeInd << std::endl;
-      infectedQueue.push_back(nodeInd);
-      infectedNodes.push_back(nodeInd);
-    }
+        infectedNodes.push_back(nodeInd);
 }
 
 

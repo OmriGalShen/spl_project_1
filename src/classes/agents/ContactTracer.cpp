@@ -1,10 +1,8 @@
 #include "../../../include/Agent.h"
 #include "iostream"
 
-ContactTracer::ContactTracer(): Agent()
-{
-
-}
+ContactTracer::ContactTracer(): Agent() //what does Agent() mean? does virus need it too? - Eden
+{}
 
 void ContactTracer::act(Session& session)
 {
@@ -12,7 +10,7 @@ void ContactTracer::act(Session& session)
     int infectedNode = session.dequeueInfected();
     if(infectedNode>=0)
     {
-        Tree *shortPathTree = session.BFS(infectedNode);
+        Tree * shortPathTree = session.BFS(infectedNode);
         int nodeToRemove = shortPathTree->traceTree();
         std::cout << "node to remove "<< nodeToRemove << std::endl;
         delete shortPathTree;
@@ -20,7 +18,7 @@ void ContactTracer::act(Session& session)
     }
 }
 
-Agent * ContactTracer::clone()  const
+Agent * ContactTracer::clone() const
 {
-    return new ContactTracer(*this);
+    return new ContactTracer(* this);
 }

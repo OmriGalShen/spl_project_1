@@ -19,6 +19,7 @@ Session::Session(const std::string& path): // constructor
     g(),
     treeType(),
     agents(),
+    infectedQueue(),
     cycleCount(0)
 {
     ifstream readFile(path);
@@ -48,7 +49,7 @@ void Session::setGraph(const Graph &graph)
 
 void Session::addAgent(const Agent& agent)
 {
-    Agent *clone = agent.clone();
+    Agent * clone = agent.clone();
     agents.push_back(clone);
 }
 
@@ -56,9 +57,10 @@ void Session::addAgent(const Agent& agent)
 //    g(other.g),
 //    treeType(other.treeType),
 //    agents(std::vector<Agent*>()),
+//    infectedQueue(),   //other.infectedQueue? - Eden
 //    cycleCount(0), //should it be other.cycleCount? - Eden
 //{
-//    for(auto agent : other.agents)           //why? - Eden
+//    for(auto agent : other.agents)
 //    {
 //        Agent* agentClone = agent->clone();
 //        agents.push_back(agentClone);
@@ -70,6 +72,7 @@ void Session::addAgent(const Agent& agent)
 //        g(other.g),
 //        treeType(other.treeType),
 //        agents(std::move(other.agents)),
+//        infectedQueue(),   //other.infectedQueue? - Eden
 //        cycleCount(other.cycleCount),
 //{}
 //
@@ -82,7 +85,7 @@ void Session::addAgent(const Agent& agent)
 //
 //void Session::clean() // used by move assignment+destructor
 //{
-//    for(auto* agent:agents)
+//    for(auto * agent:agents)
 //        delete agent;
 //    agents.clear();
 //}
@@ -116,21 +119,22 @@ void Session::addAgent(const Agent& agent)
 //    }
 //    return (*this);
 //}
-//
-//
-//void Session::simulate()
-//{
-//    bool terminateCycle = false;// true when terminate conditions are fulfilled
-//    while(!terminateCycle) //cycle loop
-//    {
-//        int tempAgentsSize = agents.size();
-//        cycleCount++; // update counter for cycle
-//        for(int i=0; i<tempAgentsSize; i++) //need to fix?
-//            agents[i]->act((*this));
+
+
+
+void Session::simulate()
+{
+    bool terminateCycle = false;// true when terminate conditions are fulfilled
+    while(! terminateCycle) //cycle loop
+    {
+        int tempAgentsSize = agents.size();
+        cycleCount++; // update counter for cycle
+        for(int i=0; i<tempAgentsSize; i++)
+            agents[i]->act((*this));
 //        if(cycleCount==2)         //testing
 //            terminateCycle=true;
-//        if(tempAgentsSize==int(agents.size()))
-//            terminateCycle=true;
+        if(tempAgentsSize == int(agents.size()))
+            terminateCycle=true;
 //    // Print input info to console
 //    cout << "Agents list:" << endl;
 //    for(auto& agent: agents)
@@ -138,10 +142,10 @@ void Session::addAgent(const Agent& agent)
 //            cout << "This is a Contact Tracer" <<endl;
 //        else
 //            cout << "This is a Virus" << endl;
-//    }
-//    cout<< "In simulate!" << endl;
-//    create_json_output();
-//}
+    }
+    cout<< "In simulate!" << endl;
+    //create_json_output();
+}
 
 
 
@@ -172,16 +176,15 @@ Graph Session::getGraph() const
 
 
 
-
-
 void Session::enqueueInfected(int nodeInd)
 {
+    infectedQueue.push_back(nodeInd);
     g.infectNode(nodeInd);
 }
 
 int Session::dequeueInfected()
 {
-    if(!infectedQueue.empty())
+    if(! infectedQueue.empty())
     {
         int nodeTemp = infectedQueue.front();
         infectedQueue.pop_front();
@@ -228,7 +231,7 @@ void Session::jsonOutput()
     json output;
     output["graph"]={};
     const vector<vector<int>> matrix=g.getEdges();
-    int matSize = g.getEdges().size();
+    int matSize = matrix.size();
     for (int i=0; i<matSize; i++)
     {
         for (int j=0; j<matSize; j++)
