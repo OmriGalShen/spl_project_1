@@ -12,19 +12,17 @@ public:
     //added
     Graph();
     Graph(const Graph& other);
-    std::vector<std::vector<int>> * getEdgesCopy();
     std::vector<int> getNeighbours(int nodeInd) const;
-    unsigned int getVerticesCount() const;
-    int dequeueInfected();
-    std::deque<int>* getInfectedCopy();
-    void removeNode(int node);
-    void printGraph();
-
+    std::vector<int> getInfectedNodes();
+    std::vector<std::vector<int>> getEdges();
+    void setEdges(int row, int col, int num);
+    void setInfected(int node);
     //
 
 private:
     std::vector<std::vector<int>> edges;
-    std::deque<int> infectedQueue; //added
+    //added - Eden
+    std::vector<int> infectedNodes;
 };
 
 #endif

@@ -1,110 +1,89 @@
 #include "../../include/Graph.h"
 #include "iostream"
+#include "vector"
+
+
+//            ***constructors***
 
 
 Graph::Graph(): //empty constructor
-edges(std::vector<std::vector<int>> ()),
-infectedQueue(std::deque<int>())
+    edges(),
+    infectedNodes()
 {}
 
 Graph::Graph(std::vector<std::vector<int>> matrix): //constructor
-edges(matrix),
-infectedQueue(std::deque<int>())
+    edges(matrix),
+    infectedNodes()
+{}
+
+Graph::Graph(const Graph &other): // copy constructor
+    edges(other.edges),
+    infectedNodes(other.infectedNodes)
 {}
 
 
-Graph::Graph(const Graph &other) // copy constructor
-:edges(other.edges),infectedQueue(other.infectedQueue)
-{}
+//            ***getters***
 
 
-void Graph::printGraph()
+
+std::vector<int> Graph::getInfectedNodes()
 {
-    // Print input info to console
-    std::cout << "graph:" << std::endl;
-    for (int i = 0, r=(edges).size() ; i < r ; i++)
-    {
-        for (int j = 0, c=(edges)[i].size(); j<c; j++) {
-            std::cout << (edges)[i][j] << ' ';
-        }
-        std::cout << std::endl;
-    }
+    return infectedNodes;
 }
 
 
-void Graph::infectNode(int nodeInd)
+
+
+std::vector<int> Graph::getNeighbours(int nodeInd) const
 {
-    if(!isInfected(nodeInd))
-    {
-        std::cout << "infecting node" << nodeInd << std::endl;
-        infectedQueue.push_back(nodeInd);
-    }
-}
-
-int Graph::dequeueInfected()
-{
-    if(!infectedQueue.empty())
-    {
-        int nodeTemp = infectedQueue.front();
-        infectedQueue.pop_front();
-        return nodeTemp;
-    }
-    return -1;
-}
-
-bool Graph::isInfected(int nodeInd)
-{
-    for(int currNode : infectedQueue)
-        if(currNode == nodeInd)
-            return true;
-    return false;
-}
-
-std::vector<std::vector<int>>* Graph::getEdgesCopy() {
-    return new std::vector<std::vector<int>>(edges);
-}
-
-std::vector<int> Graph::getNeighbours(int nodeInd) const {
-    size_t rowInd = nodeInd;
+    int row = nodeInd;
+    int matSize = edges.size();
+    //std::cout << "get nei-edges.size: " << edges.size() << std::endl;
     auto neighbours = std::vector<int>();
-    if(rowInd>=0&&rowInd<edges.size())
+    if(row>=0 && row<matSize)
     {
-        for(size_t colInd=0,len=edges.size();colInd<len;colInd++)
+        for(int col=0; col<matSize; col++)
         {
-            if(edges[nodeInd][colInd]==1)
-                neighbours.push_back(colInd);
+            if(edges[row][col] == 1)
+                neighbours.push_back(col);
         }
     }
     return neighbours;
 }
 
-unsigned int Graph::getVerticesCount() const
+
+
+void Graph::infectNode(int nodeInd)
 {
-    return edges.size();
+    if(! isInfected(nodeInd))
+        setInfected(nodeInd);
 }
 
-std::deque<int>* Graph::getInfectedCopy()
+
+
+std::vector<std::vector<int>> Graph::getEdges()
 {
-    return new std::deque<int>(infectedQueue);
+    return edges;
 }
 
-
-
-void Graph::removeNode(int node)
+void Graph::setEdges(int row, int col, int num)
 {
-//    std::cout << "IN removeNode:"<< node << std::endl;
-//    std::cout << "row:"<< edges.size() << std::endl;
-//    std::cout << "col:"<< edges[0].size() << std::endl;
-    //using size_t to compare with .size() without warnings
+    edges[row][col] = num;
+}
 
-    if(node>=0 && node<int(edges.size()) // to verify that the input is valid
+void Graph::setInfected(int node)
+{
+    infectedNodes.push_back(node);
+}
+
+bool Graph::isInfected(int nodeInd)
+{
+    int size = infectedNodes.size();
+    for(int i=0; i<size; i++)
     {
-        for(auto & edge : edges)
-            edge[node]=0;
-        for(int col=0, len=edges.size(); col<len; col++)
-            edges[node][col]=0;
+        if(infectedNodes[i] == nodeInd)
+            return true;
     }
-//    printGraph();
+    return false;
 }
-
 

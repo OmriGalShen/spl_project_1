@@ -9,7 +9,7 @@ public:
     Agent();
     virtual void act(Session& session)=0;
     //added
-    virtual Agent * clone() const = 0;
+    virtual Agent *clone() const = 0;
     virtual ~Agent();
     //
 };
@@ -27,11 +27,12 @@ class Virus: public Agent{
 public:
     Virus(int nodeInd);
     virtual void act(Session& session);
-    Virus(const Virus& other); //added          copy constructor
+    //added
+    Agent *clone() const; //it was private, why? - Eden
+    Virus(const Virus& other);           //copy constructor
 
 private:
     const int nodeInd;
-    Agent *clone() const; //added
 };
 
 #endif
