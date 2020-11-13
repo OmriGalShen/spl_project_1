@@ -159,21 +159,21 @@ void Session::simulate()
             cout << "agent in action!" <<endl;
             agents[i]->act((*this));
         }
-        if (cycleCount == 2)         //testing
+        if (cycleCount == 4)         //testing
             terminateCycle = true;
-        if (tempAgentsSize == int(agents.size()))
-            terminateCycle = true;
-
+//        int newAgentsSize = agents.size();
+//        if (tempAgentsSize == newAgentsSize)
+//            terminateCycle = true;
     }
     // Print input info to console
-    cout << "Agents list:" << endl;
-    for(auto& agent: agents)
-    {
-        if(typeid(agent) == typeid(ContactTracer))
-            cout << "This is a Contact Tracer" <<endl;
-        else
-            cout << "This is a Virus" << endl;
-    }
+    //cout << "Agents list:" << endl;
+//    for(auto& agent: agents)
+//    {
+//        if(typeid(agent) == typeid(ContactTracer))
+//            cout << "This is a Contact Tracer" <<endl;
+//        else
+//            cout << "This is a Virus" << endl;
+//    }
     cout<< "In simulate!" << endl;
     jsonOutput();
 }
@@ -205,31 +205,26 @@ Graph Session::getGraph() const
 
 
 
-
-
 void Session::enqueueInfected(int nodeInd)
 {
-    infectedQueue.push_back(nodeInd);
-    g.infectNode(nodeInd);
+    if (! g.isInfected(nodeInd))
+    {
+        cout  << "push back (nodeInd): " << nodeInd << endl;  //testing
+        infectedQueue.push_back(nodeInd);
+        g.infectNode(nodeInd);
+    }
+
 }
 
 int Session::dequeueInfected()
 {
-//    if(! infectedQueue.empty())
-//    {
-//        int nodeTemp = infectedQueue.front();
-//        cout  << "dequeue (nodeTemp): " << nodeTemp << endl;
-//        infectedQueue.pop_front();
-//        cout  << "new front: " << infectedQueue.front() << endl;
-//        return nodeTemp;
-//    }
-    while(! infectedQueue.empty())
+    if(! infectedQueue.empty())
     {
         int nodeTemp = infectedQueue.front();
-        cout  << "dequeue (nodeTemp): " << nodeTemp << endl;
+        //cout  << "dequeue (nodeTemp): " << nodeTemp << endl;
         infectedQueue.pop_front();
         //cout  << "new front: " << infectedQueue.front() << endl;
-        //return nodeTemp;
+        return nodeTemp;
     }
     return -1;
 }
@@ -244,7 +239,7 @@ Tree* Session::BFS(int rootLabel)
     visitedNode[rootLabel] =true;
     std::deque<Tree*> greyQueue;
     greyQueue.push_back(curr_tree);
-    cout << "BFS tree:" << endl;
+    //cout << "BFS tree:" << endl;
     while(!greyQueue.empty())
     {
         Tree* treeNode = greyQueue.front();
