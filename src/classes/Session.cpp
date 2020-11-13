@@ -238,6 +238,10 @@ void Session::jsonOutput()
             output["graph"][i][j]=matrix[i][j];
     }
     output["infected"]={};
+    for (int i=0; i<g.getInfectedNodes().size(); i++)
+    {
+        output["infected"][i].push_back(g.getInfectedNodes()[i]);
+    }
 
     ofstream out("./output.json");
     out<<output<<endl;
