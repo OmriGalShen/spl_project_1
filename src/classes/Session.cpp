@@ -131,12 +131,12 @@ void Session::removeNode(int node)
         for(int row=0; row<matSize; row++)
         {
             g.setEdges(row, node, 0);
-            std::cout << "[row][node] num: " << g.getEdges()[row][node] << std::endl;
+            //std::cout << "[row][node] num: " << g.getEdges()[row][node] << std::endl;
         }
         for(int col=0; col<matSize; col++)
         {
             g.setEdges(node, col, 0);
-            std::cout << "[node][col] num: " << g.getEdges()[node][col] << std::endl;
+            //std::cout << "[node][col] num: " << g.getEdges()[node][col] << std::endl;
         }
 
     }
@@ -215,12 +215,21 @@ void Session::enqueueInfected(int nodeInd)
 
 int Session::dequeueInfected()
 {
-    if(! infectedQueue.empty())
+//    if(! infectedQueue.empty())
+//    {
+//        int nodeTemp = infectedQueue.front();
+//        cout  << "dequeue (nodeTemp): " << nodeTemp << endl;
+//        infectedQueue.pop_front();
+//        cout  << "new front: " << infectedQueue.front() << endl;
+//        return nodeTemp;
+//    }
+    while(! infectedQueue.empty())
     {
         int nodeTemp = infectedQueue.front();
+        cout  << "dequeue (nodeTemp): " << nodeTemp << endl;
         infectedQueue.pop_front();
-        cout  << "dequeue: " << nodeTemp << endl;
-        return nodeTemp;
+        //cout  << "new front: " << infectedQueue.front() << endl;
+        //return nodeTemp;
     }
     return -1;
 }

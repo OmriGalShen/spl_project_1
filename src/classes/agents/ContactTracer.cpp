@@ -1,7 +1,7 @@
 #include "../../../include/Agent.h"
 #include "iostream"
 
-ContactTracer::ContactTracer(): Agent() //what does Agent() mean? does virus need it too? - Eden
+ContactTracer::ContactTracer()
 {}
 
 void ContactTracer::act(Session& session)

@@ -10,12 +10,12 @@ Virus::Virus(const Virus& other): nodeInd(other.nodeInd)
 void Virus::act(Session& session)
 {
     Graph g = session.getGraph();
-    //std::cout<<"problem with g? "<<g.getEdges().size()<<std::endl;
+    std::cout<<"virus act-nodeInd = "<<nodeInd<<std::endl;
     session.enqueueInfected(nodeInd);
-    std::cout<<"virus-act "<<nodeInd<<std::endl;
+    //std::cout<<"virus-act "<<nodeInd<<std::endl;
     std::vector<int> vec = g.getNeighbours(nodeInd);
     int vecSize = vec.size();
-    std::cout<<"num of nei "<<vecSize<<std::endl;
+    //std::cout<<"num of nei "<<vecSize<<std::endl;
     bool found = false;
     if(! vec.empty())
     {
