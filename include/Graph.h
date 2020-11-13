@@ -15,8 +15,8 @@ public:
     //std::vector<std::vector<int>> * getEdgesCopy(); //what for? - Eden
     std::vector<int> getNeighbours(int nodeInd) const;
     std::vector<int> getInfectedNodes();
-    void removeNode(int node);
     std::vector<std::vector<int>> getEdges();
+    void setEdges(int row, int col, int num);
     //
 
 private:

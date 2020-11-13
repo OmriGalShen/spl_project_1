@@ -15,7 +15,7 @@ void Tree::clean() // used by move assignment+destructor
     for(auto* child:children)
          delete child;
     children.clear();
-    node=-1;
+    node = -1;
 }
 
 Tree::~Tree() // destructor

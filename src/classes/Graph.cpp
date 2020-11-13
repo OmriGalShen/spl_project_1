@@ -17,7 +17,7 @@ Graph::Graph(std::vector<std::vector<int>> matrix): //constructor
 {}
 
 Graph::Graph(const Graph &other): // copy constructor
-    edges(),
+    edges(other.edges),
     infectedNodes()   // not other.infectedNodes
 {}
 
@@ -42,6 +42,7 @@ std::vector<int> Graph::getNeighbours(int nodeInd) const
 {
     int row = nodeInd;
     int matSize = edges.size();
+    //std::cout << "get nei-edges.size: " << edges.size() << std::endl;
     auto neighbours = std::vector<int>();
     if(row>=0 && row<matSize)
     {
@@ -58,7 +59,7 @@ std::vector<int> Graph::getNeighbours(int nodeInd) const
 
 void Graph::infectNode(int nodeInd)
 {
-    if(!isInfected(nodeInd))
+    if(! isInfected(nodeInd))
         infectedNodes.push_back(nodeInd);
 }
 
@@ -69,29 +70,20 @@ std::vector<std::vector<int>> Graph::getEdges()
     return edges;
 }
 
+void Graph::setEdges(int row, int col, int num)
+{
+    edges[row][col] = num;
+}
+
 
 
 bool Graph::isInfected(int nodeInd)
 {
     for(int currNode: infectedNodes)
+    {
         if(currNode == nodeInd)
             return true;
+    }
     return false;
 }
 
-
-
-void Graph::removeNode(int node)
-{
-//   std::cout << "IN removeNode:"<< node << std::endl;
-//   std::cout << "row:"<< edges.size() << std::endl;
-//    std::cout << "col:"<< edges[0].size() << std::endl;
-    int matSize = edges.size();
-    if(node>=0 && node<matSize) // to verify that the input is valid
-    {
-        for(int row=0; row<matSize; row++)
-            edges[row][node]=0;
-        for(int col=0; col<matSize; col++)
-            edges[node][col]=0;
-    }
-}

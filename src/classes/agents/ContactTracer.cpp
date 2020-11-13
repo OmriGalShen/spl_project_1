@@ -8,13 +8,14 @@ void ContactTracer::act(Session& session)
 {
     Graph g = session.getGraph();
     int infectedNode = session.dequeueInfected();
+    std::cout<<"infected node in CT is "<<infectedNode<<std::endl;
     if(infectedNode>=0)
     {
         Tree * shortPathTree = session.BFS(infectedNode);
         int nodeToRemove = shortPathTree->traceTree();
         std::cout << "node to remove "<< nodeToRemove << std::endl;
         delete shortPathTree;
-        g.removeNode(nodeToRemove);
+        session.removeNode(nodeToRemove);
     }
 }
 

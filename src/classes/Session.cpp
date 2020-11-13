@@ -30,7 +30,7 @@ Session::Session(const std::string& path): // constructor
     if (type=="M") treeType=MaxRank;
     if (type=="C") treeType=Cycle;
     if (type=="R") treeType=Root;
-    int size = inputJson["agent"].size();
+    int size = inputJson["agents"].size();
     for (int i=0; i<size; i++)
     {
         if (inputJson["agents"][i][0]=="V")
@@ -56,8 +56,8 @@ void Session::addAgent(const Agent& agent)
 Session::Session(const Session& other): //copy constructor
     g(other.g),
     treeType(other.treeType),
-    agents(std::vector<Agent*>()),
-    infectedQueue(),   //other.infectedQueue? - Eden
+    agents(),
+    infectedQueue(other.infectedQueue),   //other.infectedQueue? - Eden
     cycleCount(0) //should it be other.cycleCount? - Eden
 {
     for(auto agent : other.agents)
@@ -72,7 +72,7 @@ Session::Session(Session&& other)://move constructor
         g(other.g),
         treeType(other.treeType),
         agents(std::move(other.agents)),
-        infectedQueue(),   //other.infectedQueue? - Eden
+        infectedQueue(other.infectedQueue),   //other.infectedQueue? - Eden
         cycleCount(other.cycleCount)
 {}
 
@@ -122,26 +122,57 @@ Session& Session::operator=(Session&& other)// move assignment
 
 
 
+void Session::removeNode(int node)
+{
+    int matSize = g.getEdges().size();
+    if(node>=0 && node<matSize) // to verify that the input is valid
+    {
+        //std::cout << "IN THE LOOP" << std::endl;
+        for(int row=0; row<matSize; row++)
+        {
+            g.setEdges(row, node, 0);
+            std::cout << "[row][node] num: " << g.getEdges()[row][node] << std::endl;
+        }
+        for(int col=0; col<matSize; col++)
+        {
+            g.setEdges(node, col, 0);
+            std::cout << "[node][col] num: " << g.getEdges()[node][col] << std::endl;
+        }
+
+    }
+}
+
+
+
+
 void Session::simulate()
 {
     bool terminateCycle = false;// true when terminate conditions are fulfilled
     while(! terminateCycle) //cycle loop
     {
         int tempAgentsSize = agents.size();
+        cout << "number of agents: " << tempAgentsSize << endl;
         cycleCount++; // update counter for cycle
-        for(int i=0; i<tempAgentsSize; i++)
+        cout << "cycle number: " << cycleCount << endl;
+        for (int i = 0; i < tempAgentsSize; i++)
+        {
+            cout << "agent in action!" <<endl;
             agents[i]->act((*this));
-//        if(cycleCount==2)         //testing
-//            terminateCycle=true;
-        if(tempAgentsSize == int(agents.size()))
-            terminateCycle=true;
-//    // Print input info to console
-//    cout << "Agents list:" << endl;
-//    for(auto& agent: agents)
-//        if(typeid(agent) == typeid(ContactTracer))
-//            cout << "This is a Contact Tracer" <<endl;
-//        else
-//            cout << "This is a Virus" << endl;
+        }
+        if (cycleCount == 2)         //testing
+            terminateCycle = true;
+        if (tempAgentsSize == int(agents.size()))
+            terminateCycle = true;
+
+    }
+    // Print input info to console
+    cout << "Agents list:" << endl;
+    for(auto& agent: agents)
+    {
+        if(typeid(agent) == typeid(ContactTracer))
+            cout << "This is a Contact Tracer" <<endl;
+        else
+            cout << "This is a Virus" << endl;
     }
     cout<< "In simulate!" << endl;
     jsonOutput();
@@ -188,6 +219,7 @@ int Session::dequeueInfected()
     {
         int nodeTemp = infectedQueue.front();
         infectedQueue.pop_front();
+        cout  << "dequeue: " << nodeTemp << endl;
         return nodeTemp;
     }
     return -1;
@@ -198,6 +230,7 @@ Tree* Session::BFS(int rootLabel)
 {
     Tree* curr_tree = Tree::createTree((*this),rootLabel);
     int matSize = g.getEdges().size();
+    //std::cout<<"matsize in BFS "<< matSize <<std::endl;
     vector<bool> visitedNode(matSize,false);
     visitedNode[rootLabel] =true;
     std::deque<Tree*> greyQueue;
@@ -208,19 +241,18 @@ Tree* Session::BFS(int rootLabel)
         Tree* treeNode = greyQueue.front();
         greyQueue.pop_front();
         vector<int> neighbours = g.getNeighbours(treeNode->getNodeInd());
-        cout <<" parent: "<< treeNode->getNodeInd() <<" children:";
+        //cout <<" parent: "<< treeNode->getNodeInd() <<" children:";
         for(int neighbourInd:neighbours)
         {
             if(!visitedNode[neighbourInd])
             {
                 Tree* newTree = Tree::createTree((*this),neighbourInd);
                 treeNode->addChild(newTree);
-                cout <<" "<< newTree->getNodeInd() <<" ";
+                //cout <<" "<< newTree->getNodeInd() <<" ";
                 greyQueue.push_back(newTree);
                 visitedNode[neighbourInd] = true;
             }
         }
-        cout << endl;
     }
     return curr_tree;
 }
@@ -241,7 +273,7 @@ void Session::jsonOutput()
     output["infected"]={};
     for (int i=0; i<infected; i++)
     {
-        output["infected"][i].push_back(g.getInfectedNodes()[i]);
+        output["infected"].push_back(g.getInfectedNodes()[i]);
     }
 
     ofstream out("./output.json");
