@@ -17,52 +17,45 @@ using namespace std;
 
 Session::Session(const std::string& path): // constructor
     g(),
-    treeType(Root),
+    treeType(),
     agents(),
-    edges(),
-    infectedQueue(),
     cycleCount(0)
 {
-
-
-
-
-//    string myText;
-//    ofstream file("output.json");
-//    file << outputJSON;
-//    file.close();
-//}
-
-
-    ifstream i(path);
+    ifstream readFile(path);
     json inputJson;
-    i>>inputJson;
+    readFile>>inputJson;
     g = Graph(inputJson["graph"]);
     string type(inputJson["tree"]);
     if (type=="M") treeType=MaxRank;
     if (type=="C") treeType=Cycle;
     if (type=="R") treeType=Root;
     int size = inputJson["agent"].size();
-    for (int x=0; x<size; x++)
+    for (int i=0; i<size; i++)
     {
-        if (inputJson["agents"][x][0]=="V")
-            agents.push_back(new Virus(inputJson["agents"][x][1]));
+        if (inputJson["agents"][i][0]=="V")
+            agents.push_back(new Virus(inputJson["agents"][i][1]));
         else
             agents.push_back(new ContactTracer());
     }
+    readFile.close();
+}
 
-//    // add agents given by the json input to the agent vector
-//    add_agents_from_json(inputJson);
-    // get type of tree from the input
-    treeType = tree_type_from_json(inputJson);
+
+void Session::setGraph(const Graph &graph)
+{
+    g = graph;
+}
+
+void Session::addAgent(const Agent& agent)
+{
+    Agent *clone = agent.clone();
+    agents.push_back(clone);
 }
 
 //Session::Session(const Session& other): //copy constructor
 //    g(other.g),
 //    treeType(other.treeType),
 //    agents(std::vector<Agent*>()),
-//    edges(other.edges),
-//    infectedQueue(other.infectedQueue),  //should we copy it like agents? - Eden
 //    cycleCount(0), //should it be other.cycleCount? - Eden
 //{
 //    for(auto agent : other.agents)           //why? - Eden
@@ -77,24 +70,22 @@ Session::Session(const std::string& path): // constructor
 //        g(other.g),
 //        treeType(other.treeType),
 //        agents(std::move(other.agents)),
-//        edges(other.edges),
-//        infectedQueue(other.infectedQueue),
 //        cycleCount(other.cycleCount),
 //{}
 //
 //
-Session::~Session() //destructor
-{
-    clean();
-}
-
-
-void Session::clean() // used by move assignment+destructor
-{
-    for(auto* agent:agents)
-        delete agent;
-    agents.clear();
-}
+//Session::~Session() //destructor
+//{
+//    clean();
+//}
+//
+//
+//void Session::clean() // used by move assignment+destructor
+//{
+//    for(auto* agent:agents)
+//        delete agent;
+//    agents.clear();
+//}
 //
 //
 //Session& Session::operator=(Session& other)// copy assignment
@@ -160,10 +151,7 @@ void Session::clean() // used by move assignment+destructor
 
 
 
-//std::vector<std::vector<int>> Session:: getMatrix()
-//{
-//    return edges;
-//}
+
 
 TreeType Session::getTreeType() const
 {
@@ -180,70 +168,7 @@ Graph Session::getGraph() const
     return g;
 }
 
-int Session::matSize() const
-{
-    return edges.size();
-}
 
-
-
-
-
-//            ***read json file***
-
-
-
-TreeType Session::tree_type_from_json(const json& inputJson)
-{
-    string type = inputJson.at("tree").get<string>();
-    if(type=="R") return Root;
-    else if(type=="C") return Cycle;
-    else return MaxRank;
-}
-
-
-//
-//
-//
-//
-//json Session::file_path_to_json(const std::string& path)
-//{
-//    ifstream MyReadFile(path);
-//    json inputJSON;
-//    MyReadFile >> inputJSON;
-//    //MyReadFile.close();
-//    return inputJSON;
-//}
-//
-//void Session::add_agents_from_json(const json& inputJson)
-//{
-//    for (auto& agent : inputJson.at("agents"))
-//    {
-//        auto agent_type = agent.at(0); //type of agent "C" or "V"
-//        auto agent_index = agent.at(1); // the node index of the agent
-//        if(agent_type == "C") // Agent is contact tracer
-//        {
-//            const Agent* contact_ptr = new ContactTracer();
-//            this->addAgent((*contact_ptr));
-//        }
-//        else if(agent_type == "V") // Agent is virus
-//        {
-//            const Agent* virus_ptr = new Virus(agent_index);
-//            this->addAgent((*virus_ptr));
-//        }
-//    }
-//}
-//
-//
-//
-//
-//
-//
-//void Session:: addAgent(const Agent& agent)
-//{
-//    Agent* clone = agent.clone();
-//    agents.push_back(clone);
-//}
 
 
 
@@ -251,8 +176,7 @@ TreeType Session::tree_type_from_json(const json& inputJson)
 
 void Session::enqueueInfected(int nodeInd)
 {
-
-    //g.infectNode(nodeInd);
+    g.infectNode(nodeInd);
 }
 
 int Session::dequeueInfected()
@@ -265,15 +189,13 @@ int Session::dequeueInfected()
     }
     return -1;
 }
-//int Session::dequeueInfected()
-//{
-//    return g.dequeueInfected();
-//}
+
 
 Tree* Session::BFS(int rootLabel)
 {
     Tree* curr_tree = Tree::createTree((*this),rootLabel);
-    vector<bool> visitedNode(matSize(),false);
+    int matSize = g.getEdges().size();
+    vector<bool> visitedNode(matSize,false);
     visitedNode[rootLabel] =true;
     std::deque<Tree*> greyQueue;
     greyQueue.push_back(curr_tree);
@@ -301,17 +223,16 @@ Tree* Session::BFS(int rootLabel)
 }
 
 
-
-
 void Session::jsonOutput()
 {
     json output;
     output["graph"]={};
-    const vector<vector<int>> gEdges=edges;
-    for (int i=0; i<matSize(); i++)
+    const vector<vector<int>> matrix=g.getEdges();
+    int matSize = g.getEdges().size();
+    for (int i=0; i<matSize; i++)
     {
-        for (int j=0; j<matSize(); j++)
-            output["graph"][i][j]=gEdges[i][j];
+        for (int j=0; j<matSize; j++)
+            output["graph"][i][j]=matrix[i][j];
     }
     output["infected"]={};
 

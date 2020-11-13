@@ -30,19 +30,22 @@ public:
     TreeType getTreeType() const;
     //added
     void jsonOutput(); //Eden
-//    Session& operator=(const Session& other); //Copy assignment operator
 //    Session(const Session& other); // Copy constructor
 //    Session(Session&& other); //move constructor
-//    Session& operator=(Session&& other); // move assignment
+
+
 //    Session& operator=(Session& other); // copy assignment
+//    *****another*****
+//    Session& operator=(const Session& other); //Copy assignment operator
+
+
+//    Session& operator=(Session&& other); // move assignment
+
     void clean(); // used by move assignment+destructor
     virtual ~Session(); // destructor
     Tree* BFS(int rootLabel); // Create BFS tree based on given node the graph in session
     int getCycle() const; // getter for private member cycleCount
-    Graph getGraph() const; // Eden
-    std::vector<std::vector<int>> getMatrix();//Eden
-    int matSize() const;
-    std::deque<int> getInfectedQueue; //Eden
+    Graph getGraph() const;
     //
     
 private:
@@ -50,12 +53,8 @@ private:
     TreeType treeType;
     std::vector<Agent*> agents;
     //added
-    std::vector<std::vector<int>> edges; //Eden
-    std::deque<int> infectedQueue; //Eden
+    std::deque<int> infectedQueue; // Eden
     int cycleCount;
-    //void add_agents_from_json(const json& inputJson);
-    static TreeType tree_type_from_json(const json& inputJson);
-    //void create_json_output();
     //
 };
 
