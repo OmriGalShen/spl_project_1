@@ -13,10 +13,11 @@ void Virus::act(Session& session)
     session.enqueueInfected(nodeInd);
     std::cout<<"virus-act "<<nodeInd<<std::endl;
     std::vector<int> vec = g.getNeighbours(nodeInd);
+    int vecSize = vec.size();
     bool found = false;
     if(! vec.empty())
     {
-        for(int i=0; !found && i<vec.size(); i++)
+        for(int i=0; !found && i<vecSize; i++)
         {
             if(! g.isInfected(vec[i]))
             {

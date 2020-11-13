@@ -53,72 +53,72 @@ void Session::addAgent(const Agent& agent)
     agents.push_back(clone);
 }
 
-//Session::Session(const Session& other): //copy constructor
-//    g(other.g),
-//    treeType(other.treeType),
-//    agents(std::vector<Agent*>()),
-//    infectedQueue(),   //other.infectedQueue? - Eden
-//    cycleCount(0), //should it be other.cycleCount? - Eden
-//{
-//    for(auto agent : other.agents)
-//    {
-//        Agent* agentClone = agent->clone();
-//        agents.push_back(agentClone);
-//    }
-//}
-//
-//
-//Session::Session(Session&& other)://move constructor
-//        g(other.g),
-//        treeType(other.treeType),
-//        agents(std::move(other.agents)),
-//        infectedQueue(),   //other.infectedQueue? - Eden
-//        cycleCount(other.cycleCount),
-//{}
-//
-//
-//Session::~Session() //destructor
-//{
-//    clean();
-//}
-//
-//
-//void Session::clean() // used by move assignment+destructor
-//{
-//    for(auto * agent:agents)
-//        delete agent;
-//    agents.clear();
-//}
-//
-//
-//Session& Session::operator=(Session& other)// copy assignment
-//{
-//    if(this != &other)
-//    {
-//        g = other.g;
-//        treeType = other.treeType;
-//        cycleCount = other.cycleCount;
-//        for(auto agent : other.agents)
-//        {
-//            Agent* agentClone = agent->clone();
-//            agents.push_back(agentClone);
-//        }
-//    }
-//    return (*this);
-//}
-//
-//
-//Session& Session::operator=(Session&& other)// move assignment
-//{
-//    if(this != &other)
-//    {
-//        this->clean();
-//        g = other.g;
-//        treeType = other.treeType;
-//        agents = std::move(other.agents);
-//    }
-//    return (*this);
-//}
+Session::Session(const Session& other): //copy constructor
+    g(other.g),
+    treeType(other.treeType),
+    agents(std::vector<Agent*>()),
+    infectedQueue(),   //other.infectedQueue? - Eden
+    cycleCount(0) //should it be other.cycleCount? - Eden
+{
+    for(auto agent : other.agents)
+    {
+        Agent* agentClone = agent->clone();
+        agents.push_back(agentClone);
+    }
+}
+
+
+Session::Session(Session&& other)://move constructor
+        g(other.g),
+        treeType(other.treeType),
+        agents(std::move(other.agents)),
+        infectedQueue(),   //other.infectedQueue? - Eden
+        cycleCount(other.cycleCount)
+{}
+
+
+Session::~Session() //destructor
+{
+    clean();
+}
+
+
+void Session::clean() // used by move assignment+destructor
+{
+    for(auto * agent:agents)
+        delete agent;
+    agents.clear();
+}
+
+
+Session& Session::operator=(Session& other)// copy assignment
+{
+    if(this != &other)
+    {
+        g = other.g;
+        treeType = other.treeType;
+        cycleCount = other.cycleCount;
+        for(auto agent : other.agents)
+        {
+            Agent* agentClone = agent->clone();
+            agents.push_back(agentClone);
+        }
+    }
+    return (*this);
+}
+
+
+Session& Session::operator=(Session&& other)// move assignment
+{
+    if(this != &other)
+    {
+        this->clean();
+        g = other.g;
+        treeType = other.treeType;
+        agents = std::move(other.agents);
+    }
+    return (*this);
+}
 
 
 
@@ -144,7 +144,7 @@ void Session::simulate()
 //            cout << "This is a Virus" << endl;
     }
     cout<< "In simulate!" << endl;
-    //create_json_output();
+    jsonOutput();
 }
 
 
@@ -232,13 +232,14 @@ void Session::jsonOutput()
     output["graph"]={};
     const vector<vector<int>> matrix=g.getEdges();
     int matSize = matrix.size();
+    int infected = g.getInfectedNodes().size();
     for (int i=0; i<matSize; i++)
     {
         for (int j=0; j<matSize; j++)
             output["graph"][i][j]=matrix[i][j];
     }
     output["infected"]={};
-    for (int i=0; i<g.getInfectedNodes().size(); i++)
+    for (int i=0; i<infected; i++)
     {
         output["infected"][i].push_back(g.getInfectedNodes()[i]);
     }

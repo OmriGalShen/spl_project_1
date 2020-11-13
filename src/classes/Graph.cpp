@@ -8,21 +8,18 @@
 
 Graph::Graph(): //empty constructor
     edges(),
-    //infectedQueue(),
     infectedNodes()
 {}
 
 Graph::Graph(std::vector<std::vector<int>> matrix): //constructor
     edges(matrix),
-    //infectedQueue(),
     infectedNodes()
 {}
 
-//Graph::Graph(const Graph &other): // copy constructor
-//    edges(),
-//    infectedQueue(),
-//    infectedNodes()   // not other.infectedNodes
-//{}
+Graph::Graph(const Graph &other): // copy constructor
+    edges(),
+    infectedNodes()   // not other.infectedNodes
+{}
 
 
 //            ***getters***
@@ -34,20 +31,21 @@ std::vector<int> Graph::getInfectedNodes()
     return infectedNodes;
 }
 
-std::vector<std::vector<int>>* Graph::getEdgesCopy()
-{
-    return new std::vector<std::vector<int>>(edges);
-}
+//std::vector<std::vector<int>>* Graph::getEdgesCopy()
+//{
+//    return new std::vector<std::vector<int>>(edges);
+//}
 
 
 
 std::vector<int> Graph::getNeighbours(int nodeInd) const
 {
     int row = nodeInd;
+    int matSize = edges.size();
     auto neighbours = std::vector<int>();
-    if(row>=0 && row<edges.size())
+    if(row>=0 && row<matSize)
     {
-        for(int col=0; col<edges.size(); col++)
+        for(int col=0; col<matSize; col++)
         {
             if(edges[row][col] == 1)
                 neighbours.push_back(col);
@@ -57,23 +55,12 @@ std::vector<int> Graph::getNeighbours(int nodeInd) const
 }
 
 
-//std::deque<int> Graph::getInfectedQueue()
-//{
-//    return infectedQueue;
-//}
-
 
 void Graph::infectNode(int nodeInd)
 {
     if(!isInfected(nodeInd))
         infectedNodes.push_back(nodeInd);
 }
-
-
-//int Graph::getEdgesSize()
-//{
-//    return edges.size();
-//}
 
 
 
