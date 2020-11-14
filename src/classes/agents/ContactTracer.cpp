@@ -6,7 +6,6 @@ ContactTracer::ContactTracer()
 
 void ContactTracer::act(Session& session)
 {
-    Graph g = session.getGraph();
     int infectedNode = session.dequeueInfected();
     std::cout<<"infected node in CT is "<<infectedNode<<std::endl;
     if(infectedNode>=0)
