@@ -145,7 +145,9 @@ void Session::removeNode(int node)
 
 
 
-
+/*
+This is the main simulation loop.
+*/
 void Session::simulate()
 {
     bool terminateCycle = false;// true when terminate conditions are fulfilled
@@ -160,26 +162,17 @@ void Session::simulate()
             cout << "agent in action!" <<endl;
             agents[i]->act((*this));
         }
-        if (cycleCount == 4) {  //testing
-            terminateCycle = true;
-            cout << "agents list" <<endl;
-        }
-
-//        int newAgentsSize = agents.size();
-//        if (tempAgentsSize == newAgentsSize)
+//        if (cycleCount == 4) {  //testing
 //            terminateCycle = true;
-    }
-    // Print input info to console
-    //cout << "Agents list:" << endl;
-    for(auto& agent: agents)
-    {
-        if(typeid(agent) == typeid(ContactTracer))
-            cout << "This is a Contact Tracer" <<endl;
-        else
-            cout << "This is a Virus" << endl;
+//            cout << "agents list" <<endl;
+//        }
+
+        int newAgentsSize = agents.size();
+        if (tempAgentsSize == newAgentsSize) // no virus was added in cycle
+            terminateCycle = true;
     }
     cout<< "In simulate!" << endl;
-    jsonOutput();
+    jsonOutput(); //output simulate results to json file
 }
 
 
