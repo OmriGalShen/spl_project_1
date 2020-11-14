@@ -25,18 +25,22 @@ Session::Session(const std::string& path): // constructor
     ifstream readFile(path);
     json inputJson;
     readFile>>inputJson;
-    g = Graph(inputJson["graph"]);
-    string type(inputJson["tree"]);
+    g = Graph(inputJson["graph"]); // get graph from input
+    string type(inputJson["tree"]); // get tree type from input
     if (type=="M") treeType=MaxRank;
     if (type=="C") treeType=Cycle;
     if (type=="R") treeType=Root;
     int size = inputJson["agents"].size();
-    for (int i=0; i<size; i++)
+    for (int i=0; i<size; i++) //loop on input agents list
     {
-        if (inputJson["agents"][i][0]=="V")
-            agents.push_back(new Virus(inputJson["agents"][i][1]));
-        else
-            agents.push_back(new ContactTracer());
+        if (inputJson["agents"][i][0]=="V") // agent is Virus
+        {
+            int virusNode = inputJson["agents"][i][1];
+            agents.push_back(new Virus(virusNode)); // add the new agent
+            g.addVirusOn(virusNode); // inform Graph that virusNode has virus
+        }
+        else // agent is ContactTracer
+            agents.push_back(new ContactTracer()); // add the new agent
     }
     readFile.close();
 }
@@ -195,7 +199,7 @@ int Session::getCycle() const
     return cycleCount;
 }
 
-Graph Session::getGraph() const
+Graph& Session::getGraphRef()
 {
     return g;
 }
@@ -204,13 +208,7 @@ Graph Session::getGraph() const
 
 void Session::enqueueInfected(int nodeInd)
 {
-    if (! g.isInfected(nodeInd))
-    {
-        cout  << "push back (nodeInd): " << nodeInd << endl;  //testing
-        infectedQueue.push_back(nodeInd);
-        g.infectNode(nodeInd);
-    }
-
+    infectedQueue.push_back(nodeInd);
 }
 
 int Session::dequeueInfected()
