@@ -22,6 +22,7 @@ void Virus::act(Session& session)
             std::cout<<"node to infect "<<neighbourNode<<std::endl;
             Agent * spread = new Virus(neighbourNode); // create virus on neighbourNode
             session.addAgent(* spread); // add the new virus as an agent to agents vector
+            delete spread;
             g.addVirusOn(neighbourNode); // Graph now marked neighbourNode as having a virus
             found = true; //found neighbour to infect, loop terminated
         }
