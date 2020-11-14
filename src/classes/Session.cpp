@@ -233,24 +233,12 @@ Tree* Session::BFS(int rootLabel)
 }
 
 
-void Session::jsonOutput()
+void Session::jsonOutput() // output final results as json
 {
-    json output;
-    output["graph"]={};
-    const vector<vector<int>> matrix=g.getEdges();
-    int matSize = matrix.size();
-    int infected = g.getInfectedNodes().size();
-    for (int i=0; i<matSize; i++)
-    {
-        for (int j=0; j<matSize; j++)
-            output["graph"][i][j]=matrix[i][j];
-    }
-    output["infected"]={};
-    for (int i=0; i<infected; i++)
-    {
-        output["infected"].push_back(g.getInfectedNodes()[i]);
-    }
-
-    ofstream out("./output.json");
-    out<<output<<endl;
+    json outputJSON;
+    outputJSON["graph"] = g.getEdges();
+    outputJSON["infected"] = g.getInfectedNodes();
+    ofstream file("output.json");
+    file << outputJSON;
+    file.close();
 }
