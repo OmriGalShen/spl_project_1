@@ -135,7 +135,6 @@ void Session::simulate()
     {
         int tempAgentsSize = agents.size();
         cout << "number of agents: " << tempAgentsSize << endl;
-        cycleCount++; // update counter for cycle
         cout << "cycle number: " << cycleCount << endl;
         for (int i = 0; i < tempAgentsSize; i++)
         {
@@ -150,6 +149,7 @@ void Session::simulate()
         int newAgentsSize = agents.size();
         if (tempAgentsSize == newAgentsSize) // no virus was added in cycle
             terminateCycle = true;
+        cycleCount++; // update counter for cycle
     }
     cout<< "In simulate!" << endl;
     jsonOutput(); //output simulate results to json file
@@ -210,24 +210,25 @@ Tree* Session::BFS(int rootLabel)
     visitedNode[rootLabel] =true;
     std::deque<Tree*> greyQueue;
     greyQueue.push_back(curr_tree);
-    //cout << "BFS tree:" << endl;
+//    cout << "BFS tree:" << endl;
     while(!greyQueue.empty())
     {
         Tree* treeNode = greyQueue.front();
         greyQueue.pop_front();
         vector<int> neighbours = g.getNeighbours(treeNode->getNodeInd());
-        //cout <<" parent: "<< treeNode->getNodeInd() <<" children:";
+//        cout <<" parent: "<< treeNode->getNodeInd() <<" children:";
         for(int neighbourInd:neighbours)
         {
             if(!visitedNode[neighbourInd])
             {
                 Tree* newTree = Tree::createTree((*this),neighbourInd);
                 treeNode->addChild(newTree);
-                //cout <<" "<< newTree->getNodeInd() <<" ";
+                cout <<" "<< newTree->getNodeInd() <<" ";
                 greyQueue.push_back(newTree);
                 visitedNode[neighbourInd] = true;
             }
         }
+//        cout << endl;
     }
     return curr_tree;
 }
