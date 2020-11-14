@@ -8,17 +8,17 @@
 
 Graph::Graph(): //empty constructor
     edges(),
-    infectedNodes()
-{}
+    nodesStatus()
+    {}
 
 Graph::Graph(std::vector<std::vector<int>> matrix): //constructor
     edges(matrix),
-    infectedNodes()
+    nodesStatus(std::vector<NodeCondition>(matrix.size(),Healthy))
 {}
 
 Graph::Graph(const Graph &other): // copy constructor
     edges(other.edges),
-    infectedNodes(other.infectedNodes)
+    nodesStatus(other.nodesStatus)
 {}
 
 
@@ -28,6 +28,10 @@ Graph::Graph(const Graph &other): // copy constructor
 
 std::vector<int> Graph::getInfectedNodes()
 {
+    std::vector<int> infectedNodes;
+    for(unsigned int i=0;i<nodesStatus.size();i++)
+        if(nodesStatus[i]==Infected)
+            infectedNodes.push_back(i);
     return infectedNodes;
 }
 
@@ -55,9 +59,18 @@ std::vector<int> Graph::getNeighbours(int nodeInd) const
 
 void Graph::infectNode(int nodeInd)
 {
-    if(! isInfected(nodeInd))
-        setInfected(nodeInd);
+    if(nodeInd>=0&&nodeInd<nodesStatus.size()) //check for valid node
+        nodesStatus[nodeInd] = Infected;
 }
+
+void Graph::addVirusOn(int nodeInd)
+{
+    if(nodeInd>=0&&nodeInd<nodesStatus.size()) //check for valid node
+        if(nodesStatus[nodeInd]==Healthy)
+            nodesStatus[nodeInd]=HasVirus;
+}
+
+bool Graph::isHealthy(int nodeInd){return nodesStatus[nodeInd]==Healthy;}
 
 
 
@@ -71,19 +84,15 @@ void Graph::setEdges(int row, int col, int num)
     edges[row][col] = num;
 }
 
-void Graph::setInfected(int node)
-{
-    infectedNodes.push_back(node);
-}
+//void Graph::setInfected(int node)
+//{
+//    infectedNodes.push_back(node);
+//}
 
 bool Graph::isInfected(int nodeInd)
 {
-    int size = infectedNodes.size();
-    for(int i=0; i<size; i++)
-    {
-        if(infectedNodes[i] == nodeInd)
-            return true;
-    }
+    if(nodeInd>=0&&nodeInd<nodesStatus.size()) //check for valid node
+        return nodesStatus[nodeInd] == Infected;
     return false;
 }
 

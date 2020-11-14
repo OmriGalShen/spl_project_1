@@ -4,6 +4,12 @@
 #include <vector>
 #include <deque> //added
 
+enum NodeCondition{
+    Healthy,
+    HasVirus,
+    Infected
+};
+
 class Graph{
 public:
     Graph(std::vector<std::vector<int>> matrix);
@@ -16,13 +22,15 @@ public:
     std::vector<int> getInfectedNodes();
     std::vector<std::vector<int>> getEdges();
     void setEdges(int row, int col, int num);
-    void setInfected(int node);
+//    void setInfected(int node);
+    void addVirusOn(int nodeInd);
+    bool isHealthy(int nodeInd);
     //
 
 private:
     std::vector<std::vector<int>> edges;
     //added - Eden
-    std::vector<int> infectedNodes;
+    std::vector<NodeCondition> nodesStatus;
 };
 
 #endif
