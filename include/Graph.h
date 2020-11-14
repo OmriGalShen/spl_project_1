@@ -25,6 +25,8 @@ public:
 //    void setInfected(int node);
     void addVirusOn(int nodeInd);
     bool isHealthy(int nodeInd);
+    void removeNode(int nodeInd);
+    void printGraph();
     //
 
 private:

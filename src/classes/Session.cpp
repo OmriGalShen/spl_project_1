@@ -125,30 +125,6 @@ Session& Session::operator=(Session&& other)// move assignment
     return (*this);
 }
 
-
-
-void Session::removeNode(int node)
-{
-    int matSize = g.getEdges().size();
-    if(node>=0 && node<matSize) // to verify that the input is valid
-    {
-        //std::cout << "IN THE LOOP" << std::endl;
-        for(int row=0; row<matSize; row++)
-        {
-            g.setEdges(row, node, 0);
-            //std::cout << "[row][node] num: " << g.getEdges()[row][node] << std::endl;
-        }
-        for(int col=0; col<matSize; col++)
-        {
-            g.setEdges(node, col, 0);
-            //std::cout << "[node][col] num: " << g.getEdges()[node][col] << std::endl;
-        }
-
-    }
-}
-
-
-
 /*
 This is the main simulation loop.
 */

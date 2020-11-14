@@ -96,3 +96,28 @@ bool Graph::isInfected(int nodeInd)
     return false;
 }
 
+void Graph::printGraph()
+{
+    for ( const auto &row : edges )
+    {
+        for ( const auto &s : row ) std::cout << s << ' ';
+        std::cout << std::endl;
+    }
+}
+
+void Graph::removeNode(int nodeInd)
+{
+//    std:: cout << "Graph before removal" << std::endl;
+//    printGraph();
+    int verticesCount =  edges.size();
+    if(nodeInd>=0 && nodeInd<verticesCount) // to verify that the input is valid
+    {
+        for(int index=0; index<verticesCount; index++)
+        {
+            edges[index][nodeInd] = 0;
+            edges[nodeInd][index] = 0;
+        }
+    }
+//    std:: cout << "Graph after removal" << std::endl;
+//    printGraph();
+}
