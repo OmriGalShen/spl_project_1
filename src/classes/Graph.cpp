@@ -59,15 +59,13 @@ std::vector<int> Graph::getNeighbours(int nodeInd) const
 
 void Graph::infectNode(int nodeInd)
 {
-    if(nodeInd>=0&&nodeInd<nodesStatus.size()) //check for valid node
-        nodesStatus[nodeInd] = Infected;
+    nodesStatus[nodeInd] = Infected;
 }
 
 void Graph::addVirusOn(int nodeInd)
 {
-    if(nodeInd>=0&&nodeInd<nodesStatus.size()) //check for valid node
-        if(nodesStatus[nodeInd]==Healthy)
-            nodesStatus[nodeInd]=HasVirus;
+    if(nodesStatus[nodeInd]==Healthy)
+        nodesStatus[nodeInd]=HasVirus;
 }
 
 bool Graph::isHealthy(int nodeInd){return nodesStatus[nodeInd]==Healthy;}
@@ -91,9 +89,7 @@ void Graph::setEdges(int row, int col, int num)
 
 bool Graph::isInfected(int nodeInd)
 {
-    if(nodeInd>=0&&nodeInd<nodesStatus.size()) //check for valid node
-        return nodesStatus[nodeInd] == Infected;
-    return false;
+    return nodesStatus[nodeInd] == Infected;
 }
 
 void Graph::printGraph()
