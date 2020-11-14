@@ -32,13 +32,7 @@ public:
     void jsonOutput(); //Eden
     Session(const Session& other); // Copy constructor
     Session(Session&& other); //move constructor
-
-
-    Session& operator=(Session& other); // copy assignment
-//    *****another*****
-    //Session& operator=(const Session& other); //Copy assignment operator
-
-
+    Session& operator=(const Session& other); // copy assignment
     Session& operator=(Session&& other); // move assignment
 
     void clean(); // used by move assignment+destructor
