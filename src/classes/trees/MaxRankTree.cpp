@@ -24,7 +24,7 @@ int MaxRankTree::traceTree()
     {
         MaxRankTree* curr = nodesToCheck.front();
         nodesToCheck.pop_front();
-        auto currChildren = ((MaxRankTree)(*curr)).children;
+        auto currChildren = (*curr).children;
         auto currentChildrenCount = currChildren.size();
         if(currentChildrenCount>maxChildrenCount)
         {
