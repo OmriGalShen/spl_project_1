@@ -39,8 +39,7 @@ public:
     virtual ~Session(); // destructor
     Tree* BFS(int rootLabel); // Create BFS tree based on given node the graph in session
     int getCycle() const; // getter for private member cycleCount
-    Graph getGraph() const;
-    void removeNode(int node);
+    Graph& getGraphRef();
     //
     
 private:

@@ -6,7 +6,7 @@ ContactTracer::ContactTracer()
 
 void ContactTracer::act(Session& session)
 {
-    Graph g = session.getGraph();
+    Graph& g = session.getGraphRef();
     int infectedNode = session.dequeueInfected();
     std::cout<<"infected node in CT is "<<infectedNode<<std::endl;
     if(infectedNode>=0)
@@ -15,7 +15,7 @@ void ContactTracer::act(Session& session)
         int nodeToRemove = shortPathTree->traceTree();
         std::cout << "node to remove "<< nodeToRemove << std::endl;
         delete shortPathTree;
-        session.removeNode(nodeToRemove);
+        g.removeNode(nodeToRemove);
     }
 }
 

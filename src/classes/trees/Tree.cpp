@@ -8,7 +8,14 @@ Tree::Tree(int rootLabel):// Constructor
 node(rootLabel),children(std::vector<Tree*>()){}
 
 Tree::Tree(const Tree &other): // Copy constructor
-node(other.node),children(other.children) {}
+node(other.node),children()
+{
+    for(auto child : other.children)
+    {
+        Tree* childClone = child->clone();
+        children.push_back(childClone);
+    }
+}
 
 void Tree::clean() // used by move assignment+destructor
 {
