@@ -7,6 +7,7 @@ MaxRankTree::MaxRankTree(int rootLabel): Tree(rootLabel) // constructor
 MaxRankTree::MaxRankTree(const MaxRankTree &other): Tree(other) // copy constructor
 {}
 
+
 Tree * MaxRankTree::clone() const
 {
     return new MaxRankTree((*this));
@@ -34,3 +35,6 @@ int MaxRankTree::traceTree()
     }
     return (*maxChildrenPtr).node;
 }
+
+
+

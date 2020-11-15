@@ -46,7 +46,7 @@ Tree& Tree::operator=(Tree&& other) // move assignment
     return (*this);
 }
 
-Tree& Tree::operator=(Tree& other) // copy assignment
+Tree& Tree::operator=(const Tree& other) // copy assignment
 {
     if(this != &other)
     {
@@ -93,4 +93,12 @@ Tree* Tree::getLeftChild()
     if(hasChildren())
         return children[0];
     return nullptr;
+}
+
+std::vector<Tree *> Tree::getChildren() {
+    return children;
+}
+
+int Tree::getRootLabel() {
+    return node;
 }

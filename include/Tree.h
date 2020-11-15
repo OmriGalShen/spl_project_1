@@ -18,7 +18,6 @@ public:
     Tree(const Tree& other); // copy constructor
     Tree(Tree&& other); // move constructor
     Tree& operator=(Tree&& other); // move assignment
-    Tree& operator=(Tree& other); // move assignment
     void clean(); // used by move assignment+destructor
     virtual ~Tree(); // destructor
     void addChild(Tree* child);
@@ -26,6 +25,8 @@ public:
     Tree* getLeftChild();
     int getNodeInd();
     virtual Tree * clone() const=0;
+    std::vector<Tree*> getChildren();
+    int getRootLabel();
     //
 
 
@@ -53,7 +54,10 @@ public:
     MaxRankTree(int rootLabel);
     virtual int traceTree();
     //added
-    MaxRankTree(const MaxRankTree& other);
+    MaxRankTree& operator=(const MaxRankTree& other); // copy assignment operator
+    MaxRankTree(const MaxRankTree& other); // copy constructor
+    MaxRankTree(MaxRankTree&& other) noexcept ; // move constructor
+    MaxRankTree& operator=(MaxRankTree&& other) noexcept ; // move assignment
     Tree *clone() const;
     //
 };
