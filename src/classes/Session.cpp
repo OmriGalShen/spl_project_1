@@ -25,8 +25,8 @@ g(), treeType(), agents(), infectedQueue(), cycleCount(0)
     if (type=="M") treeType=MaxRank;
     if (type=="C") treeType=Cycle;
     if (type=="R") treeType=Root;
-    int size = inputJson["agents"].size();
-    for (int i=0; i<size; i++) // loop on input agents list
+    int matSize = inputJson["agents"].size();
+    for (int i=0; i<matSize; i++) // loop on input agents list
     {
         if (inputJson["agents"][i][0]=="V") // agent is Virus
         {
@@ -37,7 +37,7 @@ g(), treeType(), agents(), infectedQueue(), cycleCount(0)
         else // agent is ContactTracer
             agents.push_back(new ContactTracer()); // add the new agent
     }
-    readFile.close();
+    //readFile.close();
 }
 
 Session::Session(const Session& other): // copy constructor
