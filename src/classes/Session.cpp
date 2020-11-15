@@ -222,7 +222,7 @@ void Session::jsonOutput() // output final results as json
     json outputJSON;
     outputJSON["graph"] = g.getEdges(); // I'm not sure that it's better than a loop - Eden
     outputJSON["infected"] = g.getInfectedNodes(); // same here - Eden
-    ofstream file("output.json");
+    ofstream file("../output.json");
     file << outputJSON;
     file.close();
 }
