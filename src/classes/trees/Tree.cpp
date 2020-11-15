@@ -94,3 +94,11 @@ Tree* Tree::getLeftChild()
         return children[0];
     return nullptr;
 }
+
+std::vector<Tree *> Tree::getChildren() {
+    return children;
+}
+
+int Tree::getRootLabel() {
+    return node;
+}
