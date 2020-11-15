@@ -34,7 +34,6 @@
 *.app
 .idea
 /bin
-./output.json
-/CMakeLists.txt
 /run.json
 /generatedTest.json
+output.json
