@@ -9,18 +9,16 @@
 //            ***constructors***
 
 
-Graph::Graph(): edges(), nodesStatus() //empty constructor
+Graph::Graph(): // empty constructor
+edges(), nodesStatus()
 {}
 
-Graph::Graph(std::vector<std::vector<int>> matrix): //constructor
-    edges(matrix),
-    //nodesStatus(std::vector<NodeCondition>(matrix.size(),Healthy))
-    nodesStatus(matrix.size(),Healthy) //the first part isn't necessary - Eden
+Graph::Graph(std::vector<std::vector<int>> matrix): // constructor
+edges(matrix), nodesStatus(matrix.size(),Healthy)
 {}
 
 Graph::Graph(const Graph &other): // copy constructor
-    edges(other.edges),
-    nodesStatus(other.nodesStatus)
+edges(other.edges), nodesStatus(other.nodesStatus)
 {}
 
 
@@ -45,7 +43,6 @@ std::vector<int> Graph::getNeighbours(int nodeInd) const
 {
     int row = nodeInd;
     int matSize = edges.size();
-    //std::cout << "get nei-edges.size: " << edges.size() << std::endl;
     auto neighbours = std::vector<int>();
     if(row>=0 && row<matSize)
     {
@@ -58,20 +55,10 @@ std::vector<int> Graph::getNeighbours(int nodeInd) const
     return neighbours;
 }
 
-std::vector<std::vector<int>> Graph::getEdges()
+std::vector<std::vector<int>>& Graph::getEdgesRef()
 {
     return edges;
 }
-
-//void Graph::setEdges(int row, int col, int num)
-//{
-//    edges[row][col] = num;
-//}
-
-//void Graph::setInfected(int node)
-//{
-//    infectedNodes.push_back(node);
-//}
 
 
 
@@ -101,19 +88,8 @@ bool Graph::isInfected(int nodeInd)
     return nodesStatus[nodeInd] == Infected;
 }
 
-//void Graph::printGraph()
-//{
-//    for ( const auto &row : edges )
-//    {
-//        for ( const auto &s : row ) std::cout << s << ' ';
-//        std::cout << std::endl;
-//    }
-//}
-
 void Graph::removeNode(int nodeInd)
 {
-//    std:: cout << "Graph before removal" << std::endl;
-//    printGraph();
     int verticesCount = edges.size();
     if(nodeInd>=0 && nodeInd<verticesCount) // to verify that the input is valid
     {
@@ -123,6 +99,4 @@ void Graph::removeNode(int nodeInd)
             edges[nodeInd][index] = 0;
         }
     }
-//    std:: cout << "Graph after removal" << std::endl;
-//    printGraph();
 }

@@ -1,16 +1,20 @@
 #include "../../../include/Tree.h"
 
-CycleTree::CycleTree(int rootLabel, int currCycle)
-: Tree(rootLabel),currCycle(currCycle)
-{
+CycleTree::CycleTree(int rootLabel, int currCycle): // constructor
+Tree(rootLabel), currCycle(currCycle)
+{}
 
-}
-CycleTree::CycleTree(const CycleTree &other):Tree(other),currCycle(other.currCycle) {}
+
+CycleTree::CycleTree(const CycleTree &other): // copy constructor
+Tree(other), currCycle(other.currCycle)
+{}
+
 
 Tree * CycleTree::clone() const
 {
     return new CycleTree((*this));
 }
+
 
 int CycleTree::traceTree()
 {
@@ -22,5 +26,4 @@ int CycleTree::traceTree()
         cycleCount--;
     }
     return currentTree->getNodeInd();
-
 }

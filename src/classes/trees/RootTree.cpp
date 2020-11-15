@@ -1,10 +1,10 @@
 #include "../../../include/Tree.h"
 
-RootTree::RootTree(int rootLabel)
-        : Tree(rootLabel)
+RootTree::RootTree(int rootLabel): Tree(rootLabel) // constructor
 {}
 
-RootTree::RootTree(const RootTree& other):Tree(other) {}
+RootTree::RootTree(const RootTree& other): Tree(other) // copy constructor
+{}
 
 int RootTree::traceTree()
 {

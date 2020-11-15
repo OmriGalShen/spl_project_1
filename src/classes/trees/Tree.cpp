@@ -4,10 +4,11 @@
 
 using namespace std;
 
-Tree::Tree(int rootLabel):// Constructor
-node(rootLabel),children(std::vector<Tree*>()){}
+Tree::Tree(int rootLabel): // constructor
+node(rootLabel),children(std::vector<Tree*>())
+{}
 
-Tree::Tree(const Tree &other): // Copy constructor
+Tree::Tree(const Tree &other): // copy constructor
 node(other.node),children()
 {
     for(auto child : other.children)
@@ -30,11 +31,11 @@ Tree::~Tree() // destructor
     clean();
 }
 
-Tree::Tree(Tree&& other)://move constructor
+Tree::Tree(Tree&& other): //move constructor
 node(other.node),children(std::move(other.children))
 {}
 
-Tree& Tree::operator=(Tree&& other)// move assignment
+Tree& Tree::operator=(Tree&& other) // move assignment
 {
     if(this != &other)
     {
@@ -45,7 +46,7 @@ Tree& Tree::operator=(Tree&& other)// move assignment
     return (*this);
 }
 
-Tree& Tree::operator=(Tree& other)// copy assignment
+Tree& Tree::operator=(Tree& other) // copy assignment
 {
     if(this != &other)
     {
@@ -75,11 +76,6 @@ void Tree::addChild(const Tree& child)
 void Tree::addChild(Tree* child)
 {
     children.push_back(child);
-}
-
-Tree* Tree::getRightChild()
-{
-    return children.back();
 }
 
 int Tree::getNodeInd()
