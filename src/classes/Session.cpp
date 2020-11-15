@@ -37,7 +37,7 @@ g(), treeType(), agents(), infectedQueue(), cycleCount(0)
         else // agent is ContactTracer
             agents.push_back(new ContactTracer()); // add the new agent
     }
-    //readFile.close();
+    readFile.close();
 }
 
 Session::Session(const Session& other): // copy constructor
