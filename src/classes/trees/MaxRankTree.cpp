@@ -1,13 +1,11 @@
 #include "../../../include/Tree.h"
 #include <deque>
 
-MaxRankTree::MaxRankTree(int rootLabel)
-        : Tree(rootLabel)
-{
+MaxRankTree::MaxRankTree(int rootLabel): Tree(rootLabel) // constructor
+{}
 
-}
-
-MaxRankTree::MaxRankTree(const MaxRankTree &other):Tree(other) {}
+MaxRankTree::MaxRankTree(const MaxRankTree &other): Tree(other) // copy constructor
+{}
 
 Tree * MaxRankTree::clone() const
 {

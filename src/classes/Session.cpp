@@ -15,7 +15,7 @@ using namespace std;
 
 
 Session::Session(const std::string& path): // constructor
-    g(), treeType(), agents(), infectedQueue(), cycleCount(0)
+g(), treeType(), agents(), infectedQueue(), cycleCount(0)
 {
     ifstream readFile(path);
     json inputJson;
@@ -26,7 +26,7 @@ Session::Session(const std::string& path): // constructor
     if (type=="C") treeType=Cycle;
     if (type=="R") treeType=Root;
     int size = inputJson["agents"].size();
-    for (int i=0; i<size; i++) //loop on input agents list
+    for (int i=0; i<size; i++) // loop on input agents list
     {
         if (inputJson["agents"][i][0]=="V") // agent is Virus
         {
@@ -40,9 +40,9 @@ Session::Session(const std::string& path): // constructor
     readFile.close();
 }
 
-Session::Session(const Session& other): //copy constructor
-        g(other.g), treeType(other.treeType), agents(),
-        infectedQueue(other.infectedQueue), cycleCount(other.cycleCount)
+Session::Session(const Session& other): // copy constructor
+g(other.g), treeType(other.treeType), agents(),infectedQueue(other.infectedQueue),
+cycleCount(other.cycleCount)
 {
     for(auto agent : other.agents)
     {
@@ -51,12 +51,12 @@ Session::Session(const Session& other): //copy constructor
     }
 }
 
-Session::Session(Session&& other)://move constructor
-        g(other.g), treeType(other.treeType), agents(std::move(other.agents)),
-        infectedQueue(other.infectedQueue), cycleCount(other.cycleCount)
+Session::Session(Session&& other): // move constructor
+g(other.g), treeType(other.treeType), agents(std::move(other.agents)),
+infectedQueue(other.infectedQueue), cycleCount(other.cycleCount)
 {}
 
-Session::~Session() //destructor
+Session::~Session() // destructor
 {
     clean();
 }
@@ -68,7 +68,7 @@ void Session::clean() // used by move assignment+destructor
     agents.clear();
 }
 
-Session& Session::operator=(const Session& other)// copy assignment
+Session& Session::operator=(const Session& other) // copy assignment
 {
     if(this != &other)
     {
@@ -85,7 +85,7 @@ Session& Session::operator=(const Session& other)// copy assignment
     return (*this);
 }
 
-Session& Session::operator=(Session&& other)// move assignment
+Session& Session::operator=(Session&& other) // move assignment
 {
     if(this != &other)
     {
@@ -141,9 +141,7 @@ int Session::dequeueInfected()
     if(! infectedQueue.empty())
     {
         int nodeTemp = infectedQueue.front();
-        //cout  << "dequeue (nodeTemp): " << nodeTemp << endl;
         infectedQueue.pop_front();
-        //cout  << "new front: " << infectedQueue.front() << endl;
         return nodeTemp;
     }
     return -1;
@@ -153,30 +151,25 @@ Tree* Session::BFS(int rootLabel)
 {
     Tree* curr_tree = Tree::createTree((*this),rootLabel);
     int matSize = g.getEdges().size();
-    //std::cout<<"matsize in BFS "<< matSize <<std::endl;
     vector<bool> visitedNode(matSize,false);
     visitedNode[rootLabel] =true;
     std::deque<Tree*> greyQueue;
     greyQueue.push_back(curr_tree);
-//    cout << "BFS tree:" << endl;
     while(!greyQueue.empty())
     {
         Tree* treeNode = greyQueue.front();
         greyQueue.pop_front();
         vector<int> neighbours = g.getNeighbours(treeNode->getNodeInd());
-//        cout <<" parent: "<< treeNode->getNodeInd() <<" children:";
         for(int neighbourInd:neighbours)
         {
             if(!visitedNode[neighbourInd])
             {
                 Tree* newTree = Tree::createTree((*this),neighbourInd);
                 treeNode->addChild(newTree);
-                cout <<" "<< newTree->getNodeInd() <<" ";
                 greyQueue.push_back(newTree);
                 visitedNode[neighbourInd] = true;
             }
         }
-//        cout << endl;
     }
     return curr_tree;
 }
@@ -196,32 +189,21 @@ void Session::simulate()
     while(! terminateCycle) //cycle loop
     {
         int tempAgentsSize = agents.size();
-        cout << "number of agents: " << tempAgentsSize << endl;
-        cout << "cycle number: " << cycleCount << endl;
         for (int i = 0; i < tempAgentsSize; i++)
-        {
-            cout << "agent in action!" <<endl;
             agents[i]->act((*this));
-        }
-//        if (cycleCount == 4) {  //testing
-//            terminateCycle = true;
-//            cout << "agents list" <<endl;
-//        }
-
         int newAgentsSize = agents.size();
         if (tempAgentsSize == newAgentsSize) // no virus was added in cycle
             terminateCycle = true;
         cycleCount++; // update counter for cycle
     }
-    cout<< "In simulate!" << endl;
     jsonOutput(); //output simulate results to json file
 }
 
 void Session::jsonOutput() // output final results as json
 {
     json outputJSON;
-    outputJSON["graph"] = g.getEdges(); // I'm not sure that it's better than a loop - Eden
-    outputJSON["infected"] = g.getInfectedNodes(); // same here - Eden
+    outputJSON["graph"] = g.getEdges();
+    outputJSON["infected"] = g.getInfectedNodes();
     ofstream file("../output.json");
     file << outputJSON;
     file.close();

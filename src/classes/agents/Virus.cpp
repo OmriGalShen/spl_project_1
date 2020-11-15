@@ -3,12 +3,14 @@
 
 
 
-Virus::Virus(int nodeInd): nodeInd(nodeInd)
+Virus::Virus(int nodeInd):  // constructor
+nodeInd(nodeInd)
 {}
 
 
 
-Virus::Virus(const Virus& other): nodeInd(other.nodeInd)
+Virus::Virus(const Virus& other):  // copy constructor
+nodeInd(other.nodeInd)
 {}
 
 
@@ -16,8 +18,6 @@ Virus::Virus(const Virus& other): nodeInd(other.nodeInd)
 void Virus::act(Session& session)
 {
     auto& g = session.getGraphRef();  // why auto and not Graph like in CT? - Eden
-    //std::cout<<"virus act-nodeInd = "<<nodeInd<<std::endl;
-    //std::cout<<"virus-act "<<nodeInd<<std::endl;
     std::vector<int> neighbours = g.getNeighbours(nodeInd);
     bool found = false; // found neighbour node to infect
     for(unsigned i=0; !found && i<neighbours.size(); i++) // loop on neighbours of the virus node
@@ -25,7 +25,6 @@ void Virus::act(Session& session)
         int neighbourNode = neighbours[i]; // the neighbourNode index
         if(g.isHealthy(neighbourNode)) //neighbourNode doesn't have virus or already infected
         {
-            //std::cout<<"node to infect "<<neighbourNode<<std::endl;
             Agent * spread = new Virus(neighbourNode); // create virus on neighbourNode
             session.addAgent(* spread); // add the new virus as an agent to agents vector
             delete spread;
