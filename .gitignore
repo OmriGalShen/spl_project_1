@@ -33,6 +33,7 @@
 *.out
 *.app
 .idea
-.bin
-
+/bin
+/cmake-build-debug
 ../output.json
+/CMakeLists.txt
