@@ -1,23 +1,29 @@
 #include "../../../include/Agent.h"
 #include "iostream"
 
+
+
 ContactTracer::ContactTracer()
 {}
+
+
 
 void ContactTracer::act(Session& session)
 {
     Graph& g = session.getGraphRef();
     int infectedNode = session.dequeueInfected();
-    std::cout<<"infected node in CT is "<<infectedNode<<std::endl;
-    if(infectedNode>=0)
+    //std::cout<<"infected node in CT is "<<infectedNode<<std::endl;
+    if(infectedNode >= 0)
     {
         Tree * shortPathTree = session.BFS(infectedNode);
         int nodeToRemove = shortPathTree->traceTree();
-        std::cout << "node to remove "<< nodeToRemove << std::endl;
+        //std::cout << "node to remove "<< nodeToRemove << std::endl;
         delete shortPathTree;
         g.removeNode(nodeToRemove);
     }
 }
+
+
 
 Agent * ContactTracer::clone() const
 {
