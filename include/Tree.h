@@ -3,6 +3,8 @@
 
 #include <vector>
 
+
+
 class Session;
 
 class Tree{
@@ -20,19 +22,19 @@ public:
     void clean(); // used by move assignment+destructor
     virtual ~Tree(); // destructor
     void addChild(Tree* child);
-    Tree* getRightChild();
-    int getNodeInd(); // getter for private member node
-    virtual Tree * clone() const=0;
     bool hasChildren() const;
+    Tree* getRightChild();
     Tree* getLeftChild();
+    int getNodeInd();
+    virtual Tree * clone() const=0;
     //
-
 
 
 protected: //changed from private to protected
     int node;
     std::vector<Tree*> children;
 };
+
 
 class CycleTree: public Tree{
 public:
@@ -46,6 +48,7 @@ private:
     int currCycle;
 };
 
+
 class MaxRankTree: public Tree{
 public:
     MaxRankTree(int rootLabel);
@@ -55,6 +58,7 @@ public:
     Tree *clone() const;
     //
 };
+
 
 class RootTree: public Tree{
 public:

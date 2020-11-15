@@ -29,12 +29,11 @@ public:
     int dequeueInfected();
     TreeType getTreeType() const;
     //added
-    void jsonOutput(); //Eden
+    void jsonOutput();
     Session(const Session& other); // Copy constructor
     Session(Session&& other); //move constructor
     Session& operator=(const Session& other); // copy assignment
     Session& operator=(Session&& other); // move assignment
-
     void clean(); // used by move assignment+destructor
     virtual ~Session(); // destructor
     Tree* BFS(int rootLabel); // Create BFS tree based on given node the graph in session

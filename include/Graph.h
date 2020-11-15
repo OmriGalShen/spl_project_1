@@ -21,12 +21,12 @@ public:
     std::vector<int> getNeighbours(int nodeInd) const;
     std::vector<int> getInfectedNodes();
     std::vector<std::vector<int>> getEdges();
-    void setEdges(int row, int col, int num);
+//    void setEdges(int row, int col, int num);
 //    void setInfected(int node);
     void addVirusOn(int nodeInd);
     bool isHealthy(int nodeInd);
     void removeNode(int nodeInd);
-    void printGraph();
+//    void printGraph();
     //
 
 private:

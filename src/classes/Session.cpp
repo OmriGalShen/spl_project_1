@@ -10,17 +10,12 @@ using namespace std;
 
 
 
-//            ***constructors***
 
-
+//            ***constructors and operators***
 
 
 Session::Session(const std::string& path): // constructor
-    g(),
-    treeType(),
-    agents(),
-    infectedQueue(),
-    cycleCount(0)
+    g(), treeType(), agents(), infectedQueue(), cycleCount(0)
 {
     ifstream readFile(path);
     json inputJson;
@@ -45,47 +40,26 @@ Session::Session(const std::string& path): // constructor
     readFile.close();
 }
 
-
-void Session::setGraph(const Graph &graph)
-{
-    g = graph;
-}
-
-void Session::addAgent(const Agent& agent)
-{
-    Agent * clone = agent.clone();
-    agents.push_back(clone);
-}
-
 Session::Session(const Session& other): //copy constructor
-    g(other.g),
-    treeType(other.treeType),
-    agents(),
-    infectedQueue(other.infectedQueue),   //other.infectedQueue? - Eden
-    cycleCount(other.cycleCount) //should it be other.cycleCount? - Eden
+        g(other.g), treeType(other.treeType), agents(),
+        infectedQueue(other.infectedQueue), cycleCount(other.cycleCount)
 {
     for(auto agent : other.agents)
     {
-        Agent* agentClone = agent->clone();
+        Agent * agentClone = agent->clone();
         agents.push_back(agentClone);
     }
 }
 
-
 Session::Session(Session&& other)://move constructor
-        g(other.g),
-        treeType(other.treeType),
-        agents(std::move(other.agents)),
-        infectedQueue(other.infectedQueue),   //other.infectedQueue? - Eden
-        cycleCount(other.cycleCount)
+        g(other.g), treeType(other.treeType), agents(std::move(other.agents)),
+        infectedQueue(other.infectedQueue), cycleCount(other.cycleCount)
 {}
-
 
 Session::~Session() //destructor
 {
     clean();
 }
-
 
 void Session::clean() // used by move assignment+destructor
 {
@@ -93,7 +67,6 @@ void Session::clean() // used by move assignment+destructor
         delete agent;
     agents.clear();
 }
-
 
 Session& Session::operator=(const Session& other)// copy assignment
 {
@@ -112,7 +85,6 @@ Session& Session::operator=(const Session& other)// copy assignment
     return (*this);
 }
 
-
 Session& Session::operator=(Session&& other)// move assignment
 {
     if(this != &other)
@@ -125,44 +97,11 @@ Session& Session::operator=(Session&& other)// move assignment
     return (*this);
 }
 
-/*
-This is the main simulation loop.
-*/
-void Session::simulate()
-{
-    bool terminateCycle = false;// true when terminate conditions are fulfilled
-    while(! terminateCycle) //cycle loop
-    {
-        int tempAgentsSize = agents.size();
-        cout << "number of agents: " << tempAgentsSize << endl;
-        cout << "cycle number: " << cycleCount << endl;
-        for (int i = 0; i < tempAgentsSize; i++)
-        {
-            cout << "agent in action!" <<endl;
-            agents[i]->act((*this));
-        }
-//        if (cycleCount == 4) {  //testing
-//            terminateCycle = true;
-//            cout << "agents list" <<endl;
-//        }
-
-        int newAgentsSize = agents.size();
-        if (tempAgentsSize == newAgentsSize) // no virus was added in cycle
-            terminateCycle = true;
-        cycleCount++; // update counter for cycle
-    }
-    cout<< "In simulate!" << endl;
-    jsonOutput(); //output simulate results to json file
-}
 
 
 
 
-//            ***getters***
-
-
-
-
+//            ***getters and setters***
 
 
 TreeType Session::getTreeType() const
@@ -180,6 +119,16 @@ Graph& Session::getGraphRef()
     return g;
 }
 
+void Session::setGraph(const Graph &graph)
+{
+    g = graph;
+}
+
+
+
+
+
+//            ***other functions***
 
 
 void Session::enqueueInfected(int nodeInd)
@@ -199,7 +148,6 @@ int Session::dequeueInfected()
     }
     return -1;
 }
-
 
 Tree* Session::BFS(int rootLabel)
 {
@@ -233,13 +181,48 @@ Tree* Session::BFS(int rootLabel)
     return curr_tree;
 }
 
+void Session::addAgent(const Agent& agent)
+{
+    Agent * clone = agent.clone();
+    agents.push_back(clone);
+}
+
+/*
+This is the main simulation loop.
+*/
+void Session::simulate()
+{
+    bool terminateCycle = false;// true when terminate conditions are fulfilled
+    while(! terminateCycle) //cycle loop
+    {
+        int tempAgentsSize = agents.size();
+        cout << "number of agents: " << tempAgentsSize << endl;
+        cout << "cycle number: " << cycleCount << endl;
+        for (int i = 0; i < tempAgentsSize; i++)
+        {
+            cout << "agent in action!" <<endl;
+            agents[i]->act((*this));
+        }
+//        if (cycleCount == 4) {  //testing
+//            terminateCycle = true;
+//            cout << "agents list" <<endl;
+//        }
+
+        int newAgentsSize = agents.size();
+        if (tempAgentsSize == newAgentsSize) // no virus was added in cycle
+            terminateCycle = true;
+        cycleCount++; // update counter for cycle
+    }
+    cout<< "In simulate!" << endl;
+    jsonOutput(); //output simulate results to json file
+}
 
 void Session::jsonOutput() // output final results as json
 {
     json outputJSON;
-    outputJSON["graph"] = g.getEdges();
-    outputJSON["infected"] = g.getInfectedNodes();
-    ofstream file("output.json");
+    outputJSON["graph"] = g.getEdges(); // I'm not sure that it's better than a loop - Eden
+    outputJSON["infected"] = g.getInfectedNodes(); // same here - Eden
+    ofstream file("../output.json");
     file << outputJSON;
     file.close();
 }

@@ -28,7 +28,7 @@ public:
     Virus(int nodeInd);
     virtual void act(Session& session);
     //added
-    Agent *clone() const; //it was private, why? - Eden
+    Agent *clone() const;
     Virus(const Virus& other);           //copy constructor
 
 private:
