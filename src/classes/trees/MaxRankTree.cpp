@@ -1,11 +1,41 @@
 #include "../../../include/Tree.h"
 #include <deque>
 
-MaxRankTree::MaxRankTree(int rootLabel): Tree(rootLabel) // constructor
+// constructor
+MaxRankTree::MaxRankTree(int rootLabel): Tree(rootLabel)
 {}
 
-MaxRankTree::MaxRankTree(const MaxRankTree &other): Tree(other) // copy constructor
+// copy constructor
+MaxRankTree::MaxRankTree(const MaxRankTree &other): Tree(other)
 {}
+
+// copy assignment operator
+MaxRankTree &MaxRankTree::operator=(const MaxRankTree &other) {
+    if(this != &other)
+    {
+        this->clean();
+        node = other.node;
+        children = other.children;
+    }
+    return (*this);
+}
+// move constructor
+MaxRankTree::MaxRankTree(MaxRankTree &&other)
+        :Tree(std::move(other))
+{
+
+}
+// move assignment
+MaxRankTree &MaxRankTree::operator=(MaxRankTree &&other)
+{
+    if(this != &other)
+    {
+        this->clean();
+        node = other.node;
+        children = std::move(other.children);
+    }
+    return (*this);
+}
 
 
 Tree * MaxRankTree::clone() const
@@ -35,6 +65,7 @@ int MaxRankTree::traceTree()
     }
     return (*maxChildrenPtr).node;
 }
+
 
 
 
