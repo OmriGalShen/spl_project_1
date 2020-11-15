@@ -9,7 +9,7 @@
 
 
 // for convenience
-using json = nlohmann::json; //used for working with json files
+using json = nlohmann::json; // used for working with json files
 
 class Agent;
 
@@ -30,8 +30,8 @@ public:
     TreeType getTreeType() const;
     //added
     void jsonOutput();
-    Session(const Session& other); // Copy constructor
-    Session(Session&& other); //move constructor
+    Session(const Session& other); // copy constructor
+    Session(Session&& other); // move constructor
     Session& operator=(const Session& other); // copy assignment
     Session& operator=(Session&& other); // move assignment
     void clean(); // used by move assignment+destructor

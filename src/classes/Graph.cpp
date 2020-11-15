@@ -55,7 +55,7 @@ std::vector<int> Graph::getNeighbours(int nodeInd) const
     return neighbours;
 }
 
-std::vector<std::vector<int>> Graph::getEdges()
+std::vector<std::vector<int>>& Graph::getEdgesRef()
 {
     return edges;
 }

@@ -3,7 +3,6 @@
 #include "Agent.h"
 #include "iostream"
 #include <deque>
-#include <algorithm>
 // for convenience
 using namespace std;
 
@@ -150,7 +149,7 @@ int Session::dequeueInfected()
 Tree* Session::BFS(int rootLabel)
 {
     Tree* curr_tree = Tree::createTree((*this),rootLabel);
-    int matSize = g.getEdges().size();
+    int matSize = g.getEdgesRef().size();
     vector<bool> visitedNode(matSize,false);
     visitedNode[rootLabel] =true;
     std::deque<Tree*> greyQueue;
@@ -186,7 +185,7 @@ This is the main simulation loop.
 void Session::simulate()
 {
     bool terminateCycle = false;// true when terminate conditions are fulfilled
-    while(! terminateCycle) //cycle loop
+    while(! terminateCycle) // cycle loop
     {
         int tempAgentsSize = agents.size();
         for (int i = 0; i < tempAgentsSize; i++)
@@ -196,15 +195,15 @@ void Session::simulate()
             terminateCycle = true;
         cycleCount++; // update counter for cycle
     }
-    jsonOutput(); //output simulate results to json file
+    jsonOutput(); // output simulate results to json file
 }
 
 void Session::jsonOutput() // output final results as json
 {
     json outputJSON;
-    outputJSON["graph"] = g.getEdges();
+    outputJSON["graph"] = g.getEdgesRef();
     outputJSON["infected"] = g.getInfectedNodes();
-    ofstream file("../output.json");
+    ofstream file("./output.json");
     file << outputJSON;
     file.close();
 }

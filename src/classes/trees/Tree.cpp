@@ -78,11 +78,6 @@ void Tree::addChild(Tree* child)
     children.push_back(child);
 }
 
-Tree* Tree::getRightChild()
-{
-    return children.back();
-}
-
 int Tree::getNodeInd()
 {
     return node;

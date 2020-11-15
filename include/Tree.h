@@ -9,28 +9,27 @@ class Session;
 
 class Tree{
 public:
-    Tree(int rootLabel); // Constructor
+    Tree(int rootLabel); // constructor
     void addChild(const Tree& child);
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree()=0;
     //added
-    Tree& operator=(const Tree& other); //Copy assignment operator
-    Tree(const Tree& other); // Copy constructor
-    Tree(Tree&& other); //move constructor
+    Tree& operator=(const Tree& other); // copy assignment operator
+    Tree(const Tree& other); // copy constructor
+    Tree(Tree&& other); // move constructor
     Tree& operator=(Tree&& other); // move assignment
     Tree& operator=(Tree& other); // move assignment
     void clean(); // used by move assignment+destructor
     virtual ~Tree(); // destructor
     void addChild(Tree* child);
     bool hasChildren() const;
-    Tree* getRightChild();
     Tree* getLeftChild();
     int getNodeInd();
     virtual Tree * clone() const=0;
     //
 
 
-protected: //changed from private to protected
+protected: // changed from private to protected
     int node;
     std::vector<Tree*> children;
 };
