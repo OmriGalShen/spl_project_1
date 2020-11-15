@@ -46,7 +46,7 @@ Tree& Tree::operator=(Tree&& other) // move assignment
     return (*this);
 }
 
-Tree& Tree::operator=(Tree& other) // copy assignment
+Tree& Tree::operator=(const Tree& other) // copy assignment
 {
     if(this != &other)
     {
