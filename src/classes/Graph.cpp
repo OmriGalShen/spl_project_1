@@ -12,9 +12,14 @@ Graph::Graph(): //empty constructor
     {}
 
 Graph::Graph(std::vector<std::vector<int>> matrix): //constructor
-    edges(matrix),
-    nodesStatus(std::vector<NodeCondition>(matrix.size(),Healthy))
-{}
+    edges({}), //should be defined this way - Eden
+    //nodesStatus(std::vector<NodeCondition>(matrix.size(),Healthy))
+    nodesStatus(matrix.size(),Healthy) //the first part isn't necessary - Eden
+{
+    int matSize = matrix.size();
+    for (int i=0; i<matSize; i++)
+        edges.push_back(matrix[i]);
+}
 
 Graph::Graph(const Graph &other): // copy constructor
     edges(other.edges),
