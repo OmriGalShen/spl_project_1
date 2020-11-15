@@ -34,5 +34,5 @@
 *.app
 .idea
 /bin
-../output.json
+./output.json
 /CMakeLists.txt
