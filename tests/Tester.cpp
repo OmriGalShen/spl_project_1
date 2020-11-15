@@ -1,5 +1,5 @@
 #include "../include/Session.h"
-#include "Tester.h"
+#include "../tests/Tester.h"
 #include <csignal>
 #include <iostream>
 #include <fstream>
