@@ -35,4 +35,4 @@
 .idea
 .bin
 
-/output.json
+../output.json
