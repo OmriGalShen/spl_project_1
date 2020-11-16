@@ -14,7 +14,7 @@ public:
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree()=0;
     //added
-    Tree& operator=(const Tree& other); // copy assignment operator
+    const Tree& operator=(const Tree& other); // copy assignment operator
     Tree(const Tree& other); // copy constructor
     Tree(Tree&& other); // move constructor
     Tree& operator=(Tree&& other); // move assignment
@@ -41,7 +41,7 @@ public:
     CycleTree(int rootLabel, int currCycle);
     virtual int traceTree();
     //added
-    CycleTree& operator=(const CycleTree& other); // copy assignment operator
+    const CycleTree& operator=(const CycleTree& other); // copy assignment operator
     CycleTree(const CycleTree& other); // copy constructor
     CycleTree(CycleTree&& other) ; // move constructor
     CycleTree& operator=(CycleTree&& other) ; // move assignment
@@ -57,7 +57,7 @@ public:
     MaxRankTree(int rootLabel);
     virtual int traceTree();
     //added
-    MaxRankTree& operator=(const MaxRankTree& other); // copy assignment operator
+    const MaxRankTree& operator=(const MaxRankTree& other); // copy assignment operator
     MaxRankTree(const MaxRankTree& other); // copy constructor
     MaxRankTree(MaxRankTree&& other) ; // move constructor
     MaxRankTree& operator=(MaxRankTree&& other) ; // move assignment
@@ -71,7 +71,7 @@ public:
     RootTree(int rootLabel);
     virtual int traceTree();
     //added
-    RootTree& operator=(const RootTree& other); // copy assignment operator
+    const RootTree& operator=(const RootTree& other); // copy assignment operator
     RootTree(const RootTree& other); // copy constructor
     RootTree(RootTree&& other) ; // move constructor
     RootTree& operator=(RootTree&& other) ; // move assignment

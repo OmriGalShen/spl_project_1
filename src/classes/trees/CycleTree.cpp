@@ -10,7 +10,7 @@ Tree(other), currCycle(other.currCycle)
 {}
 
 // copy assignment operator
-CycleTree &CycleTree::operator=(const CycleTree &other) {
+const CycleTree &CycleTree::operator=(const CycleTree &other) {
     if(this != &other)
     {
         Tree:: operator=(other);

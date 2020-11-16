@@ -67,7 +67,7 @@ void Session::clean() // used by move assignment+destructor
     agents.clear();
 }
 
-Session& Session::operator=(const Session& other) // copy assignment
+const Session& Session::operator=(const Session& other) // copy assignment
 {
     if(this != &other)
     {

@@ -9,7 +9,7 @@ RootTree::RootTree(const RootTree &other): Tree(other)
 {}
 
 // copy assignment operator
-RootTree &RootTree::operator=(const RootTree &other) {
+const RootTree &RootTree::operator=(const RootTree &other) {
     if(this != &other)
         Tree:: operator=(other);
     return (*this);

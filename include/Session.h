@@ -32,7 +32,7 @@ public:
     void jsonOutput();
     Session(const Session& other); // copy constructor
     Session(Session&& other); // move constructor
-    Session& operator=(const Session& other); // copy assignment
+    const Session& operator=(const Session& other); // copy assignment
     Session& operator=(Session&& other); // move assignment
     void clean(); // used by move assignment+destructor
     virtual ~Session(); // destructor

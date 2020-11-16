@@ -10,7 +10,7 @@ MaxRankTree::MaxRankTree(const MaxRankTree &other): Tree(other)
 {}
 
 // copy assignment operator
-MaxRankTree &MaxRankTree::operator=(const MaxRankTree &other)
+const MaxRankTree &MaxRankTree::operator=(const MaxRankTree &other)
 {
     if(this != &other)
         Tree:: operator=(other);
