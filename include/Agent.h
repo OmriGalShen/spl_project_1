@@ -19,7 +19,9 @@ class ContactTracer: public Agent{
 public:
     ContactTracer();
     virtual void act(Session& session);
-    Agent *clone() const; // added
+    // added
+    Agent *clone() const; // should that be virtual like act? - Eden
+    //
 };
 
 

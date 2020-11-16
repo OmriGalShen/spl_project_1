@@ -23,7 +23,7 @@ void Tree::clean() // used by move assignment+destructor
     for(auto* child:children)
          delete child;
     children.clear();
-    node = -1;
+    node = -1; // why? - Eden
 }
 
 Tree::~Tree() // destructor
@@ -41,7 +41,7 @@ Tree& Tree::operator=(Tree&& other) // move assignment
     {
         this->clean();
         node = other.node;
-        children = std::move(other.children);
+        children = std::move(other.children); // need the std? - Eden
     }
     return (*this);
 }
@@ -86,6 +86,8 @@ int Tree::getNodeInd()
 bool Tree::hasChildren() const
 {
     return children.size()>0;
+    // return !children.empty();
+    // to solve a potential problem with int compered with unsigned int - Eden
 }
 
 Tree* Tree::getLeftChild()
