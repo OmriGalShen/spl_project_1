@@ -22,11 +22,11 @@ public:
     virtual ~Tree(); // destructor
     void addChild(Tree* child);
     bool hasChildren() const;
-    Tree* getLeftChild();
-    int getNodeInd();
+    Tree* getLeftChild(); // const? - Eden
+    int getNodeInd(); // const? - Eden
     virtual Tree * clone() const=0;
-    std::vector<Tree*> getChildren();
-    int getRootLabel();
+    std::vector<Tree*> getChildren();  // not used - Eden
+    int getRootLabel(); // 1. not used 2. const? - Eden
     //
 
 

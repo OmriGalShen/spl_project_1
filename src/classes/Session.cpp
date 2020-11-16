@@ -12,7 +12,7 @@ using namespace std;
 
 //            ***constructors and operators***
 
-
+// is the std:: needed? - Eden
 Session::Session(const std::string& path): // constructor
 g(), treeType(), agents(), infectedQueue(), cycleCount(0)
 {
@@ -43,7 +43,7 @@ Session::Session(const Session& other): // copy constructor
 g(other.g), treeType(other.treeType), agents(),infectedQueue(other.infectedQueue),
 cycleCount(other.cycleCount)
 {
-    for(auto agent : other.agents)
+    for(auto agent : other.agents) // should that be auto& ? - Eden
     {
         Agent * agentClone = agent->clone();
         agents.push_back(agentClone);
@@ -51,7 +51,7 @@ cycleCount(other.cycleCount)
 }
 
 Session::Session(Session&& other): // move constructor
-g(other.g), treeType(other.treeType), agents(std::move(other.agents)),
+g(other.g), treeType(other.treeType), agents(std::move(other.agents)), //need std? - Eden
 infectedQueue(other.infectedQueue), cycleCount(other.cycleCount)
 {}
 
@@ -64,18 +64,18 @@ void Session::clean() // used by move assignment+destructor
 {
     for(auto * agent:agents)
         delete agent;
-    agents.clear();
+    agents.clear();  // is this instead of agent=nullptr? - Eden
 }
 
 const Session& Session::operator=(const Session& other) // copy assignment
 {
-    if(this != &other)
+    if(this != &other)  // what about the infectedQueue? - Eden
     {
         this->clean();
         g = other.g;
         treeType = other.treeType;
         cycleCount = other.cycleCount;
-        for(auto agent : other.agents)
+        for(auto agent : other.agents) // same here - auto& ? - Eden
         {
             Agent* agentClone = agent->clone();
             agents.push_back(agentClone);
@@ -86,7 +86,7 @@ const Session& Session::operator=(const Session& other) // copy assignment
 
 Session& Session::operator=(Session&& other) // move assignment
 {
-    if(this != &other)
+    if(this != &other)  //what about cycleCount and the infectedQueue? - Eden
     {
         this->clean();
         g = other.g;
@@ -152,7 +152,7 @@ Tree* Session::BFS(int rootLabel)
     int matSize = g.getEdgesRef().size();
     vector<bool> visitedNode(matSize,false);
     visitedNode[rootLabel] =true;
-    std::deque<Tree*> greyQueue;
+    std::deque<Tree*> greyQueue; // std needed? - Eden
     greyQueue.push_back(curr_tree);
     while(!greyQueue.empty())
     {
