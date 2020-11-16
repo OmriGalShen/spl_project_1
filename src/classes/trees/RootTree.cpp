@@ -11,11 +11,7 @@ RootTree::RootTree(const RootTree &other): Tree(other)
 // copy assignment operator
 RootTree &RootTree::operator=(const RootTree &other) {
     if(this != &other)
-    {
-        this->clean();
-        node = other.node;
-        children = other.children;
-    }
+        Tree:: operator=(other);
     return (*this);
 }
 // move constructor
@@ -28,11 +24,7 @@ RootTree::RootTree(RootTree &&other)
 RootTree &RootTree::operator=(RootTree &&other)
 {
     if(this != &other)
-    {
-        this->clean();
-        node = other.node;
-        children = std::move(other.children);
-    }
+        Tree:: operator=(std::move(other)); //Steal resources
     return (*this);
 }
 

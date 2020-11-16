@@ -10,13 +10,10 @@ MaxRankTree::MaxRankTree(const MaxRankTree &other): Tree(other)
 {}
 
 // copy assignment operator
-MaxRankTree &MaxRankTree::operator=(const MaxRankTree &other) {
+MaxRankTree &MaxRankTree::operator=(const MaxRankTree &other)
+{
     if(this != &other)
-    {
-        this->clean();
-        node = other.node;
-        children = other.children;
-    }
+        Tree:: operator=(other);
     return (*this);
 }
 // move constructor
@@ -29,11 +26,7 @@ MaxRankTree::MaxRankTree(MaxRankTree &&other)
 MaxRankTree &MaxRankTree::operator=(MaxRankTree &&other)
 {
     if(this != &other)
-    {
-        this->clean();
-        node = other.node;
-        children = std::move(other.children);
-    }
+        Tree:: operator=(std::move(other)); //Steal resources
     return (*this);
 }
 

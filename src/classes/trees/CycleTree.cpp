@@ -13,10 +13,8 @@ Tree(other), currCycle(other.currCycle)
 CycleTree &CycleTree::operator=(const CycleTree &other) {
     if(this != &other)
     {
-        this->clean();
-        node = other.node;
+        Tree:: operator=(other);
         currCycle = other.currCycle;
-        children = other.children;
     }
     return (*this);
 }
@@ -31,10 +29,9 @@ CycleTree &CycleTree::operator=(CycleTree &&other)
 {
     if(this != &other)
     {
-        this->clean();
-        node = other.node;
         currCycle = other.currCycle;
-        children = std::move(other.children);
+        other.currCycle = -1;
+        Tree:: operator=(std::move(other)); //Steal resources
     }
     return (*this);
 }
