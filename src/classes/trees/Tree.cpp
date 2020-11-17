@@ -24,29 +24,35 @@ Tree::Tree(const Tree &other): node(other.node) // copy constructor
     }
 }
 
+
 Tree::Tree(Tree&& other): // move constructor
 node(other.node),children(std::move(other.children))
 {}
+
 
 Tree& Tree::operator=(const Tree& other) // copy assignment
 {
     if(this != &other)
     {
+        this->clean();
+        node = other.node;
+        children = other.children;
     }
-    return *this;
+    return (*this);
 }
+
 
 Tree& Tree::operator=(Tree&& other) // move assignment
 {
     if(this != &other)
     {
-        clean();
+        this->clean();
         node = other.node;
-        children = other.children;
-        other.clean();
+        children = move(other.children);
     }
     return (*this);
 }
+
 
 void Tree::clean() // used by move assignment+destructor
 {
@@ -65,6 +71,14 @@ Tree::~Tree() // destructor
 
 
 
+//            ***other functions***
+
+
+void Tree::addChild(const Tree& child)
+{
+    Tree* clone = child.clone();
+    children.push_back(clone);
+}
 
 
 Tree* Tree::createTree(const Session& session, int rootLabel)
@@ -77,26 +91,18 @@ Tree* Tree::createTree(const Session& session, int rootLabel)
     return new CycleTree(rootLabel,session.getCycle());
 }
 
-void Tree::addChild(const Tree& child)
-{
-    Tree* clone = child.clone();
-    children.push_back(clone);
-}
 
 void Tree::addChild(Tree* child)
 {
     children.push_back(child);
 }
 
-int Tree::getNodeInd() const
-{
-    return node;
-}
 
 bool Tree::hasChildren() const
 {
     return !children.empty();
 }
+
 
 Tree* Tree::getLeftChild()
 {
@@ -104,6 +110,14 @@ Tree* Tree::getLeftChild()
         return children[0];
     return nullptr;
 }
+
+
+int Tree::getNodeInd() const
+{
+    return node;
+}
+
+
 
 
 // for testing
