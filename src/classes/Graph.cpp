@@ -28,7 +28,7 @@ edges(other.edges), nodesStatus(other.nodesStatus)
 //            ***getters***
 
 
-std::vector<int> Graph::getInfectedNodes()
+std::vector<int> Graph::getInfectedNodes() const
 {
     std::vector<int> infectedNodes;
     for(unsigned int i=0; i<nodesStatus.size(); i++)

@@ -25,7 +25,7 @@ public:
     Graph();
     Graph(const Graph& other);
     vector<int> getNeighbours(int nodeInd) const;
-    vector<int> getInfectedNodes(); // should that be const/ passed by ref? - Eden
+    vector<int> getInfectedNodes() const; // should that be const/ passed by ref? - Eden
     vector<vector<int>>& getEdgesRef();
     void addVirusOn(int nodeInd);
     bool isHealthy(int nodeInd);

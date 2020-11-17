@@ -42,10 +42,11 @@ g(), treeType(), agents(), infectedQueue(), cycleCount(0)
 
 
 Session::Session(const Session& other): // copy constructor
-g(other.g), treeType(other.treeType), agents(), infectedQueue(other.infectedQueue),
+treeType(other.treeType), agents(), infectedQueue(other.infectedQueue),
 cycleCount(other.cycleCount)
 {
-    for(auto& agent : other.agents) // should that be auto& ? - Eden
+    setGraph(other.g);
+    for(auto& agent : other.agents)
     {
         Agent* agentClone = agent->clone();
         agents.push_back(agentClone);
@@ -54,35 +55,12 @@ cycleCount(other.cycleCount)
 
 
 Session::Session(Session&& other): // move constructor
-g(other.g), treeType(other.treeType), agents(move(other.agents)),
-infectedQueue(other.infectedQueue), cycleCount(other.cycleCount)
+        g(other.g), treeType(other.treeType), agents(move(other.agents)),
+        infectedQueue(other.infectedQueue), cycleCount(other.cycleCount)
 {
-    //other.g. = Graph();
-    other.cycleCount = 0;
-    other.
+    other.clean(); // should we add that? - Eden
 }
 
-
-void Session::clean() // used by move assignment+destructor
-{
-    for(auto * agent:agents)
-    {
-        delete agent;
-        agent = nullptr;
-    }
-
-    //agents.clear();  // is this instead of agent=nullptr? - Eden
-}
-
-
-
-
-
-
-Session::~Session() // destructor
-{
-    clean();
-}
 
 
 
@@ -90,15 +68,12 @@ Session& Session::operator=(const Session& other) // copy assignment
 {
     if(this != &other)  // what about the infectedQueue? - Eden
     {
-        this->clean();
-        g = other.g;
+        clean();
+        setGraph(other.g);
         treeType = other.treeType;
+
+        infectedQueue = other.infectedQueue;
         cycleCount = other.cycleCount;
-        for(auto agent : other.agents) // same here - auto& ? - Eden
-        {
-            Agent* agentClone = agent->clone();
-            agents.push_back(agentClone);
-        }
     }
     return (*this);
 }
@@ -113,6 +88,25 @@ Session& Session::operator=(Session&& other) // move assignment
         agents = std::move(other.agents);
     }
     return (*this);
+}
+
+
+
+void Session::clean() // used by move assignment+destructor
+{
+    for(auto * agent:agents)
+    {
+        delete agent;
+        agent = nullptr;
+    }
+    //agents.clear();  // is this instead of agent=nullptr? - Eden
+}
+
+
+
+Session::~Session() // destructor
+{
+    clean();
 }
 
 
