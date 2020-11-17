@@ -11,7 +11,7 @@ using namespace std;
 //            ***constructors and operators***
 
 
-Tree::Tree(int rootLabel): node(rootLabel), children(std::vector<Tree*>()) // constructor
+Tree::Tree(int rootLabel): node(rootLabel), children(vector<Tree*>()) // constructor
 {}
 
 
@@ -61,6 +61,7 @@ void Tree::clean() // used by move assignment+destructor
     children.clear();
     node = -1;
 }
+
 
 Tree::~Tree() // destructor
 {
@@ -116,8 +117,6 @@ int Tree::getNodeInd() const
 {
     return node;
 }
-
-
 
 
 // for testing

@@ -62,8 +62,6 @@ Session::Session(Session&& other): // move constructor
 }
 
 
-
-
 Session& Session::operator=(const Session& other) // copy assignment
 {
     if(this != &other)  // what about the infectedQueue? - Eden
@@ -78,6 +76,7 @@ Session& Session::operator=(const Session& other) // copy assignment
     return (*this);
 }
 
+
 Session& Session::operator=(Session&& other) // move assignment
 {
     if(this != &other)  //what about cycleCount and the infectedQueue? - Eden
@@ -91,7 +90,6 @@ Session& Session::operator=(Session&& other) // move assignment
 }
 
 
-
 void Session::clean() // used by move assignment+destructor
 {
     for(auto * agent:agents)
@@ -101,7 +99,6 @@ void Session::clean() // used by move assignment+destructor
     }
     //agents.clear();  // is this instead of agent=nullptr? - Eden
 }
-
 
 
 Session::~Session() // destructor
@@ -121,16 +118,17 @@ TreeType Session::getTreeType() const
     return treeType;
 }
 
+
 int Session::getCycle() const
 {
     return cycleCount;
 }
 
+
 Graph& Session::getGraphRef()
 {
     return g;
 }
-
 
 
 void Session::setGraph(const Graph &graph)
@@ -151,6 +149,7 @@ void Session::enqueueInfected(int nodeInd)
     infectedQueue.push_back(nodeInd);
 }
 
+
 int Session::dequeueInfected()
 {
     if(! infectedQueue.empty())
@@ -161,6 +160,7 @@ int Session::dequeueInfected()
     }
     return -1;
 }
+
 
 Tree* Session::BFS(int rootLabel)
 {
@@ -189,6 +189,7 @@ Tree* Session::BFS(int rootLabel)
     return curr_tree;
 }
 
+
 void Session::addAgent(const Agent& agent)
 {
     Agent * clone = agent.clone();
@@ -213,6 +214,7 @@ void Session::simulate()
     }
     jsonOutput(); // output simulate results to json file
 }
+
 
 void Session::jsonOutput() // output final results as json
 {

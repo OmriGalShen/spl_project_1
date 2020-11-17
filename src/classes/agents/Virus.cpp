@@ -23,7 +23,7 @@ void Virus::act(Session& session)
     for(unsigned i=0; !found && i<neighbours.size(); i++) // loop on neighbours of the virus node
     {
         int neighbourNode = neighbours[i]; // the neighbourNode index
-        if(g.isHealthy(neighbourNode)) //neighbourNode doesn't have virus or already infected
+        if(g.isHealthy(neighbourNode)) // neighbourNode doesn't have virus or already infected
         {
             Agent * spread = new Virus(neighbourNode); // create virus on neighbourNode
             session.addAgent(* spread); // add the new virus as an agent to agents vector
@@ -35,7 +35,7 @@ void Virus::act(Session& session)
     if(! g.isInfected(nodeInd)) // if virus is on node but it isn't infected yet
     {
         g.infectNode(nodeInd); // Virus infect the node he is on
-        session.enqueueInfected(nodeInd); // New infected node is added to session's queue
+        session.enqueueInfected(nodeInd); // new infected node is added to session's queue
     }
 }
 

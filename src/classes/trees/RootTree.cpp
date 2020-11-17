@@ -25,7 +25,7 @@ RootTree &RootTree::operator=(const RootTree &other) // copy assignment operator
 RootTree &RootTree::operator=(RootTree &&other) // move assignment
 {
     if(this != &other)
-        Tree:: operator=(std::move(other)); //Steal resources
+        Tree:: operator=(std::move(other)); // steal resources
     return (*this);
 }
 
@@ -38,5 +38,5 @@ int RootTree::traceTree()
 
 Tree* RootTree::clone() const
 {
-    return new RootTree((*this));
+    return new RootTree(*this);
 }

@@ -45,9 +45,9 @@ public:
     virtual int traceTree();
     //added
     CycleTree(const CycleTree& other); // copy constructor
-    CycleTree(CycleTree&& other) ; // move constructor
+    CycleTree(CycleTree&& other); // move constructor
     CycleTree& operator=(const CycleTree& other); // copy assignment operator
-    CycleTree& operator=(CycleTree&& other) ; // move assignment
+    CycleTree& operator=(CycleTree&& other); // move assignment
     virtual Tree* clone() const;
     //
 private:
@@ -61,9 +61,9 @@ public:
     virtual int traceTree();
     //added
     MaxRankTree(const MaxRankTree& other); // copy constructor
-    MaxRankTree(MaxRankTree&& other) ; // move constructor
+    MaxRankTree(MaxRankTree&& other); // move constructor
     MaxRankTree& operator=(const MaxRankTree& other); // copy assignment operator
-    MaxRankTree& operator=(MaxRankTree&& other) ; // move assignment
+    MaxRankTree& operator=(MaxRankTree&& other); // move assignment
     virtual Tree* clone() const;
     //
 };
@@ -75,9 +75,9 @@ public:
     virtual int traceTree();
     //added
     RootTree(const RootTree& other); // copy constructor
-    RootTree(RootTree&& other) ; // move constructor
+    RootTree(RootTree&& other); // move constructor
     RootTree& operator=(const RootTree& other); // copy assignment operator
-    RootTree& operator=(RootTree&& other) ; // move assignment
+    RootTree& operator=(RootTree&& other); // move assignment
     virtual Tree* clone() const;
     //
 };

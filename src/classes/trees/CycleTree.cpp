@@ -39,7 +39,7 @@ CycleTree &CycleTree::operator=(CycleTree &&other) // move assignment
     {
         currCycle = other.currCycle;
         other.currCycle = -1;
-        Tree:: operator=(std::move(other)); //Steal resources
+        Tree:: operator=(std::move(other)); // steal resources
     }
     return (*this);
 }
@@ -53,7 +53,7 @@ CycleTree &CycleTree::operator=(CycleTree &&other) // move assignment
 
 Tree* CycleTree::clone() const
 {
-    return new CycleTree((*this));
+    return new CycleTree(*this);
 }
 
 
@@ -61,7 +61,7 @@ int CycleTree::traceTree()
 {
     Tree* currentTree = this;
     int cycleCount = currCycle;
-    while (cycleCount>0&&currentTree->hasChildren())
+    while (cycleCount>0 && currentTree->hasChildren())
     {
         currentTree = currentTree->getLeftChild();
         cycleCount--;

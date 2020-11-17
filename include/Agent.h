@@ -21,7 +21,7 @@ public:
     ContactTracer();
     virtual void act(Session& session);
     // added
-    virtual Agent* clone() const; // should that be virtual like act? - Eden
+    virtual Agent* clone() const;
     //
 };
 

@@ -18,14 +18,14 @@ enum NodeCondition{
 
 class Graph{
 public:
-    Graph(std::vector<std::vector<int>> matrix);
+    Graph(vector<vector<int>> matrix);
     void infectNode(int nodeInd);
     bool isInfected(int nodeInd);
     // added
     Graph();
     Graph(const Graph& other);
     vector<int> getNeighbours(int nodeInd) const;
-    vector<int> getInfectedNodes() const; // should that be const/ passed by ref? - Eden
+    vector<int> getInfectedNodes() const;
     vector<vector<int>>& getEdgesRef();
     void addVirusOn(int nodeInd);
     bool isHealthy(int nodeInd);
@@ -34,7 +34,7 @@ public:
 
 
 private:
-    std::vector<std::vector<int>> edges;
+    vector<vector<int>> edges;
     // added
     vector<NodeCondition> nodesStatus;
     //
