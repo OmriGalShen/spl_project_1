@@ -1,37 +1,36 @@
 #include "../../../include/Tree.h"
 #include <deque>
 
-// constructor
-MaxRankTree::MaxRankTree(int rootLabel): Tree(rootLabel)
+
+MaxRankTree::MaxRankTree(int rootLabel): Tree(rootLabel) // constructor
 {}
 
-// copy constructor
-MaxRankTree::MaxRankTree(const MaxRankTree &other): Tree(other)
+
+MaxRankTree::MaxRankTree(const MaxRankTree &other): Tree(other) // copy constructor
 {}
 
-// copy assignment operator
-const MaxRankTree &MaxRankTree::operator=(const MaxRankTree &other)
+
+MaxRankTree::MaxRankTree(MaxRankTree &&other): Tree(std::move(other)) // move constructor
+{}
+
+
+MaxRankTree& MaxRankTree::operator=(const MaxRankTree &other) // copy assignment operator
 {
     if(this != &other)
         Tree:: operator=(other);
     return (*this);
 }
-// move constructor
-MaxRankTree::MaxRankTree(MaxRankTree &&other)
-        :Tree(std::move(other))
-{
 
-}
-// move assignment
-MaxRankTree &MaxRankTree::operator=(MaxRankTree &&other)
+
+MaxRankTree& MaxRankTree::operator=(MaxRankTree &&other) // move assignment
 {
     if(this != &other)
-        Tree:: operator=(std::move(other)); //Steal resources
+        Tree:: operator=(std::move(other)); // steal resources
     return (*this);
 }
 
 
-Tree * MaxRankTree::clone() const
+Tree* MaxRankTree::clone() const
 {
     return new MaxRankTree((*this));
 }

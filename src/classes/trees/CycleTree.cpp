@@ -1,5 +1,12 @@
 #include "../../../include/Tree.h"
 
+
+
+
+
+//            ***constructors and operators***
+
+
 CycleTree::CycleTree(int rootLabel, int currCycle): // constructor
 Tree(rootLabel), currCycle(currCycle)
 {}
@@ -9,8 +16,14 @@ CycleTree::CycleTree(const CycleTree &other): // copy constructor
 Tree(other), currCycle(other.currCycle)
 {}
 
-// copy assignment operator
-const CycleTree &CycleTree::operator=(const CycleTree &other) {
+
+CycleTree::CycleTree(CycleTree &&other): // move constructor
+Tree(std::move(other)),currCycle(other.currCycle)
+{}
+
+
+CycleTree &CycleTree::operator=(const CycleTree &other) // copy assignment operator
+{
     if(this != &other)
     {
         Tree:: operator=(other);
@@ -18,14 +31,9 @@ const CycleTree &CycleTree::operator=(const CycleTree &other) {
     }
     return (*this);
 }
-// move constructor
-CycleTree::CycleTree(CycleTree &&other)
-        :Tree(std::move(other)),currCycle(other.currCycle)
-{
 
-}
-// move assignment
-CycleTree &CycleTree::operator=(CycleTree &&other)
+
+CycleTree &CycleTree::operator=(CycleTree &&other) // move assignment
 {
     if(this != &other)
     {
@@ -37,7 +45,13 @@ CycleTree &CycleTree::operator=(CycleTree &&other)
 }
 
 
-Tree * CycleTree::clone() const
+
+
+
+//            ***other functions***
+
+
+Tree* CycleTree::clone() const
 {
     return new CycleTree((*this));
 }

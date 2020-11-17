@@ -14,20 +14,23 @@ public:
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree()=0;
     //added
-    const Tree& operator=(const Tree& other); // copy assignment operator
     Tree(const Tree& other); // copy constructor
     Tree(Tree&& other); // move constructor
+    Tree& operator=(const Tree& other); // copy assignment operator
     Tree& operator=(Tree&& other); // move assignment
     void clean(); // used by move assignment+destructor
     virtual ~Tree(); // destructor
     void addChild(Tree* child);
     bool hasChildren() const;
     Tree* getLeftChild(); // const? - Eden
-    int getNodeInd(); // const? - Eden
-    virtual Tree * clone() const=0;
-    std::vector<Tree*> getChildren();  // not used - Eden
-    int getRootLabel(); // 1. not used 2. const? - Eden
+    int getNodeInd() const;
+    virtual Tree* clone() const=0;
     //
+
+
+// for testing
+//    std::vector<Tree*> getChildren();
+//    int getRootLabel();
 
 
 protected: // changed from private to protected
@@ -41,11 +44,11 @@ public:
     CycleTree(int rootLabel, int currCycle);
     virtual int traceTree();
     //added
-    const CycleTree& operator=(const CycleTree& other); // copy assignment operator
     CycleTree(const CycleTree& other); // copy constructor
     CycleTree(CycleTree&& other) ; // move constructor
+    CycleTree& operator=(const CycleTree& other); // copy assignment operator
     CycleTree& operator=(CycleTree&& other) ; // move assignment
-    Tree *clone() const;
+    virtual Tree* clone() const;
     //
 private:
     int currCycle;
@@ -57,11 +60,11 @@ public:
     MaxRankTree(int rootLabel);
     virtual int traceTree();
     //added
-    const MaxRankTree& operator=(const MaxRankTree& other); // copy assignment operator
     MaxRankTree(const MaxRankTree& other); // copy constructor
     MaxRankTree(MaxRankTree&& other) ; // move constructor
+    MaxRankTree& operator=(const MaxRankTree& other); // copy assignment operator
     MaxRankTree& operator=(MaxRankTree&& other) ; // move assignment
-    Tree *clone() const;
+    virtual Tree* clone() const;
     //
 };
 
@@ -71,11 +74,11 @@ public:
     RootTree(int rootLabel);
     virtual int traceTree();
     //added
-    const RootTree& operator=(const RootTree& other); // copy assignment operator
     RootTree(const RootTree& other); // copy constructor
     RootTree(RootTree&& other) ; // move constructor
+    RootTree& operator=(const RootTree& other); // copy assignment operator
     RootTree& operator=(RootTree&& other) ; // move assignment
-    Tree *clone() const;
+    virtual Tree* clone() const;
     //
 };
 

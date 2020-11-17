@@ -41,7 +41,7 @@ void Virus::act(Session& session)
 
 
 
-Agent * Virus::clone() const
+Agent* Virus::clone() const
 {
     return new Virus(* this);
 }

@@ -3,6 +3,7 @@
 #include "Agent.h"
 #include "iostream"
 #include <deque>
+
 // for convenience
 using namespace std;
 
@@ -12,8 +13,8 @@ using namespace std;
 
 //            ***constructors and operators***
 
-// is the std:: needed? - Eden
-Session::Session(const std::string& path): // constructor
+
+Session::Session(const string& path): // constructor
 g(), treeType(), agents(), infectedQueue(), cycleCount(0)
 {
     ifstream readFile(path);
@@ -39,35 +40,53 @@ g(), treeType(), agents(), infectedQueue(), cycleCount(0)
     readFile.close();
 }
 
+
 Session::Session(const Session& other): // copy constructor
-g(other.g), treeType(other.treeType), agents(),infectedQueue(other.infectedQueue),
+g(other.g), treeType(other.treeType), agents(), infectedQueue(other.infectedQueue),
 cycleCount(other.cycleCount)
 {
-    for(auto agent : other.agents) // should that be auto& ? - Eden
+    for(auto& agent : other.agents) // should that be auto& ? - Eden
     {
-        Agent * agentClone = agent->clone();
+        Agent* agentClone = agent->clone();
         agents.push_back(agentClone);
     }
 }
 
+
 Session::Session(Session&& other): // move constructor
-g(other.g), treeType(other.treeType), agents(std::move(other.agents)), //need std? - Eden
+g(other.g), treeType(other.treeType), agents(move(other.agents)),
 infectedQueue(other.infectedQueue), cycleCount(other.cycleCount)
-{}
+{
+    //other.g. = Graph();
+    other.cycleCount = 0;
+    other.
+}
+
+
+void Session::clean() // used by move assignment+destructor
+{
+    for(auto * agent:agents)
+    {
+        delete agent;
+        agent = nullptr;
+    }
+
+    //agents.clear();  // is this instead of agent=nullptr? - Eden
+}
+
+
+
+
+
 
 Session::~Session() // destructor
 {
     clean();
 }
 
-void Session::clean() // used by move assignment+destructor
-{
-    for(auto * agent:agents)
-        delete agent;
-    agents.clear();  // is this instead of agent=nullptr? - Eden
-}
 
-const Session& Session::operator=(const Session& other) // copy assignment
+
+Session& Session::operator=(const Session& other) // copy assignment
 {
     if(this != &other)  // what about the infectedQueue? - Eden
     {
@@ -118,6 +137,8 @@ Graph& Session::getGraphRef()
     return g;
 }
 
+
+
 void Session::setGraph(const Graph &graph)
 {
     g = graph;
@@ -128,6 +149,7 @@ void Session::setGraph(const Graph &graph)
 
 
 //            ***other functions***
+
 
 
 void Session::enqueueInfected(int nodeInd)

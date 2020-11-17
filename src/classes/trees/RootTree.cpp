@@ -1,39 +1,42 @@
 #include "../../../include/Tree.h"
 
-// constructor
-RootTree::RootTree(int rootLabel): Tree(rootLabel)
+
+RootTree::RootTree(int rootLabel): Tree(rootLabel) // constructor
 {}
 
-// copy constructor
-RootTree::RootTree(const RootTree &other): Tree(other)
+
+RootTree::RootTree(const RootTree &other): Tree(other) // copy constructor
 {}
 
-// copy assignment operator
-const RootTree &RootTree::operator=(const RootTree &other) {
+
+RootTree::RootTree(RootTree &&other): // move constructor
+        Tree(std::move(other))
+{}
+
+
+RootTree &RootTree::operator=(const RootTree &other) // copy assignment operator
+{
     if(this != &other)
         Tree:: operator=(other);
     return (*this);
 }
-// move constructor
-RootTree::RootTree(RootTree &&other)
-        :Tree(std::move(other))
-{
 
-}
-// move assignment
-RootTree &RootTree::operator=(RootTree &&other)
+
+RootTree &RootTree::operator=(RootTree &&other) // move assignment
 {
     if(this != &other)
         Tree:: operator=(std::move(other)); //Steal resources
     return (*this);
 }
 
+
 int RootTree::traceTree()
 {
     return node;
 }
 
-Tree * RootTree::clone() const
+
+Tree* RootTree::clone() const
 {
     return new RootTree((*this));
 }

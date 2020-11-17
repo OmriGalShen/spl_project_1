@@ -4,18 +4,48 @@
 
 using namespace std;
 
-Tree::Tree(int rootLabel): // constructor
-node(rootLabel),children(std::vector<Tree*>())
+
+
+
+
+//            ***constructors and operators***
+
+
+Tree::Tree(int rootLabel): node(rootLabel), children(std::vector<Tree*>()) // constructor
 {}
 
-Tree::Tree(const Tree &other): // copy constructor
-node(other.node),children()
+
+Tree::Tree(const Tree &other): node(other.node) // copy constructor
 {
-    for(auto child : other.children)
+    for(auto& child : other.children)
     {
         Tree* childClone = child->clone();
         children.push_back(childClone);
     }
+}
+
+Tree::Tree(Tree&& other): // move constructor
+node(other.node),children(std::move(other.children))
+{}
+
+Tree& Tree::operator=(const Tree& other) // copy assignment
+{
+    if(this != &other)
+    {
+    }
+    return *this;
+}
+
+Tree& Tree::operator=(Tree&& other) // move assignment
+{
+    if(this != &other)
+    {
+        clean();
+        node = other.node;
+        children = other.children;
+        other.clean();
+    }
+    return (*this);
 }
 
 void Tree::clean() // used by move assignment+destructor
@@ -23,7 +53,7 @@ void Tree::clean() // used by move assignment+destructor
     for(auto* child:children)
          delete child;
     children.clear();
-    node = -1; // why? - Eden
+    node = -1;
 }
 
 Tree::~Tree() // destructor
@@ -31,31 +61,11 @@ Tree::~Tree() // destructor
     clean();
 }
 
-Tree::Tree(Tree&& other): //move constructor
-node(other.node),children(std::move(other.children))
-{}
 
-Tree& Tree::operator=(Tree&& other) // move assignment
-{
-    if(this != &other)
-    {
-        this->clean();
-        node = other.node;
-        children = std::move(other.children); // need the std? - Eden
-    }
-    return (*this);
-}
 
-const Tree& Tree::operator=(const Tree& other) // copy assignment
-{
-    if(this != &other)
-    {
-        this->clean();
-        node = other.node;
-        children = other.children;
-    }
-    return (*this);
-}
+
+
+
 
 Tree* Tree::createTree(const Session& session, int rootLabel)
 {
@@ -78,16 +88,14 @@ void Tree::addChild(Tree* child)
     children.push_back(child);
 }
 
-int Tree::getNodeInd()
+int Tree::getNodeInd() const
 {
     return node;
 }
 
 bool Tree::hasChildren() const
 {
-    return children.size()>0;
-    // return !children.empty();
-    // to solve a potential problem with int compered with unsigned int - Eden
+    return !children.empty();
 }
 
 Tree* Tree::getLeftChild()
@@ -97,10 +105,12 @@ Tree* Tree::getLeftChild()
     return nullptr;
 }
 
-std::vector<Tree *> Tree::getChildren() {
-    return children;
-}
 
-int Tree::getRootLabel() {
-    return node;
-}
+// for testing
+//std::vector<Tree *> Tree::getChildren() {
+//    return children;
+//}
+//
+//int Tree::getRootLabel() {
+//    return node;
+//}
