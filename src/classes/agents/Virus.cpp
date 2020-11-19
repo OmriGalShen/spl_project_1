@@ -9,9 +9,8 @@ nodeInd(nodeInd)
 
 
 
-Virus::Virus(const Virus& other):  // copy constructor
-nodeInd(other.nodeInd)
-{}
+//Virus::Virus(const Virus& other): nodeInd(other.nodeInd) // copy constructor
+//{}
 
 
 
@@ -43,5 +42,6 @@ void Virus::act(Session& session)
 
 Agent* Virus::clone() const
 {
-    return new Virus(* this);
+    //return new Virus(*this);
+    return new Virus(nodeInd);
 }

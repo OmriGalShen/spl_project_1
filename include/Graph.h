@@ -20,7 +20,7 @@ class Graph{
 public:
     Graph(vector<vector<int>> matrix);
     void infectNode(int nodeInd);
-    bool isInfected(int nodeInd);
+    bool isInfected(int nodeInd) const;
     // added
     Graph();
     Graph(const Graph& other);
@@ -28,7 +28,7 @@ public:
     vector<int> getInfectedNodes() const;
     vector<vector<int>>& getEdgesRef();
     void addVirusOn(int nodeInd);
-    bool isHealthy(int nodeInd);
+    bool isHealthy(int nodeInd) const;
     void removeNode(int nodeInd);
     //
 

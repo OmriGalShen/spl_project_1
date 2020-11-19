@@ -38,7 +38,7 @@ public:
     virtual ~Session(); // destructor
     Tree* BFS(int rootLabel); // Create BFS tree based on given node the graph in session
     int getCycle() const; // getter for private member cycleCount
-    Graph& getGraphRef();  // should that be const? - Eden
+    Graph& getGraphRef();
     //
     
 private:

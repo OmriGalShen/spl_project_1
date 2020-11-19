@@ -9,17 +9,14 @@
 //            ***constructors***
 
 
-Graph::Graph(): // empty constructor
-edges(), nodesStatus()
+Graph::Graph(): edges(), nodesStatus() // empty constructor
 {}
 
 Graph::Graph(std::vector<std::vector<int>> matrix): // constructor
 edges(matrix), nodesStatus(matrix.size(),Healthy)
 {}
 
-Graph::Graph(const Graph &other): // copy constructor
-edges(other.edges), nodesStatus(other.nodesStatus)
-{}
+Graph::Graph(const Graph &other) = default;// copy constructor
 
 
 
@@ -78,12 +75,12 @@ void Graph::addVirusOn(int nodeInd)
         nodesStatus[nodeInd] = HasVirus;
 }
 
-bool Graph::isHealthy(int nodeInd)
+bool Graph::isHealthy(int nodeInd) const
 {
     return nodesStatus[nodeInd] == Healthy;
 }
 
-bool Graph::isInfected(int nodeInd)
+bool Graph::isInfected(int nodeInd) const
 {
     return nodesStatus[nodeInd] == Infected;
 }

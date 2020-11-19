@@ -15,7 +15,7 @@ Tree::Tree(int rootLabel): node(rootLabel), children(vector<Tree*>()) // constru
 {}
 
 
-Tree::Tree(const Tree &other): node(other.node) // copy constructor
+Tree::Tree(const Tree &other): node(other.node), children() // copy constructor
 {
     for(auto& child : other.children)
     {

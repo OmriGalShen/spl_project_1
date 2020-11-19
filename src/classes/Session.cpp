@@ -37,15 +37,14 @@ g(), treeType(), agents(), infectedQueue(), cycleCount(0)
         else // agent is ContactTracer
             agents.push_back(new ContactTracer()); // add the new agent
     }
-    readFile.close();
+    readFile.close(); // ##############why do we need this? didn't sew it on dolav's explanation - Eden
 }
 
 
 Session::Session(const Session& other): // copy constructor
-treeType(other.treeType), agents(), infectedQueue(other.infectedQueue),
+g(other.g) /*/inside?/*/, treeType(other.treeType), agents(), infectedQueue(other.infectedQueue),
 cycleCount(other.cycleCount)
 {
-    setGraph(other.g);
     for(auto& agent : other.agents)
     {
         Agent* agentClone = agent->clone();
@@ -55,23 +54,19 @@ cycleCount(other.cycleCount)
 
 
 Session::Session(Session&& other): // move constructor
-        g(other.g), treeType(other.treeType), agents(move(other.agents)),
-        infectedQueue(other.infectedQueue), cycleCount(other.cycleCount)
-{
-    other.clean(); // should we add that? - Eden
-}
+g(other.g), treeType(other.treeType), agents(move(other.agents)), infectedQueue(), cycleCount(0)
+{ other.clean(); /*/ should we add that? - Eden /*/ }
 
 
 Session& Session::operator=(const Session& other) // copy assignment
 {
-    if(this != &other)  // what about the infectedQueue? - Eden
+    if(this != &other)
     {
         clean();
-        setGraph(other.g);
+        g = other.g;
         treeType = other.treeType;
 
-        infectedQueue = other.infectedQueue;
-        cycleCount = other.cycleCount;
+
     }
     return (*this);
 }
@@ -79,12 +74,12 @@ Session& Session::operator=(const Session& other) // copy assignment
 
 Session& Session::operator=(Session&& other) // move assignment
 {
-    if(this != &other)  //what about cycleCount and the infectedQueue? - Eden
+    if(this != &other)
     {
         this->clean();
         g = other.g;
         treeType = other.treeType;
-        agents = std::move(other.agents);
+        agents = move(other.agents);
     }
     return (*this);
 }
@@ -95,9 +90,8 @@ void Session::clean() // used by move assignment+destructor
     for(auto * agent:agents)
     {
         delete agent;
-        agent = nullptr;
     }
-    //agents.clear();  // is this instead of agent=nullptr? - Eden
+    agents.clear();
 }
 
 
@@ -222,6 +216,6 @@ void Session::jsonOutput() // output final results as json
     outputJSON["graph"] = g.getEdgesRef();
     outputJSON["infected"] = g.getInfectedNodes();
     ofstream file("./output.json");
-    file << outputJSON;
-    file.close();
+    file << outputJSON << endl;
+    //file.close();
 }
