@@ -7,7 +7,7 @@
 
 class Agent{
 public:
-    Agent();
+    Agent(); // empty constructor
     virtual void act(Session& session)=0;
     //added
     virtual Agent* clone() const = 0;

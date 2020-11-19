@@ -3,8 +3,7 @@
 
 
 
-ContactTracer::ContactTracer()
-{}
+ContactTracer::ContactTracer() = default;
 
 
 

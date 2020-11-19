@@ -1,17 +1,11 @@
 #include "../../../include/Agent.h"
 #include "iostream"
 
+// for convenience
+using namespace std;
 
 
-Virus::Virus(int nodeInd):  // constructor
-nodeInd(nodeInd)
-{}
-
-
-
-//Virus::Virus(const Virus& other): nodeInd(other.nodeInd) // copy constructor
-//{}
-
+Virus::Virus(int nodeInd): nodeInd(nodeInd){}  // constructor
 
 
 void Virus::act(Session& session)
@@ -39,9 +33,7 @@ void Virus::act(Session& session)
 }
 
 
-
 Agent* Virus::clone() const
 {
-    //return new Virus(*this);
     return new Virus(nodeInd);
 }

@@ -42,8 +42,8 @@ g(), treeType(), agents(), infectedQueue(), cycleCount(0)
 
 
 Session::Session(const Session& other): // copy constructor
-g(other.g) /*/inside?/*/, treeType(other.treeType), agents(), infectedQueue(other.infectedQueue),
-cycleCount(other.cycleCount)
+g(other.g), treeType(other.treeType), agents(), infectedQueue(),
+cycleCount(0)
 {
     for(auto& agent : other.agents)
     {
@@ -54,8 +54,8 @@ cycleCount(other.cycleCount)
 
 
 Session::Session(Session&& other): // move constructor
-g(other.g), treeType(other.treeType), agents(move(other.agents)), infectedQueue(), cycleCount(0)
-{ other.clean(); /*/ should we add that? - Eden /*/ }
+g(other.g), treeType(other.treeType), agents(move(other.agents)), infectedQueue(),
+cycleCount(0) {}
 
 
 Session& Session::operator=(const Session& other) // copy assignment
@@ -65,8 +65,11 @@ Session& Session::operator=(const Session& other) // copy assignment
         clean();
         g = other.g;
         treeType = other.treeType;
-
-
+        for(auto& agent : other.agents)
+        {
+            Agent* agentClone = agent->clone();
+            agents.push_back(agentClone);
+        }
     }
     return (*this);
 }
@@ -87,7 +90,7 @@ Session& Session::operator=(Session&& other) // move assignment
 
 void Session::clean() // used by move assignment+destructor
 {
-    for(auto * agent:agents)
+    for(auto * agent : agents)
     {
         delete agent;
     }
@@ -162,9 +165,9 @@ Tree* Session::BFS(int rootLabel)
     int matSize = g.getEdgesRef().size();
     vector<bool> visitedNode(matSize,false);
     visitedNode[rootLabel] =true;
-    std::deque<Tree*> greyQueue; // std needed? - Eden
+    deque<Tree*> greyQueue;
     greyQueue.push_back(curr_tree);
-    while(!greyQueue.empty())
+    while(! greyQueue.empty())
     {
         Tree* treeNode = greyQueue.front();
         greyQueue.pop_front();
