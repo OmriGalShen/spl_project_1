@@ -24,7 +24,8 @@ Tree::Tree(const Tree &other): node(other.node), children() // copy constructor
 }
 
 
-Tree::Tree(Tree&& other): node(other.node),children(move(other.children)){} // move constructor
+Tree::Tree(Tree&& other): node(other.node),children(move(other.children)) // move constructor
+{}
 
 
 Tree& Tree::operator=(const Tree& other) // copy assignment

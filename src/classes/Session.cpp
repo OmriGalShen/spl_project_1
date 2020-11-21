@@ -22,9 +22,12 @@ g(), treeType(), agents(), infectedQueue(), cycleCount(0)
     readFile>>inputJson;
     g = Graph(inputJson["graph"]); // get graph from input
     string type(inputJson["tree"]); // get tree type from input
-    if (type=="M") treeType=MaxRank;
-    if (type=="C") treeType=Cycle;
-    if (type=="R") treeType=Root;
+    if (type=="M")
+        treeType=MaxRank;
+    if (type=="C")
+        treeType=Cycle;
+    if (type=="R")
+        treeType=Root;
     int matSize = inputJson["agents"].size();
     for (int i=0; i<matSize; i++) // loop on input agents list
     {

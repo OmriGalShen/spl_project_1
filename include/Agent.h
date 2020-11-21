@@ -32,7 +32,7 @@ public:
     virtual void act(Session& session);
     //added
     virtual Agent* clone() const;
-    //Virus(const Virus& other); // copy constructor
+    //Virus(const Virus& other); // copy constructor  // ########### what for?
     //
 
 private:

@@ -10,7 +10,7 @@ Virus::Virus(int nodeInd): nodeInd(nodeInd){}  // constructor
 
 void Virus::act(Session& session)
 {
-    auto& g = session.getGraphRef();  // why auto and not Graph like in CT? - Eden
+    auto& g = session.getGraphRef();
     std::vector<int> neighbours = g.getNeighbours(nodeInd);
     bool found = false; // found neighbour node to infect
     for(unsigned i=0; !found && i<neighbours.size(); i++) // loop on neighbours of the virus node
