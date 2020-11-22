@@ -2,14 +2,14 @@
 #define AGENT_H_
 
 #include <vector>
-#include "Session.h" //added ########## what for?
+#include "Session.h" // added to access Session& session
 
 
 class Agent{
 public:
     Agent(); // empty constructor
     virtual void act(Session& session)=0;
-    //added
+    // added
     virtual Agent* clone() const = 0;
     virtual ~Agent();
     //
@@ -30,9 +30,9 @@ class Virus: public Agent{
 public:
     Virus(int nodeInd);
     virtual void act(Session& session);
-    //added
+    // added
     virtual Agent* clone() const;
-    //Virus(const Virus& other); // copy constructor  // ########### what for?
+    Virus(const Virus& other); // copy constructor
     //
 
 private:

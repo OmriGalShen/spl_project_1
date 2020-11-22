@@ -7,7 +7,7 @@ using namespace std;
 
 
 
-//            ***constructors and operators***
+//                           *****rule of 5*****
 
 
 Tree::Tree(int rootLabel): node(rootLabel), children(vector<Tree*>()) // constructor
@@ -32,7 +32,7 @@ Tree& Tree::operator=(const Tree& other) // copy assignment
 {
     if(this != &other)
     {
-        this->clean();
+        clean();
         node = other.node;
         children = other.children;
     }
@@ -44,20 +44,11 @@ Tree& Tree::operator=(Tree&& other) // move assignment
 {
     if(this != &other)
     {
-        this->clean();
+        clean();
         node = other.node;
         children = move(other.children);
     }
     return (*this);
-}
-
-
-void Tree::clean() // used by move assignment+destructor
-{
-    for(auto* child:children)
-         delete child;
-    children.clear();
-    node = -1;
 }
 
 
@@ -70,7 +61,36 @@ Tree::~Tree() // destructor
 
 
 
+//                           *****getters*****
+
+
+Tree* Tree::getLeftChild() const
+{
+    if(hasChildren())
+        return children[0];
+    return nullptr;
+}
+
+
+int Tree::getNodeInd() const
+{
+    return node;
+}
+
+
+
+
+
 //            ***other functions***
+
+
+void Tree::clean() // used by move assignment + destructor
+{
+    for(auto* child : children)
+        delete child;
+    children.clear();
+    node = -1;
+}
 
 
 void Tree::addChild(const Tree& child)
@@ -99,27 +119,3 @@ bool Tree::hasChildren() const
 {
     return !children.empty();
 }
-
-
-Tree* Tree::getLeftChild() const
-{
-    if(hasChildren())
-        return children[0];
-    return nullptr;
-}
-
-
-int Tree::getNodeInd() const
-{
-    return node;
-}
-
-
-// for testing
-//std::vector<Tree *> Tree::getChildren() {
-//    return children;
-//}
-//
-//int Tree::getRootLabel() {
-//    return node;
-//}

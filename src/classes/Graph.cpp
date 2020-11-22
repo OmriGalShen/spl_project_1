@@ -1,7 +1,7 @@
 #include "../../include/Graph.h"
-#include "vector"
+#include <vector>
 
-
+using namespace std;
 
 
 
@@ -11,8 +11,8 @@
 Graph::Graph(): edges(), nodesStatus() // empty constructor
 {}
 
-Graph::Graph(std::vector<std::vector<int>> matrix): // constructor
-edges(matrix), nodesStatus(matrix.size(),Healthy)
+Graph::Graph(vector<vector<int>> matrix): // constructor
+edges(matrix), nodesStatus(matrix.size(), Healthy)
 {}
 
 Graph::Graph(const Graph &other) = default; // copy constructor
@@ -39,11 +39,11 @@ vector<int> Graph::getInfectedNodes() const
 vector<int> Graph::getNeighbours(int nodeInd) const
 {
     int row = nodeInd;
-    int matSize = edges.size();
+    int size = edges.size();
     auto neighbours = vector<int>();
-    if(row>=0 && row<matSize)
+    if(row>=0 && row<size)
     {
-        for(int col=0; col<matSize; col++)
+        for(int col=0; col<size; col++)
         {
             if(edges[row][col] == 1)
                 neighbours.push_back(col);

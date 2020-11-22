@@ -4,13 +4,13 @@
 #include <vector>
 #include <string>
 #include "Graph.h"
+// added
 #include "json.hpp"  //used for working with json files
-#include "Tree.h" //added
+#include "Tree.h"
+#include <queue>
+//
 
-
-// for convenience
 using json = nlohmann::json; // used for working with json files
-
 class Agent;
 
 enum TreeType{
@@ -18,6 +18,7 @@ enum TreeType{
   MaxRank,
   Root
 };
+
 
 class Session{
 public:
@@ -28,7 +29,7 @@ public:
     void enqueueInfected(int);
     int dequeueInfected();
     TreeType getTreeType() const;
-    //added
+    // added
     void jsonOutput();
     Session(const Session& other); // copy constructor
     Session(Session&& other); // move constructor
@@ -36,17 +37,17 @@ public:
     Session& operator=(Session&& other); // move assignment
     void clean(); // used by move assignment+destructor
     virtual ~Session(); // destructor
-    Tree* BFS(int rootLabel); // Create BFS tree based on given node the graph in session
+    Tree* BFS(int rootLabel); // Create BFS tree based on given node
     int getCycle() const; // getter for private member cycleCount
     Graph& getGraphRef();
     //
-    
+
 private:
     Graph g;
     TreeType treeType;
-    std::vector<Agent*> agents;
-    //added
-    std::queue<int> infectedQueue;
+    vector<Agent*> agents;
+    // added
+    queue<int> infectedQueue;
     int cycleCount;
     //
 };
