@@ -1,10 +1,12 @@
 #include "../../../include/Tree.h"
-#include <deque>
+#include <queue>
+
+using namespace std; // added for convenience
+
 
 
 MaxRankTree::MaxRankTree(int rootLabel): Tree(rootLabel) // constructor
 {}
-
 
 
 Tree* MaxRankTree::clone() const
@@ -13,26 +15,25 @@ Tree* MaxRankTree::clone() const
 }
 
 
-
 int MaxRankTree::traceTree()
 {
-    size_t maxChildrenCount = 0;
+    int maxChildrenCount = 0;
     MaxRankTree* maxChildrenPtr = this;
-    std::deque<MaxRankTree*> nodesToCheck;
-    nodesToCheck.push_back(this);
-    while (!nodesToCheck.empty())
+    queue<MaxRankTree*> nodesToCheck;
+    nodesToCheck.push(this);
+    while (! nodesToCheck.empty())
     {
         MaxRankTree* curr = nodesToCheck.front();
-        nodesToCheck.pop_front();
+        nodesToCheck.pop();
         auto currChildren = (*curr).children;
-        auto currentChildrenCount = currChildren.size();
+        int currentChildrenCount = currChildren.size();
         if(currentChildrenCount>maxChildrenCount)
         {
             maxChildrenCount=currentChildrenCount;
             maxChildrenPtr = curr;
         }
         for(auto* child: currChildren)
-            nodesToCheck.push_back((MaxRankTree*)child);
+            nodesToCheck.push((MaxRankTree*)child);
     }
     return (*maxChildrenPtr).node;
 }

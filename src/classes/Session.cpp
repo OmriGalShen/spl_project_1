@@ -1,18 +1,14 @@
 #include "../../include/Session.h"
 #include <fstream>
-#include "Agent.h"
+#include "../../include/Agent.h"
 #include "iostream"
 #include <queue>
 
-// for convenience
-using namespace std;
-
-
+using namespace std;// for convenience
 
 
 
 //            ***constructors and operators***
-
 
 Session::Session(const string& path): // constructor
 g(), treeType(), agents(), infectedQueue(), cycleCount(0)
@@ -20,33 +16,28 @@ g(), treeType(), agents(), infectedQueue(), cycleCount(0)
     ifstream readFile(path);
     json inputJson;
     readFile>>inputJson;
-    g = Graph(inputJson["graph"]); // get graph from input
-    string type(inputJson["tree"]); // get tree type from input
-    if (type=="M")
-        treeType=MaxRank;
-    if (type=="C")
-        treeType=Cycle;
-    if (type=="R")
-        treeType=Root;
-    int matSize = inputJson["agents"].size();
-    for (int i=0; i<matSize; i++) // loop on input agents list
+    g = Graph(inputJson["graph"]); // get the graph from the input
+    string type(inputJson["tree"]); // get the tree type from the input
+    if (type == "M") treeType=MaxRank;
+    if (type == "C") treeType=Cycle;
+    if (type == "R") treeType=Root;
+    int size = inputJson["agents"].size();
+    for (int i=0; i<size; i++) // goes over the input's agents list
     {
-        if (inputJson["agents"][i][0]=="V") // agent is Virus
+        if (inputJson["agents"][i][0]=="V") // agent is a Virus
         {
-            int virusNode = inputJson["agents"][i][1];
+            int virusNode = inputJson["agents"][i][1]; // the node that the virus is occupying
             agents.push_back(new Virus(virusNode)); // add the new agent
-            g.addVirusOn(virusNode); // inform Graph that virusNode has virus
+            g.addVirusOn(virusNode); // inform Graph that virusNode has a virus
         }
-        else // agent is ContactTracer
+        else // agent is a ContactTracer
             agents.push_back(new ContactTracer()); // add the new agent
     }
-    readFile.close(); // ##############why do we need this? didn't sew it on dolav's explanation - Eden
 }
 
 
 Session::Session(const Session& other): // copy constructor
-g(other.g), treeType(other.treeType), agents(), infectedQueue(),
-cycleCount(0)
+g(other.g), treeType(other.treeType), agents(), infectedQueue(), cycleCount(0)
 {
     for(auto& agent : other.agents)
     {
@@ -82,7 +73,7 @@ Session& Session::operator=(Session&& other) // move assignment
 {
     if(this != &other)
     {
-        this->clean();
+        clean();
         g = other.g;
         treeType = other.treeType;
         agents = move(other.agents);
@@ -94,9 +85,7 @@ Session& Session::operator=(Session&& other) // move assignment
 void Session::clean() // used by move assignment+destructor
 {
     for(auto * agent : agents)
-    {
         delete agent;
-    }
     agents.clear();
 }
 
@@ -161,38 +150,37 @@ int Session::dequeueInfected()
     return -1;
 }
 
-
 Tree* Session::BFS(int rootLabel)
 {
-    Tree* curr_tree = Tree::createTree((*this),rootLabel);
-    int matSize = g.getEdgesRef().size();
-    vector<bool> visitedNode(matSize,false);
-    visitedNode[rootLabel] =true;
-    deque<Tree*> greyQueue;
-    greyQueue.push_back(curr_tree);
+    Tree* rootTree = Tree::createTree(*this, rootLabel);
+    int size = g.getEdgesRef().size();
+    vector<bool> visitedNodes(size, false);
+    visitedNodes[rootLabel] = true;
+    queue<Tree*> greyQueue;
+    greyQueue.push(rootTree);
     while(! greyQueue.empty())
     {
-        Tree* treeNode = greyQueue.front();
-        greyQueue.pop_front();
-        vector<int> neighbours = g.getNeighbours(treeNode->getNodeInd());
-        for(int neighbourInd:neighbours)
+        Tree* currTree = greyQueue.front();
+        greyQueue.pop();
+        vector<int> neighbours = g.getNeighbours(currTree->getNodeInd());
+        for(int neighbour : neighbours)
         {
-            if(!visitedNode[neighbourInd])
+            if(! visitedNodes[neighbour])
             {
-                Tree* newTree = Tree::createTree((*this),neighbourInd);
-                treeNode->addChild(newTree);
-                greyQueue.push_back(newTree);
-                visitedNode[neighbourInd] = true;
+                Tree* newTree = Tree::createTree(*this, neighbour);
+                currTree->addChild(newTree);
+                greyQueue.push(newTree);
+                visitedNodes[neighbour] = true;
             }
         }
     }
-    return curr_tree;
+    return rootTree;
 }
 
 
 void Session::addAgent(const Agent& agent)
 {
-    Agent * clone = agent.clone();
+    Agent* clone = agent.clone();
     agents.push_back(clone);
 }
 

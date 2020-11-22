@@ -3,9 +3,8 @@
 
 #include <vector>
 
-
-
 class Session;
+
 
 class Tree{
 public:
@@ -13,16 +12,16 @@ public:
     void addChild(const Tree& child);
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree() = 0;
-    //added
+    // added
     Tree(const Tree& other); // copy constructor
     Tree(Tree&& other); // move constructor
     Tree& operator=(const Tree& other); // copy assignment operator
     Tree& operator=(Tree&& other); // move assignment operator
-    void clean(); // used by move assignment+destructor
     virtual ~Tree(); // destructor
+    void clean(); // used by move assignment+destructor
     void addChild(Tree* child); // to make the BFS better organized
     bool hasChildren() const;
-    Tree* getLeftChild() const; // const? - Eden
+    Tree* getLeftChild() const;
     int getNodeInd() const;
     virtual Tree* clone() const = 0;
     //
@@ -40,6 +39,7 @@ public:
     //added
     virtual Tree* clone() const;
     //
+
 private:
     int currCycle;
 };

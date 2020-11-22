@@ -2,12 +2,9 @@
 #define GRAPH_H_
 
 #include <vector>
-#include <queue> //added ############ what for?
+#include <queue>
 
-// for convenience
-using namespace std;
-
-
+using namespace std; // added for convenience
 
 enum NodeCondition{
     Healthy,
@@ -31,7 +28,6 @@ public:
     bool isHealthy(int nodeInd) const;
     void removeNode(int nodeInd);
     //
-
 
 private:
     vector<vector<int>> edges;
