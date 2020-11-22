@@ -5,15 +5,19 @@ using namespace std;
 
 
 
-//            ***constructors***
+
+
+//                           *** constructors ***
 
 
 Graph::Graph(): edges(), nodesStatus() // empty constructor
 {}
 
+
 Graph::Graph(vector<vector<int>> matrix): // constructor
 edges(matrix), nodesStatus(matrix.size(), Healthy)
 {}
+
 
 Graph::Graph(const Graph &other) = default; // copy constructor
 
@@ -21,7 +25,7 @@ Graph::Graph(const Graph &other) = default; // copy constructor
 
 
 
-//            ***getters***
+//                           *** getters ***
 
 
 vector<int> Graph::getInfectedNodes() const
@@ -40,7 +44,7 @@ vector<int> Graph::getNeighbours(int nodeInd) const
 {
     int row = nodeInd;
     int size = edges.size();
-    auto neighbours = vector<int>();
+    vector<int> neighbours;
     if(row>=0 && row<size)
     {
         for(int col=0; col<size; col++)
@@ -62,7 +66,7 @@ const vector<vector<int>>& Graph::getEdgesRef() const
 
 
 
-//            ***other functions***
+//                           *** other functions ***
 
 
 void Graph::infectNode(int nodeInd)

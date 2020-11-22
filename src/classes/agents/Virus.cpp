@@ -1,10 +1,15 @@
 #include "../../../include/Agent.h"
 #include "iostream"
 
-using namespace std; // for convenience
+using namespace std;
+
 
 
 Virus::Virus(int nodeInd): nodeInd(nodeInd)  // constructor
+{}
+
+
+Virus::Virus(const Virus &other): nodeInd(other.nodeInd) // copy constructor
 {}
 
 

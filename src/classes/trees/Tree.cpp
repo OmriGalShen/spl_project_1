@@ -7,7 +7,7 @@ using namespace std;
 
 
 
-//                           *****rule of 5*****
+//                           ***** rule of 5 *****
 
 
 Tree::Tree(int rootLabel): node(rootLabel), children(vector<Tree*>()) // constructor
@@ -16,15 +16,12 @@ Tree::Tree(int rootLabel): node(rootLabel), children(vector<Tree*>()) // constru
 
 Tree::Tree(const Tree &other): node(other.node), children() // copy constructor
 {
-    for(auto& child : other.children)
-    {
-        Tree* childClone = child->clone();
-        children.push_back(childClone);
-    }
+    for(auto & child : other.children)
+        children.push_back(child->clone());
 }
 
 
-Tree::Tree(Tree&& other): node(other.node),children(move(other.children)) // move constructor
+Tree::Tree(Tree&& other): node(other.node), children(move(other.children)) // move constructor
 {}
 
 
@@ -36,7 +33,7 @@ Tree& Tree::operator=(const Tree& other) // copy assignment
         node = other.node;
         children = other.children;
     }
-    return (*this);
+    return (* this);
 }
 
 
@@ -48,7 +45,7 @@ Tree& Tree::operator=(Tree&& other) // move assignment
         node = other.node;
         children = move(other.children);
     }
-    return (*this);
+    return (* this);
 }
 
 
@@ -61,7 +58,7 @@ Tree::~Tree() // destructor
 
 
 
-//                           *****getters*****
+//                           *** getters ***
 
 
 Tree* Tree::getLeftChild() const
@@ -81,12 +78,12 @@ int Tree::getNodeInd() const
 
 
 
-//            ***other functions***
+//                           *** other functions ***
 
 
 void Tree::clean() // used by move assignment + destructor
 {
-    for(auto* child : children)
+    for(auto * child : children)
         delete child;
     children.clear();
     node = -1;
@@ -95,8 +92,7 @@ void Tree::clean() // used by move assignment + destructor
 
 void Tree::addChild(const Tree& child)
 {
-    Tree* clone = child.clone();
-    children.push_back(clone);
+    children.push_back(child.clone());
 }
 
 
@@ -117,5 +113,5 @@ void Tree::addChild(Tree* child)
 
 bool Tree::hasChildren() const
 {
-    return !children.empty();
+    return (! children.empty());
 }

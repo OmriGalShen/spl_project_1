@@ -1,14 +1,16 @@
 #include "../../include/Session.h"
-#include <fstream>
 #include "../../include/Agent.h"
+#include <fstream>
 #include "iostream"
-#include <queue>
 
-using namespace std;// for convenience
-
+using namespace std;
 
 
-//            ***constructors and operators***
+
+
+
+//                           ***** rule of 5 *****
+
 
 Session::Session(const string& path): // constructor
 g(), treeType(), agents(), infectedQueue(), cycleCount(0)
@@ -33,23 +35,25 @@ g(), treeType(), agents(), infectedQueue(), cycleCount(0)
         else // agent is a ContactTracer
             agents.push_back(new ContactTracer()); // add the new agent
     }
+    readFile.close();
 }
+
+
+/* the infectedQueue is initialized to be empty and the cycleCount to 0 because all
+ * constructors\operators can only be called before the simulate function starts. */
 
 
 Session::Session(const Session& other): // copy constructor
 g(other.g), treeType(other.treeType), agents(), infectedQueue(), cycleCount(0)
 {
-    for(auto& agent : other.agents)
-    {
-        Agent* agentClone = agent->clone();
-        agents.push_back(agentClone);
-    }
+    for(auto & agent : other.agents)
+        agents.push_back(agent->clone());
 }
 
 
 Session::Session(Session&& other): // move constructor
-g(other.g), treeType(other.treeType), agents(move(other.agents)), infectedQueue(),
-cycleCount(0) {}
+g(other.g), treeType(other.treeType), agents(move(other.agents)), infectedQueue(), cycleCount(0)
+{}
 
 
 Session& Session::operator=(const Session& other) // copy assignment
@@ -59,11 +63,8 @@ Session& Session::operator=(const Session& other) // copy assignment
         clean();
         g = other.g;
         treeType = other.treeType;
-        for(auto& agent : other.agents)
-        {
-            Agent* agentClone = agent->clone();
-            agents.push_back(agentClone);
-        }
+        for(auto & agent : other.agents)
+            agents.push_back(agent->clone());
     }
     return (*this);
 }
@@ -78,15 +79,7 @@ Session& Session::operator=(Session&& other) // move assignment
         treeType = other.treeType;
         agents = move(other.agents);
     }
-    return (*this);
-}
-
-
-void Session::clean() // used by move assignment+destructor
-{
-    for(auto * agent : agents)
-        delete agent;
-    agents.clear();
+    return (* this);
 }
 
 
@@ -99,7 +92,7 @@ Session::~Session() // destructor
 
 
 
-//            ***getters and setters***
+//                           *** getters and setters ***
 
 
 TreeType Session::getTreeType() const
@@ -129,8 +122,15 @@ void Session::setGraph(const Graph &graph)
 
 
 
-//            ***other functions***
+//                           *** other functions ***
 
+
+void Session::clean() // used by move assignment+destructor
+{
+    for(auto * agent : agents)
+        delete agent;
+    agents.clear();
+}
 
 
 void Session::enqueueInfected(int nodeInd)
@@ -150,18 +150,19 @@ int Session::dequeueInfected()
     return -1;
 }
 
+
 Tree* Session::BFS(int rootLabel)
 {
     Tree* rootTree = Tree::createTree(*this, rootLabel);
     int size = g.getEdgesRef().size();
     vector<bool> visitedNodes(size, false);
     visitedNodes[rootLabel] = true;
-    queue<Tree*> greyQueue;
-    greyQueue.push(rootTree);
-    while(! greyQueue.empty())
+    queue<Tree*> treeQueue;
+    treeQueue.push(rootTree);
+    while(! treeQueue.empty())
     {
-        Tree* currTree = greyQueue.front();
-        greyQueue.pop();
+        Tree* currTree = treeQueue.front();
+        treeQueue.pop();
         vector<int> neighbours = g.getNeighbours(currTree->getNodeInd());
         for(int neighbour : neighbours)
         {
@@ -169,7 +170,7 @@ Tree* Session::BFS(int rootLabel)
             {
                 Tree* newTree = Tree::createTree(*this, neighbour);
                 currTree->addChild(newTree);
-                greyQueue.push(newTree);
+                treeQueue.push(newTree);
                 visitedNodes[neighbour] = true;
             }
         }
@@ -180,13 +181,15 @@ Tree* Session::BFS(int rootLabel)
 
 void Session::addAgent(const Agent& agent)
 {
-    Agent* clone = agent.clone();
-    agents.push_back(clone);
+    agents.push_back(agent.clone());
 }
+
 
 /*
 This is the main simulation loop.
 */
+
+
 void Session::simulate()
 {
     bool terminateCycle = false;// true when terminate conditions are fulfilled
@@ -211,5 +214,5 @@ void Session::jsonOutput() // output final results as json
     outputJSON["infected"] = g.getInfectedNodes();
     ofstream file("./output.json");
     file << outputJSON << endl;
-    //file.close();
+    file.close();
 }

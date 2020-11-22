@@ -21,7 +21,7 @@ public:
     void clean(); // used by move assignment+destructor
     void addChild(Tree* child); // to make the BFS better organized
     bool hasChildren() const;
-    Tree* getLeftChild() const;
+    Tree* getLeftChild() const; // for the cycleTree
     int getNodeInd() const;
     virtual Tree* clone() const = 0;
     //

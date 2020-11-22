@@ -1,7 +1,7 @@
 #include "../../../include/Tree.h"
 #include <queue>
 
-using namespace std; // added for convenience
+using namespace std;
 
 
 
@@ -11,7 +11,7 @@ MaxRankTree::MaxRankTree(int rootLabel): Tree(rootLabel) // constructor
 
 Tree* MaxRankTree::clone() const
 {
-    return new MaxRankTree((*this));
+    return new MaxRankTree(* this);
 }
 
 
@@ -32,7 +32,7 @@ int MaxRankTree::traceTree()
             maxChildrenCount=currentChildrenCount;
             maxChildrenPtr = curr;
         }
-        for(auto* child: currChildren)
+        for(auto * child: currChildren)
             nodesToCheck.push((MaxRankTree*)child);
     }
     return (*maxChildrenPtr).node;

@@ -7,12 +7,10 @@ currCycle(currCycle)
 {}
 
 
-
 Tree* CycleTree::clone() const
 {
     return new CycleTree(*this);
 }
-
 
 
 int CycleTree::traceTree()
