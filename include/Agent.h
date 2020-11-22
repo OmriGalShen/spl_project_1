@@ -2,12 +2,12 @@
 #define AGENT_H_
 
 #include <vector>
-#include "Session.h" //added
+#include "Session.h" //added ########## what for?
 
 
 class Agent{
 public:
-    Agent();
+    Agent(); // empty constructor
     virtual void act(Session& session)=0;
     //added
     virtual Agent* clone() const = 0;
@@ -32,7 +32,7 @@ public:
     virtual void act(Session& session);
     //added
     virtual Agent* clone() const;
-    Virus(const Virus& other); // copy constructor
+    //Virus(const Virus& other); // copy constructor  // ########### what for?
     //
 
 private:

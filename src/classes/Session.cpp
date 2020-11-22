@@ -2,7 +2,7 @@
 #include <fstream>
 #include "Agent.h"
 #include "iostream"
-#include <deque>
+#include <queue>
 
 // for convenience
 using namespace std;
@@ -22,9 +22,12 @@ g(), treeType(), agents(), infectedQueue(), cycleCount(0)
     readFile>>inputJson;
     g = Graph(inputJson["graph"]); // get graph from input
     string type(inputJson["tree"]); // get tree type from input
-    if (type=="M") treeType=MaxRank;
-    if (type=="C") treeType=Cycle;
-    if (type=="R") treeType=Root;
+    if (type=="M")
+        treeType=MaxRank;
+    if (type=="C")
+        treeType=Cycle;
+    if (type=="R")
+        treeType=Root;
     int matSize = inputJson["agents"].size();
     for (int i=0; i<matSize; i++) // loop on input agents list
     {
@@ -37,15 +40,14 @@ g(), treeType(), agents(), infectedQueue(), cycleCount(0)
         else // agent is ContactTracer
             agents.push_back(new ContactTracer()); // add the new agent
     }
-    readFile.close();
+    readFile.close(); // ##############why do we need this? didn't sew it on dolav's explanation - Eden
 }
 
 
 Session::Session(const Session& other): // copy constructor
-treeType(other.treeType), agents(), infectedQueue(other.infectedQueue),
-cycleCount(other.cycleCount)
+g(other.g), treeType(other.treeType), agents(), infectedQueue(),
+cycleCount(0)
 {
-    setGraph(other.g);
     for(auto& agent : other.agents)
     {
         Agent* agentClone = agent->clone();
@@ -55,23 +57,22 @@ cycleCount(other.cycleCount)
 
 
 Session::Session(Session&& other): // move constructor
-        g(other.g), treeType(other.treeType), agents(move(other.agents)),
-        infectedQueue(other.infectedQueue), cycleCount(other.cycleCount)
-{
-    other.clean(); // should we add that? - Eden
-}
+g(other.g), treeType(other.treeType), agents(move(other.agents)), infectedQueue(),
+cycleCount(0) {}
 
 
 Session& Session::operator=(const Session& other) // copy assignment
 {
-    if(this != &other)  // what about the infectedQueue? - Eden
+    if(this != &other)
     {
         clean();
-        setGraph(other.g);
+        g = other.g;
         treeType = other.treeType;
-
-        infectedQueue = other.infectedQueue;
-        cycleCount = other.cycleCount;
+        for(auto& agent : other.agents)
+        {
+            Agent* agentClone = agent->clone();
+            agents.push_back(agentClone);
+        }
     }
     return (*this);
 }
@@ -79,12 +80,12 @@ Session& Session::operator=(const Session& other) // copy assignment
 
 Session& Session::operator=(Session&& other) // move assignment
 {
-    if(this != &other)  //what about cycleCount and the infectedQueue? - Eden
+    if(this != &other)
     {
         this->clean();
         g = other.g;
         treeType = other.treeType;
-        agents = std::move(other.agents);
+        agents = move(other.agents);
     }
     return (*this);
 }
@@ -92,12 +93,11 @@ Session& Session::operator=(Session&& other) // move assignment
 
 void Session::clean() // used by move assignment+destructor
 {
-    for(auto * agent:agents)
+    for(auto * agent : agents)
     {
         delete agent;
-        agent = nullptr;
     }
-    //agents.clear();  // is this instead of agent=nullptr? - Eden
+    agents.clear();
 }
 
 
@@ -146,7 +146,7 @@ void Session::setGraph(const Graph &graph)
 
 void Session::enqueueInfected(int nodeInd)
 {
-    infectedQueue.push_back(nodeInd);
+    infectedQueue.push(nodeInd);
 }
 
 
@@ -155,7 +155,7 @@ int Session::dequeueInfected()
     if(! infectedQueue.empty())
     {
         int nodeTemp = infectedQueue.front();
-        infectedQueue.pop_front();
+        infectedQueue.pop();
         return nodeTemp;
     }
     return -1;
@@ -168,9 +168,9 @@ Tree* Session::BFS(int rootLabel)
     int matSize = g.getEdgesRef().size();
     vector<bool> visitedNode(matSize,false);
     visitedNode[rootLabel] =true;
-    std::deque<Tree*> greyQueue; // std needed? - Eden
+    deque<Tree*> greyQueue;
     greyQueue.push_back(curr_tree);
-    while(!greyQueue.empty())
+    while(! greyQueue.empty())
     {
         Tree* treeNode = greyQueue.front();
         greyQueue.pop_front();
@@ -222,6 +222,6 @@ void Session::jsonOutput() // output final results as json
     outputJSON["graph"] = g.getEdgesRef();
     outputJSON["infected"] = g.getInfectedNodes();
     ofstream file("./output.json");
-    file << outputJSON;
-    file.close();
+    file << outputJSON << endl;
+    //file.close();
 }

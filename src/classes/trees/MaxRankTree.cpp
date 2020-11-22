@@ -6,34 +6,13 @@ MaxRankTree::MaxRankTree(int rootLabel): Tree(rootLabel) // constructor
 {}
 
 
-MaxRankTree::MaxRankTree(const MaxRankTree &other): Tree(other) // copy constructor
-{}
-
-
-MaxRankTree::MaxRankTree(MaxRankTree &&other): Tree(std::move(other)) // move constructor
-{}
-
-
-MaxRankTree& MaxRankTree::operator=(const MaxRankTree &other) // copy assignment operator
-{
-    if(this != &other)
-        Tree:: operator=(other);
-    return (*this);
-}
-
-
-MaxRankTree& MaxRankTree::operator=(MaxRankTree &&other) // move assignment
-{
-    if(this != &other)
-        Tree:: operator=(std::move(other)); // steal resources
-    return (*this);
-}
-
 
 Tree* MaxRankTree::clone() const
 {
     return new MaxRankTree((*this));
 }
+
+
 
 int MaxRankTree::traceTree()
 {
@@ -57,7 +36,3 @@ int MaxRankTree::traceTree()
     }
     return (*maxChildrenPtr).node;
 }
-
-
-
-

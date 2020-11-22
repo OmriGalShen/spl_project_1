@@ -38,7 +38,7 @@ public:
     virtual ~Session(); // destructor
     Tree* BFS(int rootLabel); // Create BFS tree based on given node the graph in session
     int getCycle() const; // getter for private member cycleCount
-    Graph& getGraphRef();  // should that be const? - Eden
+    Graph& getGraphRef();
     //
     
 private:
@@ -46,7 +46,7 @@ private:
     TreeType treeType;
     std::vector<Agent*> agents;
     //added
-    std::deque<int> infectedQueue;
+    std::queue<int> infectedQueue;
     int cycleCount;
     //
 };

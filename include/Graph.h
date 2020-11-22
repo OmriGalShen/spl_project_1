@@ -2,7 +2,7 @@
 #define GRAPH_H_
 
 #include <vector>
-#include <deque> //added
+#include <queue> //added ############ what for?
 
 // for convenience
 using namespace std;
@@ -18,17 +18,17 @@ enum NodeCondition{
 
 class Graph{
 public:
-    Graph(vector<vector<int>> matrix);
+    Graph(vector<vector<int>> matrix); // constructor
     void infectNode(int nodeInd);
     bool isInfected(int nodeInd);
     // added
-    Graph();
-    Graph(const Graph& other);
+    Graph(); // empty constructor
+    Graph(const Graph& other); // copy constructor
     vector<int> getNeighbours(int nodeInd) const;
     vector<int> getInfectedNodes() const;
-    vector<vector<int>>& getEdgesRef();
+    const vector<vector<int>>& getEdgesRef() const;
     void addVirusOn(int nodeInd);
-    bool isHealthy(int nodeInd);
+    bool isHealthy(int nodeInd) const;
     void removeNode(int nodeInd);
     //
 
