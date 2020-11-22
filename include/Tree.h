@@ -12,26 +12,20 @@ public:
     Tree(int rootLabel); // constructor
     void addChild(const Tree& child);
     static Tree* createTree(const Session& session, int rootLabel);
-    virtual int traceTree()=0;
+    virtual int traceTree() = 0;
     //added
     Tree(const Tree& other); // copy constructor
     Tree(Tree&& other); // move constructor
     Tree& operator=(const Tree& other); // copy assignment operator
-    Tree& operator=(Tree&& other); // move assignment
+    Tree& operator=(Tree&& other); // move assignment operator
     void clean(); // used by move assignment+destructor
     virtual ~Tree(); // destructor
-    void addChild(Tree* child);
+    void addChild(Tree* child); // to make the BFS better organized
     bool hasChildren() const;
-    Tree* getLeftChild(); // const? - Eden
+    Tree* getLeftChild() const; // const? - Eden
     int getNodeInd() const;
-    virtual Tree* clone() const=0;
+    virtual Tree* clone() const = 0;
     //
-
-
-// for testing
-//    std::vector<Tree*> getChildren();
-//    int getRootLabel();
-
 
 protected:
     int node;

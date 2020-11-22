@@ -2,7 +2,7 @@
 #define GRAPH_H_
 
 #include <vector>
-#include <deque> //added
+#include <queue> //added ############ what for?
 
 // for convenience
 using namespace std;

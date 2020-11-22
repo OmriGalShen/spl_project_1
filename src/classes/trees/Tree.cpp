@@ -101,7 +101,7 @@ bool Tree::hasChildren() const
 }
 
 
-Tree* Tree::getLeftChild()
+Tree* Tree::getLeftChild() const
 {
     if(hasChildren())
         return children[0];

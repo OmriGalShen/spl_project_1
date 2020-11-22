@@ -2,7 +2,7 @@
 #include <fstream>
 #include "Agent.h"
 #include "iostream"
-#include <deque>
+#include <queue>
 
 // for convenience
 using namespace std;
@@ -146,7 +146,7 @@ void Session::setGraph(const Graph &graph)
 
 void Session::enqueueInfected(int nodeInd)
 {
-    infectedQueue.push_back(nodeInd);
+    infectedQueue.push(nodeInd);
 }
 
 
@@ -155,7 +155,7 @@ int Session::dequeueInfected()
     if(! infectedQueue.empty())
     {
         int nodeTemp = infectedQueue.front();
-        infectedQueue.pop_front();
+        infectedQueue.pop();
         return nodeTemp;
     }
     return -1;
