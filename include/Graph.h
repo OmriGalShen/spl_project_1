@@ -2,7 +2,6 @@
 #define GRAPH_H_
 
 #include <vector>
-#include <queue>
 
 using namespace std; // added for convenience
 

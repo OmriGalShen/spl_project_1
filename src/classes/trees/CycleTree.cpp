@@ -2,8 +2,9 @@
 
 
 
-CycleTree::CycleTree(int rootLabel, int currCycle): Tree(rootLabel), currCycle(currCycle)
-{} // constructor
+CycleTree::CycleTree(int rootLabel, int currCycle): Tree(rootLabel), // constructor
+currCycle(currCycle)
+{}
 
 
 
